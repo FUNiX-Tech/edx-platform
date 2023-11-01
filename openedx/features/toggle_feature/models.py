@@ -19,3 +19,10 @@ class ToggleFeatureCourse (models.Model) :
     def __str__ (self):
 
         return f'{self.course_id}'
+    
+    @classmethod
+    def findCourseToggeFeature (self , course_id) :
+        try:
+            return self.objects.filter(course_id = course_id)
+        except:
+            return None
