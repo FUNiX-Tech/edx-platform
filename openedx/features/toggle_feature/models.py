@@ -7,8 +7,7 @@ class ToggleFeatureCourse (models.Model) :
         CourseOverview,
         db_constraint=False,
         db_index=True,
-        on_delete=models.DO_NOTHING,
-        unique=True
+        on_delete=models.CASCADE  
     )
     is_feedback =  models.BooleanField(default=True, verbose_name='feedback' )
     is_discussion = models.BooleanField(default=True , verbose_name='discussion')
@@ -27,7 +26,7 @@ class ToggleFeatureCourse (models.Model) :
         except:
             return None
 
-        
+
 class ToggleFeatureUser (models.Model):
     student = models.ForeignKey(User, db_index=True, db_constraint=False, on_delete=models.CASCADE)
     is_feedback =  models.BooleanField(default=True, verbose_name='feedback' )

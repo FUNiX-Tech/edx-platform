@@ -12,7 +12,7 @@ class Migration(migrations.Migration):
             name='ToggleFeatureCourse',
             fields=[
                 ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
-                ('course_id', CourseKeyField(max_length=255, db_index=True, unique=True)),
+                ('course_id', CourseKeyField(max_length=255, db_index=True)),
                 ('is_feedback' , models.BooleanField(default=True)),
                 ('is_discussion' , models.BooleanField(default=True)),
                 ('is_date_and_progress' , models.BooleanField(default=True)),
