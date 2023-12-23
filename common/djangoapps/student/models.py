@@ -1281,8 +1281,8 @@ class LastHistoryActivate(models.Model):
         on_delete=models.DO_NOTHING,
     )
     
-    def __str__(self):
-        return "%s %s %s" % (self.user_id, self.course_id)
+    # def __str__(self):
+    #     return "%s %s %s" % (self.user_id, self.course_id)
 class LastHistoryActivateDAO():
     @classmethod
     def create_date_history (self, course_id, user_id):
