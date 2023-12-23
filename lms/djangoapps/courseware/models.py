@@ -245,8 +245,8 @@ class StudentModuleHistory(BaseStudentModuleHistory):
 
     student_module = models.ForeignKey(StudentModule, db_index=True, db_constraint=False, on_delete=models.CASCADE)
 
-    def __str__(self):
-        return str(repr(self))
+    # def __str__(self):
+    #     return str(repr(self))
 
     def save_history(sender, instance, **kwargs):  # pylint: disable=no-self-argument, unused-argument
         """
