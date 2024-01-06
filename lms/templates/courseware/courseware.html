@@ -263,6 +263,7 @@ ${HTML(fragment.foot_html())}
                 </p>
                 <script type="text/javascript">
                 $(document).ajaxSuccess(function(event, xhr, settings) {
+                    console.log("UFC - ", "tesst_ajaxSuccess")
                     if (settings.url.indexOf("xmodule_handler/problem_check") > -1) {
                         var data = JSON.parse(xhr.responseText);
                         if (data.entrance_exam_passed){

@@ -1,0 +1,38 @@
+---
+metadata:
+    display_name: Matching Question
+    markdown: |
+        Đây là câu hỏi Matching Question, Kéo thả
+
+data:   |
+        <problem>
+        <matchingresponse>
+        <div question_matching="True">Hãy ghép các thành phần của Marketing Framework tương ứng với các yếu tố trong marketing phía dưới.</div>
+        <div sub_question_matching="True">(Hãy nối từ tương ứng tương ứng với đáp án bạn chọn.)</div>
+
+          <matchingcontent>
+
+              <itemgroup title="True">
+                <item>Marketing Plan</item>
+                <item>Marketing Framework</item>
+              </itemgroup>
+
+              <itemgroup >
+                <item left="left1">Mục tiêu Marketing của bạn:</item>
+                <item right="right1">Why</item>
+              </itemgroup>
+
+              <itemgroup >
+                <item left="left2">Các kênh mà khách hàng của bạn sử dụng:</item>
+                <item right="right2">Where</item>
+              </itemgroup>
+
+              <itemgroup >
+                <item right="right3">Yes/No</item>
+              </itemgroup>
+
+          </matchingcontent>
+
+        </matchingresponse>
+        </problem>
+

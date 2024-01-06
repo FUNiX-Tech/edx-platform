@@ -6,12 +6,12 @@ from openedx.core.djangolib.markup import HTML
 
 <%namespace name='static' file='static_content.html'/>
 <h3 class="hd hd-3 problem-header" id="${ short_id }-problem-title" aria-describedby="${ id }-problem-progress" tabindex="-1">
-  ${ problem['name'] }
+  ${ problem['name'] } 123_test
 </h3>
 
 <div class="problem-progress" id="${ id }-problem-progress"></div>
 
-<div class="problem">
+<div class="problem" id="test_css_new_01">
   ${ HTML(problem['html']) }
   <div class="action">
     <input type="hidden" name="problem_id" value="${ problem['name'] }" />
@@ -161,4 +161,77 @@ from openedx.core.djangolib.markup import HTML
     function emit_event(message) {
         parent.postMessage(message, '*');
     }
+</script>
+
+<script>
+        const rightItem = document.querySelectorAll(".right_content_item");
+        const rightItemBtn = document.querySelectorAll(".right_content_item .btn");
+        let draggedItem = null;
+
+        rightItemBtn.forEach(function(btn) {
+            btn.addEventListener("dragstart", function (e) {
+                draggedItem = btn.innerHTML;
+            });
+
+            btn.addEventListener("dragend", function (e) {
+                btn.innerHTML = draggedItem;
+                draggedItem = null;
+            });
+        });
+
+        rightItem.forEach( function(item) {
+            item.addEventListener("dragover", function (e) {
+                e.preventDefault();
+            });
+
+            item.addEventListener("drop", function (e) {
+                e.preventDefault();
+                const cloneItem = item.querySelector(".btn").innerHTML;
+
+                item.querySelector(".btn").innerHTML = draggedItem;
+
+                draggedItem = cloneItem;
+            });
+        });
+
+        const submitHandler = function() {
+
+            const divElement = document.querySelector('.main_content');
+            const dataRmain = divElement.getAttribute('data-rmain');
+            const newArr = JSON.parse(JSON.stringify(dataRmain));
+
+
+            let dataResultElements = document.querySelectorAll('[data-result]');
+
+            let dataResults = Array.prototype.map.call(dataResultElements, function(elem) {
+                return parseInt(elem.getAttribute('data-result').replace('right', ''), 10);
+            });
+
+
+            if (dataResults[0] == 1) {
+                const matchingResult = document.querySelector('.matching_result');
+                matchingResult.classList.remove('matching_hidden');
+
+                const matchingResultContainer = document.querySelector('.matching_result_container');
+                matchingResultContainer.classList.remove('error_result');
+                matchingResultContainer.classList.add('success_result');
+
+                const matchingResultTitle = document.querySelector('.matching_result_title');
+                matchingResultTitle.innerHTML = "Bạn đã trả lời đúng";
+            }else {
+                const matchingResult = document.querySelector('.matching_result');
+                matchingResult.classList.remove('matching_hidden');
+
+                const matchingResultContainer = document.querySelector('.matching_result_container');
+                matchingResultContainer.classList.remove('success_result');
+                matchingResultContainer.classList.add('error_result');
+                const matchingResultTitle = document.querySelector('.matching_result_title');
+                matchingResultTitle.innerHTML = "Bạn đã trả lời sai";
+
+            }
+        }
+        const submitBtn = document.querySelector(".submit_matching_btn");
+
+        submitBtn.addEventListener("click", submitHandler);
+
 </script>

@@ -300,7 +300,7 @@
       }
 
       .modal-content {
-        height: 435px;
+        height: 80vh;
         overflow-y: auto;
         overflow-x: hidden;
         padding: 0;
@@ -348,11 +348,11 @@
   // component editor
   .modal-window {
     .CodeMirror {
-      height: 365px;
+      height: 650px;
     }
 
     .CodeMirror-advanced {
-      height: 435px;
+      height: 80vh;
     }
 
     .wrapper-comp-settings {

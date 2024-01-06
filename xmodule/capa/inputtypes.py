@@ -562,6 +562,8 @@ class ChoiceGroup(InputTypeBase):
                         )
                     )
                     raise Exception(msg)
+
+        print("choices_test", choices)
         return choices
 
     def get_user_visible_answer(self, internal_answer):

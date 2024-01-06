@@ -51,6 +51,10 @@
         MarkdownEditingDescriptor.explanationTemplate = '[explanation]\n' + // eslint-disable-line no-use-before-define
             (gettext('Short explanation')) + '\n[explanation]\n';
 
+        // Tạo temple matching mới
+        MarkdownEditingDescriptor.matchingTemplate = '[matching]\n' + // eslint-disable-line no-use-before-define
+            (gettext('Matching')) + '\n[matching]\n';
+
         function MarkdownEditingDescriptor(element) {
             var that = this;
             this.onToolbarButton = function() {
@@ -149,6 +153,14 @@
             case 'explanation-button':
                 revisedSelection = MarkdownEditingDescriptor.insertExplanation(selection);
                 break;
+
+            // Tạo sự kiện khi click matching button
+            case 'matching-button':
+                // revisedSelection = MarkdownEditingDescriptor.insertMatching(selection);
+                revisedSelection = MarkdownEditingDescriptor.insertExplanation(selection);
+
+                break;
+
             default:
                 break;
             }
@@ -259,6 +271,13 @@
             return MarkdownEditingDescriptor.insertGenericInput(selectedText, '[explanation]\n', '\n[explanation]',
                 MarkdownEditingDescriptor.explanationTemplate
             );
+        };
+
+         // Tạo phương thức để insert matching temple
+        MarkdownEditingDescriptor.insertMatching = function(selectedText) {
+          return MarkdownEditingDescriptor.insertGenericInput(selectedText, '[explanation]\n', '\n[explanation]',
+              MarkdownEditingDescriptor.explanationTemplate
+          );
         };
 
         MarkdownEditingDescriptor.insertGenericInput = function(selectedText, lineStart, lineEnd, template) {
@@ -830,6 +849,8 @@
             finalXml = '<problem>\n' + responseTypesXML.join('\n\n') + finalDemandHints + '\n</problem>';
             return finalXml;
         };
+
+
 
         return MarkdownEditingDescriptor;
     }(XModule.Descriptor));

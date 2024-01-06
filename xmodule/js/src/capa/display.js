@@ -181,6 +181,8 @@
             this.gentleAlertNotification = this.$('.notification-gentle-alert');
             this.submitNotification = this.$('.notification-submit');
 
+            console.log("btn_tesst_01", $(".submit_matching_btn"))
+
             // Accessibility helper for sighted keyboard users to show <clarification> tooltips on focus:
             this.$('.clarification').focus(function(ev) {
                 var icon;

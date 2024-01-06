@@ -930,6 +930,7 @@ class ProblemBlock(
         """
         curr_score, total_possible = self.get_display_progress()
 
+        # UFC - vị trí render ra problem_ajax.html có chứa các data về problem
         return self.runtime.service(self, 'mako').render_template('problem_ajax.html', {
             'element_id': self.location.html_id(),
             'id': str(self.location),
@@ -1213,6 +1214,7 @@ class ProblemBlock(
             'msg': total_text,
         }
 
+    # UFC - có thể hàm này quy định biến dc truyền vào problem.html
     def get_problem_html(self, encapsulate=True, submit_notification=False):
         """
         Return html for the problem.
@@ -1294,6 +1296,7 @@ class ProblemBlock(
         # Now do all the substitutions which the LMS module_render normally does, but
         # we need to do here explicitly since we can get called for our HTML via AJAX
         html = self.runtime.service(self, "replace_urls").replace_urls(html)
+        # print("html: ", html)
 
         return html
 
@@ -1704,7 +1707,14 @@ class ProblemBlock(
         return {'grade': self.score.raw_earned, 'max_grade': self.score.raw_possible}
 
     # pylint: disable=too-many-statements
+    # UFC - hàm chấm bài
     def submit_problem(self, data, override_time=False):
+        print("tesst_cham_bai_01")
+        print("data", data)
+        # print("self_cham_bai", self)
+        # print("self_cham_bai_data", self.data)
+        # print("self.get_problem_html(", self.get_problem_html())
+
         """
         Checks whether answers to a problem are correct
 
@@ -1712,12 +1722,18 @@ class ProblemBlock(
           {'success' : 'correct' | 'incorrect' | AJAX alert msg string,
            'contents' : html}
         """
+
+
         event_info = {}
         event_info['state'] = self.lcp.get_state()
+        print("self.lcp.get_state()", self.lcp.get_state())
+
         event_info['problem_id'] = str(self.location)
 
         self.lcp.has_saved_answers = False
         answers = self.make_dict_of_responses(data)
+
+        print("answers_py", answers)
         answers_without_files = convert_files_to_filenames(answers)
         event_info['answers'] = answers_without_files
 
@@ -1780,6 +1796,8 @@ class ProblemBlock(
             # self.lcp.context['attempt'] refers to the attempt number (1-based)
             self.lcp.context['attempt'] = self.attempts + 1
             correct_map = self.lcp.grade_answers(answers)
+
+            print("correct_map_new", correct_map)
             # self.attempts refers to the number of attempts that did not
             # raise an error (0-based)
             self.attempts = self.attempts + 1
@@ -1833,6 +1851,8 @@ class ProblemBlock(
         # success = correct if ALL questions in this problem are correct
         success = 'correct'
         for answer_id in correct_map:
+            print("correct_map_new answer_id", answer_id)
+
             if not correct_map.is_correct(answer_id):
                 success = 'incorrect'
 

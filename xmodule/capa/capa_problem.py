@@ -475,8 +475,13 @@ class LoncapaProblem(object):
 
         # start new with empty CorrectMap
         newcmap = CorrectMap()
+        print("newcmap",newcmap)
+        print("self.responders.values()", self.responders.values())
+
+
         # Call each responsetype instance to do actual grading
         for responder in self.responders.values():
+            print("self.responders.values()", responder)
             # File objects are passed only if responsetype explicitly allows
             # for file submissions.  But we have no way of knowing if
             # student_answers contains a proper answer or the filename of
@@ -491,6 +496,7 @@ class LoncapaProblem(object):
             if 'filesubmission' in responder.allowed_inputfields and student_answers is not None:
                 results = responder.evaluate_answers(student_answers, oldcmap)
             else:
+                print("tesst_process")
                 results = responder.evaluate_answers(self.student_answers, oldcmap)
             newcmap.update(results)
 

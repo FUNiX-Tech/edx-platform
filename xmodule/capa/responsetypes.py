@@ -3906,6 +3906,68 @@ class ChoiceTextResponse(LoncapaResponse):
 
 #-----------------------------------------------------------------------------
 
+@registry.register
+class MatchingResponse(LoncapaResponse):
+    """
+    Loại phản hồi ghép nối, nơi sinh viên cần ghép nối các cặp mục bên trái và bên phải.
+
+    Example:
+
+    <matchingresponse>
+        <p>Câu hỏi</p>
+        <itemgroup>
+            <item right="Right 01" left="Left 01" />
+            <item right="Right 02" left="Left 02" />
+            <item right="" left="Left 03" />
+        </itemgroup>
+    </matchingresponse>
+    """
+
+    human_name = _('Matching Question')
+    tags = ['matchingresponse']
+    max_inputfields = None
+    allowed_inputfields = ['select', 'dropdown', 'checkboxgroup', 'radiogroup']
+
+    def setup_response(self):
+        """
+        Thiết lập ban đầu cho phản hồi, bao gồm lấy danh sách các cặp ghép nối từ XML.
+        """
+        # self.pairs = []
+        # for item in self.xml.findall('.//itemgroup/item'):
+        #     left = item.get('left')
+        #     right = item.get('right')
+        #     self.pairs.append((left, right))
+
+        pass
+
+    def get_score(self, student_answers):
+        """
+        Đánh giá câu trả lời của sinh viên và trả về CorrectMap.
+        """
+        # correct_count = 0
+        # for left, right in self.pairs:
+        #     student_right = student_answers.get(left, '')
+        #     if student_right == right:
+        #         correct_count += 1
+
+        # correctness = 'correct' if correct_count == len(self.pairs) else 'incorrect'
+        # return CorrectMap(self.answer_id, correctness)
+
+        pass
+
+    def get_answers(self):
+        """
+        Trả về các cặp ghép nối đúng.
+        """
+        # return {left: right for left, right in self.pairs}
+        pass
+
+
+    pass
+
+#-----------------------------------------------------------------------------
+
+
 # TEMPORARY: List of all response subclasses
 # FIXME: To be replaced by auto-registration
 
@@ -3926,5 +3988,6 @@ __all__ = [
     TrueFalseResponse,
     AnnotationResponse,
     ChoiceTextResponse,
+    MatchingResponse
 ]
 # pylint: enable=invalid-all-object

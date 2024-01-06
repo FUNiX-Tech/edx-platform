@@ -5,6 +5,8 @@ from collections import OrderedDict
 from datetime import datetime
 from functools import partial
 from uuid import uuid4
+from xml.etree import ElementTree
+import random
 
 from django.conf import settings
 from django.contrib.auth.decorators import login_required
@@ -116,11 +118,12 @@ def _is_library_component_limit_reached(usage_key):
     return total_children + 1 > settings.MAX_BLOCKS_PER_CONTENT_LIBRARY
 
 
+# UFC - API để lưu dữ liệu sau khi đã chỉnh sửa giao diện xblock studio
 @require_http_methods(("DELETE", "GET", "PUT", "POST", "PATCH"))
 @login_required
 @expect_json
 def xblock_handler(request, usage_key_string=None):
-    
+
     """
     The restful handler for xblock requests.
 
@@ -175,7 +178,7 @@ def xblock_handler(request, usage_key_string=None):
     if usage_key_string:
 
         usage_key = usage_key_with_run(usage_key_string)
-        
+
         access_check = has_studio_read_access if request.method == 'GET' else has_studio_write_access
         if not access_check(request.user, usage_key.course_key):
             raise PermissionDenied()
@@ -185,7 +188,7 @@ def xblock_handler(request, usage_key_string=None):
 
             if 'application/json' in accept_header:
                 fields = request.GET.get('fields', '').split(',')
-                
+
                 if 'graderType' in fields:
                     # right now can't combine output of this w/ output of _get_module_info, but worthy goal
                     return JsonResponse(CourseGradingModel.get_section_grader_type(usage_key))
@@ -201,16 +204,514 @@ def xblock_handler(request, usage_key_string=None):
                 return HttpResponse(status=406)
 
         elif request.method == 'DELETE':
-           
+
 
             _delete_item(usage_key, request.user)
             return JsonResponse()
         else:  # Since we have a usage_key, we are updating an existing xblock.
-            
+            # UFC - Xử lý XML thành HTML khi bấm nút Save
+
+            # shuffle item right trước khi tiến hành chuyển đổi qua HTML --> chưa xử lý được
+            def shuffle_xml_items(xml_string):
+                # Phân tích cú pháp XML từ chuỗi đầu vào
+                root = ElementTree.fromstring(xml_string)
+
+                # Lọc các thẻ <item> có thuộc tính 'right'
+                items_with_right = [item for item in root.findall('.//item[@right]')]
+
+                random.shuffle(items_with_right)
+
+                new_arr_items_with_right = []
+
+                for item in items_with_right:
+
+                    new_arr_items_with_right.append((item.text, item.get('right')))
+
+                    pass
+
+
+
+                # tạo 1 mảng mới có độ dài bằng với mảng items_with_right và đánh số từ 0 -> độ dài mảng - 1
+                # indices = list(range(len(items_with_right)))
+
+                # Xáo trộn danh sách các thẻ <item> này
+                # random.shuffle(indices)
+
+
+                    # for count, value in enumerate(values):
+
+                # Duyệt qua từng <itemgroup> và thay thế các thẻ <item> có thuộc tính 'right'
+                index_indices = 0
+                # for item_group in root.findall('.//itemgroup'):
+
+                #     for idx, item in enumerate(item_group):
+                #         if item.get('right'):
+
+                #             # Lấy thẻ <item> từ items_with_right tương ứng với index hiện tại trong mảng indices
+                #             # replacement_item = items_with_right[indices[index_indices]]
+                #             item.text = items_with_right[index_indices].text
+                #             item.set('right', items_with_right[index_indices].get('right'))
+
+                #             print("index_indices", index_indices)
+                #             print("item.text", item.text)
+                #             print("item.get('right')", items_with_right[index_indices].get('right'))
+
+                #             index_indices += 1
+
+                for item in root.findall('.//item[@right]'):
+                    item.text = new_arr_items_with_right[index_indices][0]
+                    item.set('right', new_arr_items_with_right[index_indices][1])
+
+
+                    index_indices += 1
+
+                # Chuyển đổi cây XML đã chỉnh sửa thành chuỗi
+                return ElementTree.tostring(root, encoding='unicode')
+
+
+            tests_xml = '''
+                <matchingcontent>
+
+                    <itemgroup title="True">
+                        <item>Marketing Plan1</item>
+                        <item>Marketing Framework</item>
+                    </itemgroup>
+
+                    <itemgroup >
+                        <item left="left1">Mục tiêu Marketing của bạn:</item>
+                        <item right="right1">Một đối tượng giả định có các hành vi, động cơ, thói quen mua hàng của khách hàng</item>
+                    </itemgroup>
+
+                    <itemgroup >
+                        <item left="left2">Các kênh mà khách hàng của bạn sử dụng:</item>
+                        <item right="right2">Where</item>
+                    </itemgroup>
+
+                    <itemgroup >
+                        <item right="right3">Yes / No</item>
+                    </itemgroup>
+
+                </matchingcontent>
+            '''
+
+            # hàm lấy các giá trị của thuộc tính 'left' trong thẻ <item>
+            def extract_left(xml_content):
+                # Parse the XML content
+                root = ElementTree.fromstring(xml_content)
+
+                # Initialize an array for left values
+                left_arr = []
+
+                # Iterate through all item elements and extract 'left' attribute values
+                for item in root.findall('.//item[@left]'):
+                    left_arr.append(item.attrib['left'])
+
+                return left_arr
+
+            # hàm lấy các giá trị của thuộc tính 'right' trong thẻ <item>
+            def extract_right(xml_content):
+                # Parse the XML content
+                root = ElementTree.fromstring(xml_content)
+
+                # Initialize an array for right values
+                right_arr = []
+
+                # Iterate through all item elements and extract 'right' attribute values
+                for item in root.findall('.//item[@right]'):
+                    right_arr.append(item.attrib['right'])
+
+                return right_arr
+
+            if request.json.get('data'):
+                left_arr = extract_left(request.json.get('data'))
+                print("left_arr", "".join(left_arr))
+                right_arr = extract_right(request.json.get('data'))
+
+
+            # Tạo biến Css để dùng chung
+            css_option = '''
+                <style>
+                    * {
+                        padding: 0;
+                        margin: 0;
+                        box-sizing: border-box;
+                    }
+
+                    #main_matching {
+                        padding: 0;
+                        margin: 0;
+                        width: 42rem;
+                        font-size: 1rem;
+                        font-stretch: normal;
+                        font-style: normal;
+                        line-height: 1.5;
+                        letter-spacing: normal;
+                        font-family: Roboto;
+                        border: 2px solid #d7d7d7;
+                    }
+
+                    #main_matching .question_matching_content {
+                        margin-top: 1.5rem;
+                        padding: 0 2rem;
+                        font-size: 1rem;
+                        font-weight: 500;
+                        color: #2c3744;
+                        margin-bottom: 0.25rem;
+                    }
+
+                    #main_matching .sub_question_matching_content {
+                        padding: 0 2rem;
+                        font-size: 0.875rem;
+                        font-weight: normal;
+                        color: #576f8a;
+                        text-align: left;
+                        margin-bottom: 1.5rem;
+                    }
+
+                    .content_title {
+                        display: grid;
+                        grid-template-columns: 1fr 1fr;
+                        column-gap: 1rem;
+                        background-color: #e6e6e8;
+                        text-align: center;
+                    }
+
+                    #main_matching .content_title_desc {
+                        padding: 0.5rem 1rem;
+                        font-size: 1.25rem;
+                        font-weight: 500;
+                    }
+
+                    .content_container {
+                        display: grid;
+                        grid-template-columns: 1fr 1fr;
+                        justify-items: stretch;
+                        grid-gap: 0 2rem;
+                        grid-template-areas: "left right";
+                    }
+
+                    .left_content {
+                        padding: 0.5rem 1rem;
+                        font-size: 1rem;
+                        font-weight: normal;
+                        color: #2c3744;
+                    }
+
+                    .right_content {
+                        padding: 0.5rem 1rem 0.5rem 0;
+                        position: relative;
+                    }
+
+                    .right_content::before {
+                        --width_stick: 0.0625rem;
+                        content: "";
+                        position: absolute;
+                        top: 0;
+                        left: -1rem;
+                        width: var(--width_stick);
+                        height: 100%;
+                        background-color: #d9d9d9;
+                        transform: translateX(-50%);
+                    }
+
+                    .right_content_item {
+                        display: inline-block;
+                    }
+
+                    .right_content_item .btn {
+                        outline: none;
+                        border: none;
+                        background: none;
+
+
+                        display: flex;
+                        justify-content: flex-start;
+                        align-items: center;
+                        gap: 8px;
+
+                        padding: 0.5rem 1rem 0.5rem 0.25rem;
+                        color: #fff;
+                        background-color: #007ae6;
+                        border-radius: 6px;
+                        cursor: grab;
+                        transition: all 0.3s ease-in-out;
+
+                        /* New logic */
+                        user-select: none;
+                    }
+
+                    .right_content_item .btn:hover {
+                        outline: none;
+                        border: none;
+                        background: none;
+                        background-color: #025dae;
+                    }
+
+                    .left {
+                        grid-area: left;
+                    }
+
+                    .right {
+                        grid-area: right;
+                    }
+
+                    .main_content .content_container:nth-child(even) {
+                        background-color: #f6f6f7;
+                    }
+
+                    .matching_action {
+                        display: flex;
+                    }
+
+                    .submit_matching_btn {
+                        display: inline-block;
+                        margin-top: 1.5rem;
+                        margin-left: auto;
+                        margin-right: 2rem;
+                        margin-bottom: 2rem;
+                        padding: 0.5rem 1rem;
+                        background-color: #007ae6;
+                        color: #fff;
+                        border-radius: 0.375rem;
+                        font-size: 1rem;
+                        font-weight: bold;
+                        cursor: pointer;
+                    }
+
+                    .submit_matching_btn:hover {
+                        background-color: #025dae;
+                    }
+
+                    .matching_result {
+                        margin: 1.5rem 2rem 0;
+                        border-top: 1px solid #d7d7d7;
+                        padding-top: 1.5rem;
+                    }
+
+                    .matching_result_container {
+                        padding: 0.75rem 1rem;
+                        border-top-left-radius: 0.375rem;
+                        border-bottom-left-radius: 0.375rem;
+                        display: flex;
+                        flex-direction: column;
+                        gap: 0.5rem;
+                    }
+
+                    .matching_hidden {
+                        display: none;
+                    }
+
+                    .success_result {
+                        background-color: #F2FFEE;
+                        border-left: 2px solid #5AA447;
+                    }
+
+                    .error_result {
+                        background-color: #FFF1F1;
+                        border-left: 2px solid #D82C0D;
+                    }
+
+                </style>
+
+            '''
+
+            # thẻ script để xử lý drag and drop
+            script_option = '''
+                <script type="text/javascript">
+                    const rightItem = document.querySelectorAll(".right_content_item");
+                    const rightItemBtn = document.querySelectorAll(".right_content_item .btn");
+                    let draggedItem = null;
+
+                    rightItemBtn.forEach(function(btn) {
+                        btn.addEventListener("dragstart", function (e) {
+                            draggedItem = btn.innerHTML;
+                        });
+
+                        btn.addEventListener("dragend", function (e) {
+                            btn.innerHTML = draggedItem;
+                            draggedItem = null;
+                        });
+                    });
+
+                    rightItem.forEach( function(item) {
+                        item.addEventListener("dragover", function (e) {
+                            e.preventDefault();
+                        });
+
+                        item.addEventListener("drop", function (e) {
+                            e.preventDefault();
+                            const cloneItem = item.querySelector(".btn").innerHTML;
+
+                            item.querySelector(".btn").innerHTML = draggedItem;
+
+                            draggedItem = cloneItem;
+                        });
+                    });
+
+                    const submitHandler = function() {
+                        console.log("submitHandler");
+
+                        const divElement = document.querySelector('.main_content');
+                        const dataRmain = divElement.getAttribute('data-rmain');
+                        const newArr = JSON.parse(JSON.stringify(dataRmain));
+
+                        console.log("Answer", newArr);
+
+                        let dataResultElements = document.querySelectorAll('[data-result]');
+                        console.log("dataResultElements", dataResultElements);
+
+                        let dataResults = Array.prototype.map.call(dataResultElements, function(elem) {
+                            return parseInt(elem.getAttribute('data-result').replace('right', ''), 10);
+                        });
+                        console.log("dataResults", dataResults);
+
+
+                        if (dataResults[0] == 1) {
+                            console.log("dataResults[0]", dataResults[0]);
+                            const matchingResult = document.querySelector('.matching_result');
+                            matchingResult.classList.remove('matching_hidden');
+
+                            const matchingResultContainer = document.querySelector('.matching_result_container');
+                            matchingResultContainer.classList.remove('error_result');
+                            matchingResultContainer.classList.add('success_result');
+
+                            const matchingResultTitle = document.querySelector('.matching_result_title');
+                            matchingResultTitle.innerHTML = "Bạn đã trả lời đúng";
+                        }else {
+                            const matchingResult = document.querySelector('.matching_result');
+                            matchingResult.classList.remove('matching_hidden');
+
+                            const matchingResultContainer = document.querySelector('.matching_result_container');
+                            matchingResultContainer.classList.remove('success_result');
+                            matchingResultContainer.classList.add('error_result');
+                            const matchingResultTitle = document.querySelector('.matching_result_title');
+                            matchingResultTitle.innerHTML = "Bạn đã trả lời sai";
+
+                        }
+                    }
+                    const submitBtn = document.querySelector(".submit_matching_btn");
+
+                    submitBtn.addEventListener("click", submitHandler);
+                </script>
+            '''
+
+            # HTML template nut submit
+            submit_btn = '''
+                <div class="matching_action">
+                    <div class="submit_matching_btn">Trả lời</div>
+                </div>
+            '''
+
+            # HTML template result
+            result_html = '''
+                <div class="matching_result matching_hidden">
+                    <div class="matching_result_container error_result">
+                        <div class="matching_result_title">Bạn đã trả lời đúng</div>
+                        <div class="matching_result_content">
+                            Lorem ipsum dolor sit amet consectetur. Vulputate nibh nisl accumsan ornare vestibulum tempus sit sagittis.
+                        </div>
+                    </div>
+                </div>
+            '''
+
+            # Hàm chuyển đổi XML thành HTML template mong muốn
+            def convert_element_xml_to_html(xml_content):
+                root = ElementTree.fromstring(xml_content)
+
+                def process_element(element):
+                    # thẻ 'problem' bọc ngoài cùng sẽ thành div và dính kèm file css chung
+                    if element.tag == 'problem':
+                        # return '<div >\n' + css_option + process_children(element) + script_option + '</div>'
+                        return '<div >\n' + css_option + process_children(element) + '</div>'
+
+
+                    # thẻ 'matchingresponse' sẽ thành <div> có id="main_matching, kèm theo thẻ result_html, submit_btn bọc ở trong
+                    elif element.tag == 'matchingresponse':
+                        # return f'''<div id="main_matching">
+                        #             {process_children(element)}
+                        #         </div>'''
+                        return '<div id="main_matching">\n' + process_children(element) + result_html + submit_btn + '</div>\n'
+
+                    # thẻ 'h3' hoặc thẻ 'div' có thuộc tính question_matching="True" sẽ thành <h3> hoặc <div> có class="question_matching_content"
+                    elif element.tag == 'div' and element.get('question_matching') == 'True':
+                        return f'<div class="question_matching_content">{element.text}</div>'
+                    elif element.tag == 'h3' and element.get('question_matching') == 'True':
+                        return f'<h3 class="question_matching_content">{element.text}</h3>'
+
+                    # thẻ 'p' hoặc thẻ 'div' có thuộc tính sub_question_matching="True" sẽ thành <p> hoặc <div> có class="sub_question_matching_content"
+                    elif element.tag == 'div' and element.get('sub_question_matching') == 'True':
+                        return f'<div class="sub_question_matching_content">{element.text}</div>'
+                    elif element.tag == 'p' and element.get('sub_question_matching') == 'True':
+                        return f'<p class="sub_question_matching_content">{element.text}</p>'
+
+                    # thẻ 'matchingcontent' sẽ thành <div> có class="main_content"
+                    elif element.tag == 'matchingcontent':
+                        return f'<div class="main_content" data-rmain="{"".join(left_arr)}">{process_children(element)}</div>'
+
+                    # thẻ 'itemgroup' có thuộc tính title="True" sẽ thành <div> có class="content_title"
+                    # thẻ 'itemgroup' không có thuộc tính title="True" sẽ thành <div> có class="content_container"
+                    elif element.tag == 'itemgroup':
+                        if element.get('title') == 'True':
+                            return f'<div class="content_title">{process_children(element)}</div>'
+                        else:
+                            return f'<div class="content_container">{process_children(element)}</div>'
+
+                    ###
+                    # thẻ 'item' có thuộc tính left="True" sẽ thành <div> có class="left left_content"
+                    # thẻ 'item' có thuộc tính right="True" sẽ thành <div> có class="right right_content" kèm theo thẻ svg bọc ở trong
+                    ###
+                    elif element.tag == 'item':
+                        if element.get('left'):
+                            return f'<div class="left left_content">{element.text}</div>'
+                        elif element.get('right'):
+                            # Lấy giá trị của thuộc tính 'right'
+                            right_value = element.get('right')
+
+                            return f'''
+                                <div class="right right_content">
+                                    <div class="right_content_item">
+                                        <div class="btn" draggable="true" >
+                                            <img src='https://svgshare.com/i/118B.svg' alt='Icon_Drag' data-result="{right_value}"/>
+                                            {element.text}
+                                        </div>
+                                    </div>
+                                </div>'''
+
+                        # thẻ 'item' không có thuộc tính left/right sẽ thành <p> có class="content_title_desc"
+                        else:
+                            return f'<div class="content_title_desc">{element.text}</div>'
+                    return ''
+
+                def process_children(element):
+                    children_html = ''.join(process_element(child) for child in element)
+
+                    return children_html
+
+                return process_element(root)
+
+
+            # UFC - in biến để xử lý lỗi chỗ Puclished
+            # Chuyển đổi phần tử gốc (matchingresponse) thành HTML
+            if request.json.get('data'):
+                root = ElementTree.fromstring(request.json.get('data'))
+                if root.find('.//matchingresponse') is not None:
+                    new_data_html = convert_element_xml_to_html(request.json.get('data'))
+
+                else:
+                    new_data_html = request.json.get('data')
+
+                # shuffle_xml = shuffle_xml_items(request.json.get('data'))
+                # print("shuffle_xml", shuffle_xml)
+            else:
+                new_data_html = request.json.get('data')
+
+            # UFC - Chỗ này xử lý lưu lại dữ liệu giao diện
             return _save_xblock(
                 request.user,
                 _get_xblock(usage_key, request.user),
-                data=request.json.get('data'),
+                # data=request.json.get('data'),
+                data = new_data_html,
+
                 children_strings=request.json.get('children'),
                 metadata=request.json.get('metadata'),
                 nullout=request.json.get('nullout'),
@@ -223,9 +724,9 @@ def xblock_handler(request, usage_key_string=None):
                 fields=request.json.get('fields'),
             )
     elif request.method in ('PUT', 'POST'):
-        
+
         if 'duplicate_source_locator' in request.json:
-            
+
             parent_usage_key = usage_key_with_run(request.json['parent_locator'])
             duplicate_source_usage_key = usage_key_with_run(request.json['duplicate_source_locator'])
 
@@ -248,7 +749,7 @@ def xblock_handler(request, usage_key_string=None):
                     },
                     status=400
                 )
-            
+
             dest_usage_key = _duplicate_item(
                 parent_usage_key,
                 duplicate_source_usage_key,
@@ -260,7 +761,7 @@ def xblock_handler(request, usage_key_string=None):
                 'courseKey': str(dest_usage_key.course_key)
             })
         else:
-            
+
             return _create_item(request)
     elif request.method == 'PATCH':
         if 'move_source_locator' in request.json:
@@ -335,7 +836,7 @@ class StudioEditModuleRuntime:
                 return LibraryToolsService(modulestore(), self._user.id)
         return None
 
-
+# UFC - có thể là nơi xử lý API để render giao diện xblock studio
 @require_http_methods("GET")
 @login_required
 @expect_json
@@ -360,7 +861,7 @@ def xblock_view_handler(request, usage_key_string, view_name):
         container_views = ['container_preview', 'reorderable_container_child_preview', 'container_child_preview']
 
         # wrap the generated fragment in the xmodule_editor div so that the javascript
-        # can bind to it correctly
+        # can bind to it correctly UFC - xblock.render(view_name)
         xblock.runtime.wrappers.append(partial(
             wrap_xblock,
             'StudioRuntime',
@@ -381,7 +882,9 @@ def xblock_view_handler(request, usage_key_string, view_name):
                 xblock.xmodule_runtime = StudioEditModuleRuntime(request.user)
 
             try:
+                # UFC - Chỗ này là nơi khi bấm nút Edit sẽ chạy vào code này
                 fragment = xblock.render(view_name)
+
             # catch exceptions indiscriminately, since after this point they escape the
             # dungeon and surface as uneditable, unsaveable, and undeletable
             # component-goblins.
@@ -435,6 +938,7 @@ def xblock_view_handler(request, usage_key_string, view_name):
                 'force_render': force_render,
                 'item_url': '/container/{usage_key}',
             })
+            # UFC - Chỗ này là nơi khi refresh lại trang hoặc bấm nút Save sẽ chạy vào code này
             fragment = get_preview_fragment(request, xblock, context)
 
             # Note that the container view recursively adds headers into the preview fragment,
@@ -463,7 +967,8 @@ def xblock_view_handler(request, usage_key_string, view_name):
 
         return JsonResponse({
             'html': fragment_content,
-            'resources': list(hashed_resources.items())
+            'resources': list(hashed_resources.items()),
+            'test_html_render': fragment.content
         })
 
     else:
@@ -524,7 +1029,7 @@ def xblock_container_handler(request, usage_key_string):
 
 
 def _update_with_callback(xblock, user, old_metadata=None, old_content=None):
-  
+
     """
     Updates the xblock in the modulestore.
     But before doing so, it calls the xblock's editor_saved callback function.
@@ -536,11 +1041,11 @@ def _update_with_callback(xblock, user, old_metadata=None, old_content=None):
             old_content = xblock.get_explicitly_set_fields_by_scope(Scope.content)
         xblock.xmodule_runtime = StudioEditModuleRuntime(user)
         xblock.editor_saved(user, old_metadata, old_content)
-    
+
     # Update after the callback so any changes made in the callback will get persisted.
     return modulestore().update_item(xblock, user.id)
 
-
+# UFC - có thẻ chỗ này xử lý answer_base
 def _save_xblock(user, xblock, data=None, children_strings=None, metadata=None, nullout=None,  # lint-amnesty, pylint: disable=too-many-statements
                  grader_type=None, is_prereq=None, prereq_usage_key=None, prereq_min_score=None,
                  prereq_min_completion=None, publish=None, fields=None):
@@ -550,11 +1055,11 @@ def _save_xblock(user, xblock, data=None, children_strings=None, metadata=None, 
     to default).
 
     """
-    
+
     store = modulestore()
     # Perform all xblock changes within a (single-versioned) transaction
     with store.bulk_operations(xblock.location.course_key):
-        
+
         # Don't allow updating an xblock and discarding changes in a single operation (unsupported by UI).
         if publish == "discard_changes":
             store.revert_to_published(xblock.location, user.id)
@@ -564,13 +1069,13 @@ def _save_xblock(user, xblock, data=None, children_strings=None, metadata=None, 
 
         old_metadata = own_metadata(xblock)
         old_content = xblock.get_explicitly_set_fields_by_scope(Scope.content)
-    
+
         if data:
             # TODO Allow any scope.content fields not just "data" (exactly like the get below this)
             xblock.data = data
         else:
             data = old_content['data'] if 'data' in old_content else None
-            
+
 
         if fields:
             for field_name in fields:
@@ -607,7 +1112,7 @@ def _save_xblock(user, xblock, data=None, children_strings=None, metadata=None, 
             # into another parent, then that child would have been deleted from this parent on the server. However,
             # this is error could occur in modulestores (such as Draft) that do not support atomic write-transactions
             old_children = set(xblock.children) - set(children)
-            
+
             if any(
                     store.get_parent_location(old_child) == xblock.location
                     for old_child in old_children
@@ -647,10 +1152,10 @@ def _save_xblock(user, xblock, data=None, children_strings=None, metadata=None, 
 
                         field.write_to(xblock, value)
         validate_and_update_xblock_due_date(xblock)
-       
+
         # update the xblock and call any xblock callbacks
         xblock = _update_with_callback(xblock, user, old_metadata, old_content)
-        
+
         # for static tabs, their containing course also records their display name
         course = store.get_course(xblock.location.course_key)
         if xblock.location.block_type == 'static_tab':
@@ -765,7 +1270,7 @@ def _create_item(request):
 @login_required
 @expect_json
 def create_item_import (request,parent_locator, category,display_name=None , boilerplate=None):
-   
+
     usage_key = usage_key_with_run(parent_locator)
     # print('=============',category,display_name )
     created_block = create_xblock(
@@ -777,7 +1282,7 @@ def create_item_import (request,parent_locator, category,display_name=None , boi
     )
 
     return created_block
-    
+
 
 
 
