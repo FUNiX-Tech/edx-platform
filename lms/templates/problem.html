@@ -556,19 +556,24 @@ from openedx.core.djangolib.markup import HTML
       ev.preventDefault();
   }
 
-  function drag(ev, parentId) {
-    console.log(parentId)
+  function drag(ev, parentEle) {
+    console.log(parentEle)
     ev.dataTransfer.setData("eleId", ev.currentTarget.id);
   }
 
-  function drop(ev, parentId) {
+  function drop(ev, parentEle) {
       ev.preventDefault();
-      console.log(parentId)
+
       var fromId = ev.dataTransfer.getData("eleId");
 
       var targetHtml = ev.currentTarget.innerHTML;
       var fromEle = document.getElementById(fromId);
       var fromHtml = fromEle.innerHTML;
+
+      ## Prevent drag drop lộn qua bài matching problem khác
+      if (!parentEle.contains(fromEle)) {
+        return
+      }
 
 
       ev.currentTarget.innerHTML = '';
