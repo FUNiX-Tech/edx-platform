@@ -1876,6 +1876,7 @@ class MatchingGroup(InputTypeBase):
     @staticmethod
     def extract_matching_items(element, i18n, text_only=False, value=None):
         student_answer = {}
+
         if value: 
             for answer_item in list(map(lambda item: item.split('+'), value)):
                 student_answer[answer_item[0]] = answer_item[1]
@@ -1903,6 +1904,7 @@ class MatchingGroup(InputTypeBase):
                 matching_items.append((mitem.get("name"), mitem.get('pos')))
         i = 0
         for ritem in right_items: 
+            # Nếu student đã submit thì sort lại  
             if student_answer:
                 left_name = left_items[i][0]
                 right_name = student_answer.get(left_name)
@@ -1913,25 +1915,8 @@ class MatchingGroup(InputTypeBase):
 
             i += 1
 
+        # Nếu student chưa submit thì suffle
         if not value:
-            print('should suffle')
-            print('should suffle')
-            print('should suffle')
-            print('should suffle')
-            print('should suffle')
-            print('should suffle')
-            print('should suffle')
-            print('should suffle')
-            print('should suffle')
-            print('should suffle')
-            print('should suffle')
-            print('should suffle')
-            print('should suffle')
-            print('should suffle')
-            print('should suffle')
-            print('should suffle')
-            print('should suffle')
-            print('should suffle')
             macthingitems = MatchingGroup.do_suffle(macthingitems)
 
         return [matching_items, left_items, right_items, macthingitems]
@@ -1953,9 +1938,6 @@ class MatchingGroup(InputTypeBase):
 
         for left_item, right_item in matchingitems: 
             remain_right_items_other = list(filter(lambda item: item[2] != right_item[2], remain_right_items))
-            print('-----------------------------------------------')
-            print('remail other',len(remain_right_items_other))
-            print('remain', len(remain_right_items))
             if len(remain_right_items_other) == 1:
                 new_right_item = remain_right_items_other[0]
             elif len(remain_right_items_other) == 0: 
