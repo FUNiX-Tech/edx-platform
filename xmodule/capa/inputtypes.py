@@ -46,6 +46,7 @@ import shlex  # for splitting quoted strings
 import sys
 import time
 from datetime import datetime
+import random
 
 import bleach
 import html5lib
@@ -1911,6 +1912,28 @@ class MatchingGroup(InputTypeBase):
                 macthingitems.append((left_items[i], ritem))
 
             i += 1
+
+        if not value:
+            print('should suffle')
+            print('should suffle')
+            print('should suffle')
+            print('should suffle')
+            print('should suffle')
+            print('should suffle')
+            print('should suffle')
+            print('should suffle')
+            print('should suffle')
+            print('should suffle')
+            print('should suffle')
+            print('should suffle')
+            print('should suffle')
+            print('should suffle')
+            print('should suffle')
+            print('should suffle')
+            print('should suffle')
+            print('should suffle')
+            macthingitems = MatchingGroup.do_suffle(macthingitems)
+
         return [matching_items, left_items, right_items, macthingitems]
 
     def get_user_visible_answer(self, internal_answer):
@@ -1918,3 +1941,31 @@ class MatchingGroup(InputTypeBase):
             return self._matching_items_map[internal_answer]
 
         return [self._matching_items_map[i] for i in internal_answer]
+    
+    @staticmethod
+    def do_suffle(matchingitems):
+        # matchingitems: [(left_item, right_item)]
+        # left_item, right_item: (name, text, matchingvalue)
+        # keep left items order
+
+        remain_right_items = list(map(lambda items: items[1], matchingitems))
+        suffled = []
+
+        for left_item, right_item in matchingitems: 
+            remain_right_items_other = list(filter(lambda item: item[2] != right_item[2], remain_right_items))
+            print('-----------------------------------------------')
+            print('remail other',len(remain_right_items_other))
+            print('remain', len(remain_right_items))
+            if len(remain_right_items_other) == 1:
+                new_right_item = remain_right_items_other[0]
+            elif len(remain_right_items_other) == 0: 
+                new_right_item = remain_right_items[0]
+            else:
+                new_right_item = remain_right_items_other[random.randint(0, len(remain_right_items_other) - 1)]
+
+            remain_right_items = list(filter(lambda item: item[0] != new_right_item[0], remain_right_items))
+            suffled.append((left_item, new_right_item))
+        
+        return suffled
+
+
