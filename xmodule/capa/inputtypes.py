@@ -1915,9 +1915,9 @@ class MatchingGroup(InputTypeBase):
 
             i += 1
 
-        # Nếu student chưa submit thì suffle
+        # Nếu student chưa submit thì shuffle
         if not value:
-            macthingitems = MatchingGroup.do_suffle(macthingitems)
+            macthingitems = MatchingGroup.do_shuffle(macthingitems)
 
         return [matching_items, left_items, right_items, macthingitems]
 
@@ -1928,13 +1928,13 @@ class MatchingGroup(InputTypeBase):
         return [self._matching_items_map[i] for i in internal_answer]
     
     @staticmethod
-    def do_suffle(matchingitems):
+    def do_shuffle(matchingitems):
         # matchingitems: [(left_item, right_item)]
         # left_item, right_item: (name, text, matchingvalue)
         # keep left items order
 
         remain_right_items = list(map(lambda items: items[1], matchingitems))
-        suffled = []
+        shuffled = []
 
         for left_item, right_item in matchingitems: 
             remain_right_items_other = list(filter(lambda item: item[2] != right_item[2], remain_right_items))
@@ -1946,8 +1946,8 @@ class MatchingGroup(InputTypeBase):
                 new_right_item = remain_right_items_other[random.randint(0, len(remain_right_items_other) - 1)]
 
             remain_right_items = list(filter(lambda item: item[0] != new_right_item[0], remain_right_items))
-            suffled.append((left_item, new_right_item))
+            shuffled.append((left_item, new_right_item))
         
-        return suffled
+        return shuffled
 
 
