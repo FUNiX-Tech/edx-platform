@@ -732,14 +732,14 @@ def _serialize_discussion_entities(request, context, discussion_entities, reques
     usernames = []
     include_profile_image = _include_profile_image(requested_fields)
     for entity in discussion_entities:
-        print('=======entity========', entity)
+        # print('=======entity========', entity)
         if discussion_entity_type == DiscussionEntity.thread:
             serialized_entity = ThreadSerializer(entity, context=context).data
-            print('=========serialized_entity============' , serialized_entity)
+            # print('=========serialized_entity============' , serialized_entity)
         elif discussion_entity_type == DiscussionEntity.comment:
             serialized_entity = CommentSerializer(entity, context=context).data
         results.append(serialized_entity)
-        print('==========results==========', results)
+        # print('==========results==========', results)
 
         if include_profile_image:
             if serialized_entity['author'] and serialized_entity['author'] not in usernames:

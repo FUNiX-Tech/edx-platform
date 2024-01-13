@@ -62,6 +62,7 @@ class Thread(models.Model):
 
         if query_params.get('text'):
             url = cls.url(action='search')
+
         else:
             url = cls.url(action='get_all', params=utils.extract(params, 'commentable_id'))
             if params.get('commentable_id'):
@@ -74,6 +75,7 @@ class Thread(models.Model):
             metric_action='thread.search',
             paged_results=True
         )
+        print('===========response=============', response)
         if query_params.get('text'):
             search_query = query_params['text']
             course_id = query_params['course_id']
@@ -105,7 +107,7 @@ class Thread(models.Model):
                     total_results=total_results
                 )
             )
-
+        
         return utils.CommentClientPaginatedResult(
             collection=response.get('collection', []),
             page=response.get('page', 1),
