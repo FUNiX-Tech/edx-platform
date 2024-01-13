@@ -905,7 +905,9 @@ def get_thread_list(
         query_params["course_id"] = str(course.id)
         query_params["commentable_ids"] = ",".join(topic_id_list) if topic_id_list else None
         query_params["text"] = text_search
+        print('===========text_search=============', text_search)
         paginated_results = Thread.search(query_params)
+        print('=============paginated_results====================', paginated_results)
     # The comments service returns the last page of results if the requested
     # page is beyond the last page, but we want be consistent with DRF's general
     # behavior and return a PageNotFoundError in that case
@@ -915,6 +917,7 @@ def get_thread_list(
     results = _serialize_discussion_entities(
         request, context, paginated_results.collection, requested_fields, DiscussionEntity.thread
     )
+    print('=================results=============', results)
 
     paginator = DiscussionAPIPagination(
         request,
