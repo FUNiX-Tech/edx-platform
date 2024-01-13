@@ -74,6 +74,7 @@ def perform_request(method, url, data_or_params=None, raw=False,
     print('============method=============', method)
     print('==============url===========', url)
     print('===============data==========', data)
+    print('===============params==========', params)
 
     metric_tags.append(f'status_code:{response.status_code}')
     status_code = int(response.status_code)
