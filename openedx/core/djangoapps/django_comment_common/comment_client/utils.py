@@ -70,6 +70,7 @@ def perform_request(method, url, data_or_params=None, raw=False,
         headers=headers,
         timeout=config.connection_timeout
     )
+    print('=======response=============', response)
 
     metric_tags.append(f'status_code:{response.status_code}')
     status_code = int(response.status_code)

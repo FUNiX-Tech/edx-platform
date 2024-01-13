@@ -75,7 +75,7 @@ class Thread(models.Model):
             metric_action='thread.search',
             paged_results=True
         )
-        print('===========response=============', response)
+        # print('===========response=============', response)
         if query_params.get('text'):
             search_query = query_params['text']
             course_id = query_params['course_id']
