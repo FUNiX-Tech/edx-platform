@@ -732,11 +732,14 @@ def _serialize_discussion_entities(request, context, discussion_entities, reques
     usernames = []
     include_profile_image = _include_profile_image(requested_fields)
     for entity in discussion_entities:
+        print('=======entity========', entity)
         if discussion_entity_type == DiscussionEntity.thread:
             serialized_entity = ThreadSerializer(entity, context=context).data
+            print('=========serialized_entity============' , serialized_entity)
         elif discussion_entity_type == DiscussionEntity.comment:
             serialized_entity = CommentSerializer(entity, context=context).data
         results.append(serialized_entity)
+        print('==========results==========', results)
 
         if include_profile_image:
             if serialized_entity['author'] and serialized_entity['author'] not in usernames:
@@ -907,7 +910,7 @@ def get_thread_list(
         query_params["text"] = text_search
         print('===========text_search=============', text_search)
         paginated_results = Thread.search(query_params)
-        print('=============paginated_results====================', paginated_results)
+        # print('=============paginated_results====================', paginated_results)
     # The comments service returns the last page of results if the requested
     # page is beyond the last page, but we want be consistent with DRF's general
     # behavior and return a PageNotFoundError in that case
@@ -917,7 +920,7 @@ def get_thread_list(
     results = _serialize_discussion_entities(
         request, context, paginated_results.collection, requested_fields, DiscussionEntity.thread
     )
-    print('=================results=============', results)
+    # print('=================results=============', results)
 
     paginator = DiscussionAPIPagination(
         request,
