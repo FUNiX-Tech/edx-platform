@@ -543,6 +543,7 @@ def component_handler(request, usage_key_string, handler, suffix=''):
 
     if handler == 'submit_studio_edits' and not has_course_author_access(request.user, usage_key.course_key):
         raise PermissionDenied("No studio write Permissions")
+        
     # Let the module handle the AJAX
     req = django_to_webob_request(request)
 
