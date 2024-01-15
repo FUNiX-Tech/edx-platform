@@ -132,7 +132,7 @@
           Disable visual aid on borderless table.
            */
           visual: false,
-          plugins: "lists, link, image, codemirror",
+          plugins: "lists, link, image, codemirror, table",
           codemirror: {
             path: baseUrl + "js/vendor",
             disableFilesMerge: true,
@@ -145,7 +145,7 @@
           /*
           We may want to add "styleselect" when we collect all styles used throughout the LMS
            */
-          toolbar: "formatselect fontselect bold italic underline forecolor wrapAsCode " +
+          toolbar: "formatselect fontselect bold italic underline forecolor table wrapAsCode " +
             "alignleft aligncenter alignright alignjustify " +
             "bullist numlist outdent indent blockquote link unlink " +
             ((this.new_image_modal ? 'insertImage' : 'image') + " code"),
@@ -163,6 +163,8 @@
           height: '435px',
           menubar: false,
           statusbar: false,
+
+          table_toolbar: 'tableprops tabledelete | tableinsertrowbefore tableinsertrowafter tabledeleterow | tableinsertcolbefore tableinsertcolafter tabledeletecol',
 
           /*
           Necessary to avoid stripping of style tags.
