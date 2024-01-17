@@ -577,7 +577,6 @@ class LearnerDashboardSerializer(serializers.Serializer):
             course['lastHistoryCourse'] = date_last_history_course 
         
         courses.sort(key=lambda x: (x['lastHistoryCourse'] is not None, x['lastHistoryCourse']), reverse=True)
-
         
         
         return courses
