@@ -6,7 +6,7 @@ Utility functions for setting "logged in" cookies used by subdomains.
 import json
 import logging
 import time
-
+from datetime import datetime, timedelta
 from django.conf import settings
 from django.contrib.auth.models import User  # lint-amnesty, pylint: disable=imported-auth-user
 from django.dispatch import Signal
@@ -171,7 +171,10 @@ def set_logged_in_cookies(request, response, user):
         
         accessToken = AccessToken.objects.filter(user_id=request.user.id).last()
         cookie_settings['httponly'] = False
-        response.set_cookie('accessToken' , accessToken , **cookie_settings )
+        cookie_settings['max_age'] = '120960000'
+        print('===============', cookie_settings)
+
+        response.set_cookie('accessToken' , accessToken ,  **cookie_settings)
 
     return response
 
