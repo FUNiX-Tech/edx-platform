@@ -171,10 +171,10 @@ def set_logged_in_cookies(request, response, user):
         
         accessToken = AccessToken.objects.filter(user_id=request.user.id).last()
         cookie_settings['httponly'] = False
-        cookie_settings['max_age'] = '120960000'
-        print('===============', cookie_settings)
+        # cookie_settings['max_age'] = '120960000'
+        # print('===============', cookie_settings)
 
-        response.set_cookie('accessToken' , accessToken ,  **cookie_settings)
+        response.set_cookie('accessToken' , accessToken , domain=cookie_settings['domain'] , path='/' , httponly=False, expires=cookie_settings['expires'], max_age='1209600' , secure=False)
 
     return response
 
