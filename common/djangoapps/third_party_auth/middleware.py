@@ -31,7 +31,7 @@ class ExceptionMiddleware(SocialAuthExceptionMiddleware, MiddlewareMixin):
         # Check if we have an auth entry key we can use instead
         if auth_entry and auth_entry in pipeline.AUTH_DISPATCH_URLS:
             redirect_uri = pipeline.AUTH_DISPATCH_URLS[auth_entry]
-
+        print('=================', redirect_uri)
         return redirect_uri
 
     def process_exception(self, request, exception):

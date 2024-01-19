@@ -176,7 +176,7 @@ def account_settings_context(request):
             # We only want to include providers if they are either currently available to be logged
             # in with, or if the user is already authenticated with them.
         } for state in auth_states if state.provider.display_for_login or state.has_account]
-
+    print('=====context==========', context)
     return context
 
 

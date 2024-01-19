@@ -402,6 +402,7 @@ def get_login_url(provider_id, auth_entry, redirect_url=None):
     Raises:
         ValueError: if no provider is enabled with the given provider_id.
     """
+    print('============get_login_url==============')
     assert auth_entry in _AUTH_ENTRY_CHOICES
     enabled_provider = _get_enabled_provider(provider_id)
     return _get_url(
