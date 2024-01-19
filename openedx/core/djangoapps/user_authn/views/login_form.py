@@ -153,7 +153,7 @@ def login_and_registration_form(request, initial_mode="login"):
     #  since Django's SessionAuthentication middleware auto-updates session cookies but not
     #  the other login-related cookies. See ARCH-282 and ARCHBOM-1718
     if request.user.is_authenticated:
-        response = redirect(redirect_to)
+        response = redirect('/dashboard')
         response = set_logged_in_cookies(request, response, request.user)
         return response
 
