@@ -410,6 +410,7 @@ class ThirdPartyAuthUserStatusView(APIView):
         }
         ```
         """
+        print('===============google===============')
         tpa_states = []
         for state in pipeline.get_provider_user_states(request.user):
             # We only want to include providers if they are either currently available to be logged
@@ -432,5 +433,5 @@ class ThirdPartyAuthUserStatusView(APIView):
                     # information for this provider from their edX account.
                     'disconnect_url': pipeline.get_disconnect_url(state.provider.provider_id, state.association_id),
                 })
-
+        print('=========================', tpa_states)
         return Response(tpa_states)
