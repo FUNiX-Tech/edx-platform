@@ -116,6 +116,9 @@ from openedx.core.djangolib.markup import HTML
   color : #2C3744 !important;
   padding-bottom: 10px;
 }
+.wrapper-problem-response{
+  position: relative
+}
 
 .wrapper-problem-response  fieldset{
   padding:20px 0px;
@@ -373,6 +376,15 @@ from openedx.core.djangolib.markup import HTML
 
     .hidden_matching_btn {
         display: none !important;
+    }
+
+    .bg-quiz-success{
+      position:absolute;
+      top:0px;
+      left:0px;
+      width:100%;
+      height:100%;
+      z-index:99;
     }
 
 </style>
@@ -658,6 +670,10 @@ from openedx.core.djangolib.markup import HTML
             spanElement.classList.add('err-number-qusetion')
           } else if (matchingSucces){
             spanElement.classList.add('submitted-question')
+
+            const devElement = document.createElement('div');
+            devElement.classList.add('bg-quiz-success')
+            problemList[i].appendChild(devElement)
           }
         }
 
@@ -686,8 +702,6 @@ from openedx.core.djangolib.markup import HTML
           spanElement.classList.add('active-number')
 
           if (submittedInput && incorrectLabel) {
-            console.log("spanElement i = 0", spanElement)
-            console.log("resultMatching i = 0", resultMatchingCorrect)
             btnSubmit.style.display = 'none';
             btnNext.style.display = 'block';
             spanElement.classList.add('submitted-question');
@@ -702,15 +716,11 @@ from openedx.core.djangolib.markup import HTML
           } else if (resultMatchingIncorrect) {
             spanElement.classList.add('err-number-qusetion');
           }
-
-
         } else {
 
             // console.log("resultMatching i != 0", resultMatching)
             const resultMatchingCorrect = problemList[i].querySelector('.matching_result_container.success_result')
             const resultMatchingIncorrect = problemList[i].querySelector('.matching_result_container.error_result')
-
-
             if (submittedInput && incorrectLabel) {
           spanElement.classList.add('submitted-question');
           btnSubmit.style.display = 'none';
@@ -743,6 +753,13 @@ from openedx.core.djangolib.markup import HTML
         });
 
 
+     
+        if ( submittedInput && incorrectLabel ){
+          const devElement = document.createElement('div');
+          devElement.classList.add('bg-quiz-success')
+          problemList[i].appendChild(devElement)
+         
+        }
 
 
       }
@@ -797,6 +814,7 @@ from openedx.core.djangolib.markup import HTML
         return 
       }
       if (problemElement) {
+        console.log('============', problemElement)
         const titleElement = problemElement.querySelector('.explanation-title');
         if (titleElement) {
           titleElement.textContent = 'Bạn đã trả lời đúng';
@@ -966,15 +984,15 @@ from openedx.core.djangolib.markup import HTML
         });
 
         btn.addEventListener("dragend", function (e) {
-            console.log("dragend", btn);
+           
             btn.innerHTML = draggedItem;
             draggedItem = null;
 
             const inputName = btn.dataset.inputName
-            console.log("inputName", inputName);
+           
 
             const imgEle = document.querySelectorAll(`img[data-right-result]`);
-            console.log("imgEle", imgEle);
+           
             const imgValue = [];
             imgEle.forEach(function(img) {
 
@@ -984,10 +1002,10 @@ from openedx.core.djangolib.markup import HTML
                 }
 
             });
-            console.log("imgValue", imgValue);
+           
 
             const inputEle = document.querySelectorAll(`input[data-left-value]`);
-            console.log("inputEle", inputEle);
+            
 
             const inputValue = [];
             let i = 0;
