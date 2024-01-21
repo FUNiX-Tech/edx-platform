@@ -37,7 +37,7 @@ class ResetUserPasswordFromPortalAPIView(APIView):
         Update user password
 
     **Example Request**
-        POST http://localhost:18000/api/funix_portal/user/update_password
+        POST http://localhost:18000/api/v2/funix_portal/user/update_password
         Content-Type: application/json
 
         {
