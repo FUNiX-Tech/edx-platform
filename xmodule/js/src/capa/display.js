@@ -29,6 +29,11 @@
             this.submit_btn_qz = function(){
                 return Problem.prototype.submit_qz.apply(that, arguments);
               };
+            this.submit_btn_mc = function (){
+     
+                return Problem.prototype.submit_btn_mc.apply(that, arguments);
+              }
+
             this.hint_button = function () {
   
                 return Problem.prototype.hint_button.apply(that, arguments);
@@ -186,6 +191,8 @@
             this.nextButton.click(this.next_btn)
             this.submitBtnQz = this.$('.action .btn-submit-qz')
             this.submitBtnQz.click(this.submit_btn_qz)
+            this.submitBtnMc = this.$('.action .matching_quiz_custom')
+            this.submitBtnMc.click(this.submit_btn_mc);
 
             this.resetButton = this.$('.action .reset');
             this.resetButton.click(this.reset);
@@ -649,13 +656,51 @@
             }
         };
         // problem quizz
+
+        Problem.prototype.submit_btn_mc = function (){
+            var that = this;
+            var listQz = that.$('.wrapper-problem-response');
+         
+            return $.postWithPrefix('' + this.url + '/problem_check', that.answers, function (response) {
+              if (response.success === 'submitted' || response.success === 'incorrect' || response.success === 'correct') {
+                var problemQuestionNumbers = that.$('.problem-question-number');
+                var parsedHTML = $(response.contents);
+                var listProblemParsed = parsedHTML.find('.wrapper-problem-response');
+                var matchingQuizParsed = listProblemParsed[currentIndex]
+                var matchingResultParsed = $(listProblemParsed[currentIndex]).find('.matching_result')
+    
+                var matchingGroup = $(listQz[currentIndex]).find('.matchinggroup');
+                var matchingQuiz = $(listQz[currentIndex]).find('.matching_result');
+                matchingQuiz.remove()
+                matchingGroup.append(matchingResultParsed)
+    
+                var matchingErrorParsed =  $(listQz[currentIndex]).find('.error_result');
+                var matchingSuccessParsed =  $(listQz[currentIndex]).find('.success_result');
+                if (matchingErrorParsed.length > 0){
+                   problemQuestionNumbers[currentIndex].classList.add('err-number-qusetion')  
+                   that.$('.btn-submit-qz').css('display', 'none');
+                   that.$('#btn-next').css('display', 'none');
+                   that.$('.matching_quiz_custom').css('display', 'block');
+                }
+                if (matchingSuccessParsed.length > 0){
+                  problemQuestionNumbers[currentIndex].classList.add('submitted-question')
+                  problemQuestionNumbers[currentIndex].classList.remove('err-number-qusetion')
+                  that.$('.btn-submit-qz').css('display', 'none');
+                  that.$('#btn-next').css('display', 'block');
+                  that.$('.matching_quiz_custom').css('display', 'none');
+                }
+    
+              }
+            })
+          };
+
         Problem.prototype.submit_qz = function () {
             var that = this;
             var listQz = that.$('.wrapper-problem-response');
             var checkedInput = that.$('.field input:checked');
             var indicatorError = $(listQz[currentIndex]).find('.indicator-container');
             return $.postWithPrefix('' + this.url + '/problem_check', that.answers, function (response) {
-              console.log(response);
+                console.log('======1====' , response);
     
               if (response.success === 'submitted' || response.success === 'incorrect' || response.success === 'correct') {
                 var problemQuestionNumbers = that.$('.problem-question-number');
@@ -664,7 +709,6 @@
                 var messagesProblem = listProblemParsed[currentIndex].querySelector('.message');
                 var indicatorErrorParsed = listProblemParsed[currentIndex].querySelector('.indicator-container');
                 var choicegroup = listQz[currentIndex].querySelector('.choicegroup , .capa_inputtype'); // choicegroup.appendChild(messagesProblem)
-    
                 if (response.success === 'incorrect') {
                   var problemParsed = listProblemParsed[currentIndex];
                   var submittedInput = problemParsed.querySelector('input.submitted');
@@ -735,11 +779,12 @@
                         var explanation = $(listQz[currentIndex]).find('.explanation-title'); //remove messgae
     
                         $(listQz[currentIndex]).find('.message').remove();
-    
+                      
                         if (messagesProblem) {
                           choicegroup.appendChild(messagesProblem);
                           $(listQz[currentIndex]).find('.explanation-title').append('<span>Câu trả lời của bạn chưa chính xác</span>');
                         } else {
+    
                           if (explanation.length === 0) {
                             var newMessgasBox = $('<div></div>').addClass('feedback-hint-incorrect messages-box error-problem-answer ');
                             var title = $('<div></div>').addClass('explanation-title').text('Câu trả lời của bạn chưa chính xác');
@@ -819,6 +864,9 @@
               currentIndex = 0;
             }
     
+    
+    
+    
             var submittedInput = listQz[currentIndex].querySelector('input.submitted');
             var incorrectLabel = listQz[currentIndex].querySelector('label.choicegroup_correct');
             var wrongLabel = listQz[currentIndex].querySelector('label.choicegroup_incorrect');
@@ -852,8 +900,9 @@
               that.$('#btn-next').css('display', 'none');
     
               var _messgasBox = listQz[currentIndex].querySelector('.feedback-hint-incorrect');
-    
-              _messgasBox.classList.add('error-problem-answer');
+              if (_messgasBox) {
+                _messgasBox.classList.add('error-problem-answer');
+              }
             }
     
             problemQuestionNumbers.each(function (index, element) {
@@ -873,8 +922,26 @@
                 $('.btn-submit-qz').prop('disabled', true);
               }
             });
+            var matchingQuiz  = listQz[currentIndex].querySelector('div[question_matching="True"]')
+            if (matchingQuiz){
+                var matchingSuccess =  listQz[currentIndex].querySelector('.success_result')
+                var matchingError =  listQz[currentIndex].querySelector('.error_result')
+                if (matchingSuccess){
+                that.$('.btn-submit-qz').css('display', 'none');
+                that.$('#btn-next').css('display', 'block');
+                that.$('.matching_quiz_custom').css('display', 'none');
+                that.$('#btn-next-lesson').css('display', 'none');
+                }
+                else {
+                that.$('.btn-submit-qz').css('display', 'none');
+                that.$('#btn-next').css('display', 'none');
+                that.$('.matching_quiz_custom').css('display', 'block');
+                that.$('#btn-next-lesson').css('display', 'none');
+                }
+            }
+            
     
-            if (that.$('.submitted-question').length === currentIndex + 1) {
+            if (that.$('.submitted-question').length === currentIndex + 1 && that.$('.problem-question-number').length === currentIndex +1) {
               that.$('#btn-next').css('display', 'none');
               that.$('#btn-next-lesson').css('display', 'block');
             }

@@ -1,4 +1,7 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto+Serif:opsz,wght@8..144,500&family=Roboto:wght@400;500&display=swap');
+
 .course-info {
+  font-family:'Roboto', sans-serif ;
   .container {
     padding-bottom: 120px;
 
@@ -71,7 +74,7 @@
             display: inline-block;
             margin: 0;
             letter-spacing: 0;
-
+            font-family: 'Roboto', sans-serif;
             @include text-align(left);
 
             text-shadow: 0 1px rgba(255, 255, 255, 0.6);
@@ -101,7 +104,7 @@
 
             a {
               color: $body-color;
-              font: italic 700 1em/1em $font-family-sans-serif;
+              font: italic 700 1em/1em 'Roboto', sans-serif;
               letter-spacing: 0;
               text-shadow: 0 1px rgba(255, 255, 255, 0.6);
               text-transform: none;
@@ -130,7 +133,7 @@
             box-sizing: border-box;
             border-radius: 3px;
             display: block;
-            font: normal 1.2rem/1.6rem $font-family-sans-serif;
+            font: normal 1.2rem/1.6rem 'Roboto', sans-serif;
             letter-spacing: 1px;
             padding: ($baseline/2) 0;
             text-align: center;
@@ -163,7 +166,7 @@
 
             @include float(left);
 
-            font: normal 1.2rem/1.6rem $font-family-sans-serif;
+            font: normal 1.2rem/1.6rem 'Roboto', sans-serif;
             letter-spacing: 1px;
             padding: ($baseline/2) 0;
             text-align: center;
@@ -241,7 +244,7 @@
               color: rgba(255, 255, 255, 0.8);
               content: "\25B6";
               display: block;
-              font: normal 2em/1em $font-family-sans-serif;
+              font: normal 2em/1em 'Roboto', sans-serif;
 
               @include left(50%);
               @include margin-left(-11px);
@@ -318,10 +321,11 @@
       width: flex-grid(8);
     }
 
-    font: normal 1em/1.6em $serif;
+    font: normal 1em/1.6em 'Roboto', sans-serif;
 
     h2 {
       margin-top: ($baseline*1.5);
+      font-family: 'Roboto', sans-serif
     }
 
     p {
@@ -346,7 +350,7 @@
 
           h3 {
             color: $body-color;
-            font-family: $font-family-sans-serif;
+            font-family: 'Roboto', sans-serif;
             font-weight: 700;
             margin-bottom: ($baseline*0.75);
             text-transform: none;
@@ -377,7 +381,7 @@
       .syllabus {
         ul {
           li {
-            font: normal 1em/1.6em $serif;
+            font: normal 1em/1.6em 'Roboto', sans-serif;
           }
 
           ul {
@@ -397,7 +401,7 @@
           margin-bottom: ($baseline*2);
 
           h3 {
-            font-family: $font-family-sans-serif;
+            font-family: 'Roboto', sans-serif;
             font-weight: 700;
             margin-bottom: ($baseline*0.75);
           }
@@ -480,7 +484,7 @@
         @include border-right(1px solid $border-color-2);
 
         color: $body-color;
-        font-family: $font-family-sans-serif;
+        font-family: 'Roboto', sans-serif;
         font-style: italic;
         font-weight: 700;
         display: inline-block;
@@ -608,7 +612,7 @@
 
           @include float(left);
 
-          font-family: $font-family-sans-serif;
+          font-family: 'Roboto', sans-serif;
         }
 
         .icon {
@@ -641,7 +645,7 @@
           margin: $baseline 0 ($baseline/2);
           font-size: 0.8em;
           color: $lighter-base-font-color;
-          font-family: $font-family-sans-serif;
+          font-family: 'Roboto', sans-serif;
         }
       }
     }
