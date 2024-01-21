@@ -702,17 +702,11 @@ def _compose_copyright_footer():
         'ORGANIZATION_NAME', "Galaxy Education")
     org_type = _(configuration_helpers.get_value('ORGANIZATION_TYPE', "JSC"))
 
-    # !BUG: Fix using po file, instead of hard coding
-    # part1 = _(
-    #     "@{copyright_year}. Copyrighted").format(copyright_year=copyright_year)
-    # part2 = _("{platform_name} - Member of {org_name} {org_type}").format(
-    #     platform_name=platform_name, org_name=org_name, org_type=org_type
-    # )
-
     part1 = _(
-        "@{copyright_year}. Đã đăng ký bản quyền").format(copyright_year=copyright_year)
-    part2 = _("{platform_name} - Thành viên của {org_type} {org_name}").format(
+        "@{copyright_year}. Copyrighted.").format(copyright_year=copyright_year)
+    part2 = _("{platform_name} - Member of {org_name} {org_type}.").format(
         platform_name=platform_name, org_name=org_name, org_type=org_type
     )
+
 
     return part1, part2
