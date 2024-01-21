@@ -12360,7 +12360,7 @@ msgstr "Bạn không có quyền truy cập vào mô-đun phụ thuộc này."
 
 #: lms/templates/course.html
 msgid "LEARN MORE"
-msgstr "Tìm hiểu thêm"
+msgstr "Tìm hiểu thêmaaaaaaaaaaaaaaa"
 
 #: lms/templates/course.html
 msgid "Starts"
@@ -23976,9 +23976,12 @@ msgid "Post violates honour code or academic integrity"
 msgstr "Bài đăng vi phạm quy tắc "
 
 #: lms/djangoapps/branding/api.py
-#, python-brace-format
-msgid "@{copyright_year}. Copyrighted. {platform_name} - Member of {org_name} {org_type}"
-msgstr "@{copyright_year}. Đã đăng ký bản quyền. {platform_name} - Thành viên của {org_type} {org_name}"
+msgid "@{copyright_year}. Copyrighted."
+msgstr "@{copyright_year}. Đã đăng ký bản quyền."
+
+#: lms/djangoapps/branding/api.py
+msgid "{platform_name} - Member of {org_name} {org_type}."
+msgstr "{platform_name} - Thành viên của {org_type} {org_name}."
 
 #: company type
 msgid "JSC"
