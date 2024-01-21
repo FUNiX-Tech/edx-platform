@@ -100,8 +100,8 @@ body > div.window-wrap > header {
 
 .mobile-menu {
     margin: 0;
-    position: absolute;
-    top: 0;
+    position: fixed;
+    top: $header-height;
     bottom: 0;
     left: 0;
     right: 0;
