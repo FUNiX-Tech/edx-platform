@@ -97,9 +97,16 @@
 
 .courses-container .course .course-image .cover-image {
     height: 170px !important;
+
+    img {
+        width: 100%;
+        height: 170px !important;
+        object-fit: cover;
+    }
 }
 
-// 1400px
+
+// > 1400px
 @media only screen and (min-width: $breakpoint-desktop) {
 
     ul.courses-list {
@@ -112,8 +119,8 @@
     }
 }
 
-// 1200px - 1400px
-@media only screen and (min-width: $breakpoint-tablet-lg) and (max-width: $breakpoint-desktop) {
+// 1201px - 1399px
+@media only screen and (min-width: $breakpoint-tablet-lg) and (max-width: 1399px) {
     ul.courses-list {
         width: 1200px !important;
         padding-left: calc((1200px - #{$four-items-width})/2) !important;
@@ -127,8 +134,8 @@
 }
 
 
-// 992px - 1200px
-@media only screen and (min-width: $breakpoint-tablet-md) and (max-width: $breakpoint-tablet-lg) {
+// 992px - 1199px
+@media only screen and (min-width: $breakpoint-tablet-md) and (max-width: 1199px) {
     ul.courses-list {
         width: 992px !important;
         padding-left: calc((992px - #{$three-items-width})/2) !important;
@@ -141,8 +148,8 @@
 
 }
 
-// 768px - 992px
-@media only screen and (min-width: $breakpoint-tablet-sm) and (max-width: $breakpoint-tablet-md) {
+// 768px - 991px
+@media only screen and (min-width: $breakpoint-tablet-sm) and (max-width: 991px) {
     ul.courses-list {
         width: 768px !important;
         padding-left: calc((768px - #{$two-items-width})/2) !important;
@@ -154,8 +161,8 @@
     }
 }
 
-// 576px - 768px
-@media only screen and (min-width: $breakpoint-mobile-lg) and (max-width: $breakpoint-tablet-sm) {
+// 576px - 767px
+@media only screen and (min-width: $breakpoint-mobile-lg) and (max-width: 767px) {
 
 
     ul.courses-list {
@@ -171,8 +178,8 @@
     }
 }
 
-// 375px - 576px
-@media only screen and (min-width: $breakpoint-mobile-sm) and (max-width: $breakpoint-mobile-lg) {
+// 375px - 575px
+@media only screen and (min-width: $breakpoint-mobile-sm) and (max-width: 575px) {
 
 
     ul.courses-list {
