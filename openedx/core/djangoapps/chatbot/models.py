@@ -43,4 +43,6 @@ class ChatbotQuery(TimeStampedModel):
 
     vote = models.CharField(max_length=4, choices=VOTE_CHOICES, null=True) 
 
+    feedback = models.TextField(max_length=500, default='')
+
 
