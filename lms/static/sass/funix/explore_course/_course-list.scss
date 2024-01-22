@@ -19,11 +19,12 @@
                 padding: 0;
                 width: 100%;
                 height: 100%;
+                display: flex !important;
+                justify-content: center;
 
                 ul.courses-list {
                     display: grid !important;
                     gap: 24px;
-                    padding: 0 !important;
                     width: 100%; /* Explicit width */
                     grid-auto-rows: auto; /* Added */
 
@@ -95,50 +96,107 @@
 }
 
 .courses-container .course .course-image .cover-image {
-    height: 12.5rem !important;
+    height: 170px !important;
 }
 
+// 1400px
 @media only screen and (min-width: $breakpoint-desktop) {
-    .courses-listing-item {
-        grid-template-columns: repeat(auto-fill, minmax(215px, -1fr)); 
 
-
+    ul.courses-list {
+        width: 1400px !important;
+        padding-left: calc((1400px - #{$four-items-width})/2) !important;
+        padding-right: calc((1400px - #{$four-items-width})/2) !important;
+    }
+    .courses-listing {
+        grid-template-columns: repeat(4, 1fr) !important; 
     }
 }
 
+// 1200px - 1400px
 @media only screen and (min-width: $breakpoint-tablet-lg) and (max-width: $breakpoint-desktop) {
-    .courses-listing-item {
-         grid-template-columns: repeat(auto-fill, minmax(215px, 1fr)); 
+    ul.courses-list {
+        width: 1200px !important;
+        padding-left: calc((1200px - #{$four-items-width})/2) !important;
+        padding-right: calc((1200px - #{$four-items-width})/2) !important;
 
+    }
+
+    .courses-listing {
+        grid-template-columns: repeat(4,1fr) !important;
     }
 }
 
+
+// 992px - 1200px
 @media only screen and (min-width: $breakpoint-tablet-md) and (max-width: $breakpoint-tablet-lg) {
-    .courses-listing-item {
-    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); 
-
+    ul.courses-list {
+        width: 992px !important;
+        padding-left: calc((992px - #{$three-items-width})/2) !important;
+        padding-right: calc((992px - #{$three-items-width})/2) !important;
     }
+
+    .courses-listing {
+        grid-template-columns: repeat(3,1fr) !important;
+    }
+
 }
 
+// 768px - 992px
 @media only screen and (min-width: $breakpoint-tablet-sm) and (max-width: $breakpoint-tablet-md) {
-    .courses-listing-item {
-        grid-template-columns: repeat(auto-fill, minmax(210px, 1fr));
+    ul.courses-list {
+        width: 768px !important;
+        padding-left: calc((768px - #{$two-items-width})/2) !important;
+        padding-right: calc((768px - #{$two-items-width})/2) !important;
+    }
 
+    .courses-listing {
+        grid-template-columns: repeat(2,1fr) !important;
     }
 }
 
-@media only screen and (min-width: $breakpoint-tablet-vs) and (max-width: $breakpoint-tablet-sm) {
-    .courses-listing-item {
-        grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); 
+// 576px - 768px
+@media only screen and (min-width: $breakpoint-mobile-lg) and (max-width: $breakpoint-tablet-sm) {
 
+
+    ul.courses-list {
+        display: flex !important;
+        justify-content: center !important;
+        width: 576px !important;
+        padding-left: calc((576px - #{$one-item-width})/2) !important;
+        padding-right: calc((576px - #{$one-item-width})/2) !important;
+    }
+
+    .courses-listing {
+        grid-template-columns: repeat(1,1fr) !important;
+    }
+}
+
+// 375px - 576px
+@media only screen and (min-width: $breakpoint-mobile-sm) and (max-width: $breakpoint-mobile-lg) {
+
+
+    ul.courses-list {
+        display: flex !important;
+        justify-content: center !important;
+        width: 375px !important;
+        padding-left: calc((576px - #{$one-item-width})/2) !important;
+        padding-right: calc((576px - #{$one-item-width})/2) !important;
+    }
+
+    .courses-listing {
+        grid-template-columns: repeat(1,1fr) !important;
+    }
+
+    .courses-listing-item {
+        width: 302px !important
     }
 }
 
 
-@media only screen and (max-width: $breakpoint-mobile) {
-    .courses-listing-item {
-        width: 100% !important;
-        margin: 0 !important;
-        padding: 0 !important;
+@media only screen and (max-width: $breakpoint-mobile-sm) {
+    ul.courses-list {
+        width:  375px !important;
+        padding-left: calc((100% - #{$one-item-width})/2) !important;
+        padding-right: calc((100% - #{$one-item-width})/2) !important;
     }
 }

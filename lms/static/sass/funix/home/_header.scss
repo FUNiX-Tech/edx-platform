@@ -1,6 +1,8 @@
 header.global-header {
     padding-top: 10px;
     padding-bottom: 10px;
+    padding-left: $padding-header-footer !important;
+    padding-right: $padding-header-footer !important;
     height: $header-height;
     border-bottom: 1px solid $color-stroke;
     position: fixed;
@@ -9,40 +11,22 @@ header.global-header {
     right: 0;
     z-index: 999;
 
-    @media only screen and (max-width: $breakpoint-tablet-sm) {
-        padding-left: $padding-mobile;
-        padding-right: $padding-mobile;
-    }
-
-    @media only screen and (min-width: $breakpoint-tablet-sm) and (max-width: $breakpoint-tablet-lg) {
-        padding-left: $padding-tablet-sm;
-        padding-right: $padding-tablet-sm;
-    }
-
-    @media only screen and (min-width: $breakpoint-tablet-lg) and (max-width: $breakpoint-desktop) {
-        padding-left: $padding-tablet-lg;
-        padding-right: $padding-tablet-lg;
-    }
-
-    @media only screen and (min-width: $breakpoint-desktop) {
-        padding-left: $padding-desktop;
-        padding-right: $padding-desktop;
-    }
+   
 }
 
 body > div.window-wrap > header {
     div.main-header {
         display: flex;
         align-items: center;
-        max-width: 1440px !important;
+        // max-width: 1440px !important;
         margin: auto;
 
-        @media only screen and (min-width: $breakpoint-mobile) {
+        @media only screen and (min-width: $breakpoint-tablet-md) {
             justify-content: space-between;
         }
 
-        @media only screen and (max-width: $breakpoint-mobile) {
-            justify-content: center;
+        @media only screen and (max-width: 991px) {
+            justify-content: flex-start;
         }
 
         h1 {
@@ -76,9 +60,9 @@ body > div.window-wrap > header {
                     div.mobile-nav-item {
                         margin: 0;
 
-                        @media only screen and (min-width: 396px) {
-                            display: inline-block;
-                        }
+                        // @media only screen and (min-width: 396px) {
+                        //     display: inline-block;
+                        // }
 
                         a {
                             align-self: flex-end;
@@ -91,7 +75,7 @@ body > div.window-wrap > header {
 
         div.hamburger-menu {
             padding: 2px;
-            @media only screen and (min-width: 396px) {
+            @media only screen and (min-width: 992px) {
                 display: none;
             }
         }
@@ -106,9 +90,9 @@ body > div.window-wrap > header {
     left: 0;
     right: 0;
     background-color: #fff;
-    z-index: 999;
+    z-index: 999;   
     border: 0;
-    padding: 24px 36px;
+    padding: 16px;
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
@@ -127,6 +111,8 @@ body > div.window-wrap > header {
             font-style: normal;
             font-weight: 400;
             line-height: 150%;
+            display: flex !important;
+            gap: 8px;
 
             &:hover {
                 color: $color-active;
