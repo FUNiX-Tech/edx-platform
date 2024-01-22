@@ -16,6 +16,32 @@ form.wrapper-search-input {
         width: 620px !important;
     }
 
+    @media only screen and (min-width: $breakpoint-tablet-lg) and (max-width: $breakpoint-desktop) {
+        width: 620px !important;
+    }
+
+    @media only screen and (min-width: $breakpoint-tablet-md) and (max-width: $breakpoint-tablet-lg) {
+        width: $three-items-width !important;
+    } 
+
+    @media only screen and (min-width: $breakpoint-tablet-sm) and (max-width: $breakpoint-tablet-md) {
+        margin-left: 16px !important;
+        margin-right: 16px !important
+    }
+
+    @media only screen and (min-width: $breakpoint-mobile-lg) and (max-width: $breakpoint-tablet-sm) {
+        margin-left: 16px !important;
+        margin-right: 16px !important
+    }
+    @media only screen and (min-width: $breakpoint-mobile-sm) and (max-width: $breakpoint-mobile-lg) {
+        margin-left: 16px !important;
+        margin-right: 16px !important
+    }
+    @media only screen and (max-width: $breakpoint-mobile-sm) {
+        margin-left: 16px !important;
+        margin-right: 16px !important
+    }
+
     input {
         padding: 12px !important;
         border: 1px solid $color-subdued !important;
