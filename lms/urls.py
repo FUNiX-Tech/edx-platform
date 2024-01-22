@@ -1104,3 +1104,10 @@ urlpatterns += [
     path('api/chatbot/', include('openedx.core.djangoapps.chatbot.urls')),
 ]
 
+
+# about course overview 
+# from openedx.core.djangoapps.content.course_overviews.api import   get_about_course
+from lms.djangoapps.courseware.views.views import get_about_course
+urlpatterns += [
+    path('api/overview/about/<str:course_id>' , get_about_course , name='about_course' )
+]

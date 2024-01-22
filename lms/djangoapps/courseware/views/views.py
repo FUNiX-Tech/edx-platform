@@ -792,6 +792,7 @@ class EnrollStaffView(View):
 @ensure_valid_course_key
 @cache_if_anonymous()
 def course_about(request, course_id):  # pylint: disable=too-many-statements
+    print('=====================')
     """
     Display the course's about page.
     """
@@ -808,6 +809,7 @@ def course_about(request, course_id):  # pylint: disable=too-many-statements
 
     with modulestore().bulk_operations(course_key):
         permission = get_permission_for_course_about()
+        print('=====permission======', permission)
         course = get_course_with_access(request.user, permission, course_key)
         course_details = CourseDetails.populate(course)
         modes = CourseMode.modes_for_course_dict(course_key)
@@ -901,6 +903,7 @@ def course_about(request, course_id):  # pylint: disable=too-many-statements
         }
 
         course_about_template = 'courseware/course_about.html'
+        print('================', course)
         try:
             # .. filter_implemented_name: CourseAboutRenderStarted
             # .. filter_type: org.openedx.learning.course_about.render.started.v1
@@ -2082,3 +2085,28 @@ def get_learner_username(learner_identifier):
     learner = User.objects.filter(Q(username=learner_identifier) | Q(email=learner_identifier)).first()
     if learner:
         return learner.username
+
+
+
+# from openedx.core.djangolib.markup import clean_dangerous_html
+# from lms.djangoapps.courseware.courses import get_course_with_access
+# from common.djangoapps.util.cache import cache, cache_if_anonymous
+from common.djangoapps.util.json_request import JsonResponse
+from openedx.core.djangolib.markup import clean_dangerous_html, HTML, Text
+from lms.djangoapps.courseware.courses import get_course_about_section
+from openedx.core.lib.exceptions import CourseNotFoundError
+@cache_if_anonymous()
+def get_about_course(request, course_id):
+    try:
+        course_key = CourseKey.from_string(course_id)
+        permission = 'see_exists'
+        course = get_course_with_access(request.user, permission, course_key)
+        html = clean_dangerous_html(get_course_about_section(request, course, "overview"))
+        print('============', html)
+        overview = CourseOverview.get_from_id(course.id)
+    except CourseNotFoundError as e:
+        return JsonResponse({'error': f'Course not found: {str(e)}'}, status=404)
+    except Exception as e:
+        return JsonResponse({'error': f'An unexpected error occurred: {str(e)}'}, status=500)
+        
+    return JsonResponse({'a': '1' ,   'course_image_urls': overview.image_urls})
