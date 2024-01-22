@@ -66,7 +66,7 @@ $learn-more-horizontal-position: calc(50% - 100px); // calculate the left positi
           @extend %ui-depth2;
 
           position: absolute;
-          top: ($baseline*3.75);
+          top: ($baseline*3.25);
           padding: 0 $baseline;
           width: ($baseline*10);
           height: ($baseline*2.5);
