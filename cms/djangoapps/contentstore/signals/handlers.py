@@ -143,7 +143,7 @@ def listen_for_course_publish(sender, course_key, **kwargs):  # pylint: disable=
     # Finally, call into the course search subsystem
     # to kick off an indexing action
     if CoursewareSearchIndexer.indexing_is_enabled() and CourseAboutSearchIndexer.indexing_is_enabled():
-        update_search_index.apply_async((course_key_str, datetime.now(UTC).isoformat()), countdown=5)
+        update_search_index.apply_async((course_key_str, datetime.now(UTC).isoformat()), countdown=0)
 
     update_discussions_settings_from_course_task.apply_async(
         args=[course_key_str],
