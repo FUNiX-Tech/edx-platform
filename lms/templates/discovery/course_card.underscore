@@ -33,3 +33,18 @@
         </div>
     </a>
 </article>
+
+<script>
+    function handleImageError(imageElement, defaultImageUrl) {
+        imageElement.onerror = function () {
+            imageElement.src = defaultImageUrl;
+        };
+    }
+
+    const courseImages = document.querySelectorAll('.course-image img');
+    const defaultImageUrl = '/static/images/default_course_thumb.png';
+
+    courseImages.forEach(function (imageElement) {
+        handleImageError(imageElement, defaultImageUrl);
+    });
+</script>
