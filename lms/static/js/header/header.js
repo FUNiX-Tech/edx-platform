@@ -54,12 +54,20 @@ $(document).ready(function() {
     $('.global-header .hamburger-menu').click(function() {
         $hamburgerMenu = $('.global-header .hamburger-menu');
         $mobileMenu = $('.mobile-menu');
+        var $headerLogo = $('h1.header-logo');
+        var $iconSignin = $('svg.icon-sign-in')
+
         if ($mobileMenu.is(':visible')) {
             $mobileMenu.addClass('hidden');
             $hamburgerMenu.attr('aria-expanded', 'false');
+            $iconSignin.addClass('hidden');
+            $headerLogo.show();
         } else {
             $mobileMenu.removeClass('hidden');
             $hamburgerMenu.attr('aria-expanded', 'true');
+            $iconSignin.removeClass('hidden');
+            $iconSignin.attr('aria-hidden', 'true');
+            $headerLogo.hide();
         }
         $hamburgerMenu.toggleClass('open');
     });
