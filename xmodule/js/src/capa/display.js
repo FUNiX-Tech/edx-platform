@@ -688,6 +688,11 @@
                   that.$('.btn-submit-qz').css('display', 'none');
                   that.$('#btn-next').css('display', 'block');
                   that.$('.matching_quiz_custom').css('display', 'none');
+
+
+                  const devElement = document.createElement('div');
+                  devElement.classList.add('bg-quiz-success')
+                  listQz[currentIndex].appendChild(devElement)
                 }
     
               }
@@ -714,7 +719,7 @@
                   var submittedInput = problemParsed.querySelector('input.submitted');
                   var incorrectLabel = problemParsed.querySelector('label.choicegroup_correct');
                   var wrongLabel = problemParsed.querySelector('label.choicegroup_incorrect');
-                  $(listQz[currentIndex]).find('.indicator-container').css('display', 'none');
+                 // $(listQz[currentIndex]).find('.indicator-container').css('display', 'none');
     
                   if (incorrectLabel && submittedInput) {
                     that.$('.btn-submit-qz').css('display', 'none');
@@ -734,11 +739,12 @@
                         var explanationTitle = $(listQz[currentIndex]).find('.explanation-title');
                         if (explanationTitle.length === 0) {
                           var newElement = $(
+                            '<span class="message">'+
                             '<div class="feedback-hint-correct messages-box">' +
                               '<div class="explanation-title">' +
                                 '<span>Bạn đã trả lời đúng</span>' +
                               '</div>' +
-                            '</div>'
+                            '</div>' + '</span>'
                           );
                           $(listQz[currentIndex]).append(newElement);
                         } else {
@@ -761,10 +767,15 @@
                         });
                       }
                     });
+
+                    const devElement = document.createElement('div');
+                    devElement.classList.add('bg-quiz-success')
+                    listQz[currentIndex].appendChild(devElement)
+
                   } else {}
     
                   if (wrongLabel && submittedInput) {
-                    indicatorError.css('display', 'none');
+                    //indicatorError.css('display', 'none');
                     var indocatorName = $(indicatorError).find('.sr');
     
                     if (indocatorName.text() == 'unanswered') {
@@ -779,18 +790,20 @@
                         var explanation = $(listQz[currentIndex]).find('.explanation-title'); //remove messgae
     
                         $(listQz[currentIndex]).find('.message').remove();
-                      
+                        $(listQz[currentIndex]).find('.feedback-hint-incorrect').remove()
                         if (messagesProblem) {
                           choicegroup.appendChild(messagesProblem);
                           $(listQz[currentIndex]).find('.explanation-title').append('<span>Câu trả lời của bạn chưa chính xác</span>');
                         } else {
     
                           if (explanation.length === 0) {
+                            var spanMessagesBox = $('<span></span>').addClass('message')
                             var newMessgasBox = $('<div></div>').addClass('feedback-hint-incorrect messages-box error-problem-answer ');
                             var title = $('<div></div>').addClass('explanation-title').text('Câu trả lời của bạn chưa chính xác');
                             title.css("padding-bottom", '0px');
                             newMessgasBox.append(title);
-                            $(listQz[currentIndex]).append(newMessgasBox);
+                            spanMessagesBox.append(newMessgasBox);
+                            $(listQz[currentIndex]).append(spanMessagesBox);
                           }
                         }
     
@@ -808,29 +821,53 @@
                 }
     
                 if (response.success === 'correct') {
-                  that.$('.btn-submit-qz').css('display', 'none');
-                  that.$('#btn-next').css('display', 'none');
-                  that.$('#btn-next-lesson').css('display', 'block');
-                  problemQuestionNumbers.each(function (index, element) {
-                    if (element.textContent === (currentIndex + 1).toString()) {
-                      element.classList.add('submitted-question');
-                      element.classList.remove('active-number');
-                      element.classList.remove('err-number-qusetion');
-                      $(listQz[currentIndex]).find('.message').remove();
+                    that.$('.btn-submit-qz').css('display', 'none');
+                    that.$('#btn-next').css('display', 'none');
+                    that.$('#btn-next-lesson').css('display', 'block');
+                    problemQuestionNumbers.each(function (index, element) {
+                      if (element.textContent === (currentIndex + 1).toString()) {
+                        element.classList.add('submitted-question');
+                        element.classList.remove('active-number');
+                        element.classList.remove('err-number-qusetion');
+                        $(listQz[currentIndex]).find('.message').remove();
+                        if (messagesProblem){
+                          choicegroup.appendChild(messagesProblem);
+                          //indicatorError.css('display', 'none');
+                          $(listQz[currentIndex]).find('.explanation-title').append('<span>Bạn đã trả lời đúng</span>');
+                        }else {
+                            $(listQz[currentIndex]).find('.feedback-hint-incorrect').remove()
+                            var newSpanMessage = $('<div></div>').addClass('message')
+                            var newMessgasBox = $('<div></div>').addClass('feedback-hint-incorrect messages-box');
+                            var title = $('<div></div>').addClass('explanation-title').text('Bạn đã trả lời đúng');
+                            title.css("padding-bottom", '0px');
+                            newMessgasBox.append(title);
+                            newSpanMessage.append(newMessgasBox)
+                            $(listQz[currentIndex]).append(newSpanMessage);
+                          
+                        }
+      
+                        checkedInput.each(function () {
+                          var input = $(this);
+                          var label = $('label[for="' + $(this).attr('id') + '"]');
+                          input.addClass('success-problem');
+                        });
+          
+                      }
+                    });
+                    checkedInput.each(function () {
+                      var input = $(this);
+                      var label = $('label[for="' + $(this).attr('id') + '"]');
+                      input.addClass('submitted');
+                      input.addClass('success-problem');
+                      label.addClass('response-label field-label label-inline choicegroup_correct');
                       choicegroup.appendChild(messagesProblem);
-                      indicatorError.css('display', 'none');
-                      $(listQz[currentIndex]).find('.explanation-title').append('<span>Bạn đã trả lời đúng</span>');
-                    }
-                  });
-                  checkedInput.each(function () {
-                    var input = $(this);
-                    var label = $('label[for="' + $(this).attr('id') + '"]');
-                    input.addClass('submitted');
-                    input.addClass('success-problem');
-                    label.addClass('response-label field-label label-inline choicegroup_correct');
-                    choicegroup.appendChild(messagesProblem);
-                  });
-                }
+                    });
+
+
+                    const devElement = document.createElement('div');
+                    devElement.classList.add('bg-quiz-success')
+                    listQz[currentIndex].appendChild(devElement)
+                  }
     
                 window.SR.readTexts(that.get_sr_status(response.contents));
                 that.el.trigger('contentChanged', [that.id, response.contents, response]); // that.render(response.contents, that.focus_on_submit_notification);
