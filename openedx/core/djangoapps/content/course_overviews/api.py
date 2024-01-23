@@ -123,3 +123,17 @@ def set_course_subtext (request) :
        
         CourseOverviewSubText.setSubTextSequence(sequence_id=sequence_id, sub_text=sub_text, course_id=course_id ,title=title)
     return JsonResponse({'a':'a'})
+
+# from openedx.core.djangolib.markup import clean_dangerous_html
+# from lms.djangoapps.courseware.courses import get_course_with_access
+# from common.djangoapps.util.cache import cache, cache_if_anonymous
+
+# @cache_if_anonymous()
+# def get_about_course (request, course_id):
+    
+#     print('===========================')
+#     permission = 'see_exists'
+#     course = get_course_with_access(request.user, permission, course_id)
+#     # clean_dangerous_html(get_course_about_section(request, course_id, "overview"))
+    
+#     return JsonResponse({'a':'a'})

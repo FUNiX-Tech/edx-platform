@@ -2095,18 +2095,35 @@ from common.djangoapps.util.json_request import JsonResponse
 from openedx.core.djangolib.markup import clean_dangerous_html, HTML, Text
 from lms.djangoapps.courseware.courses import get_course_about_section
 from openedx.core.lib.exceptions import CourseNotFoundError
-@cache_if_anonymous()
+from openedx.features.course_experience.utils import get_course_outline_block_tree
+from lms.djangoapps.course_blocks.api import get_course_blocks
+from xmodule.modulestore.django import modulestore 
+
 def get_about_course(request, course_id):
     try:
         course_key = CourseKey.from_string(course_id)
         permission = 'see_exists'
         course = get_course_with_access(request.user, permission, course_key)
         html = clean_dangerous_html(get_course_about_section(request, course, "overview"))
-        print('============', html)
+
         overview = CourseOverview.get_from_id(course.id)
+            
+        course_blocks = get_course_outline_block_tree(request, str(course_key))
+        block_tree = []
+        for chapter in course_blocks.get('children', []):
+            for sequential in chapter.get('children', []):
+                sequential_tree = []
+                for vertical in sequential.get('children', []):
+                    sequential_tree.append(vertical['display_name'])
+                block_tree.append({sequential['display_name']: sequential_tree})     
+                       
+        block_tree = block_tree[2:]                   
     except CourseNotFoundError as e:
         return JsonResponse({'error': f'Course not found: {str(e)}'}, status=404)
     except Exception as e:
         return JsonResponse({'error': f'An unexpected error occurred: {str(e)}'}, status=500)
-        
-    return JsonResponse({'a': '1' ,   'course_image_urls': overview.image_urls})
+    
+
+            
+    # block_tree = block_tree[1:]                   
+    return JsonResponse({ "display_name" : overview.display_name,'block_tree': block_tree ,   'course_image_urls': overview.image_urls})
