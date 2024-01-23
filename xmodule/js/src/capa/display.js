@@ -688,6 +688,11 @@
                   that.$('.btn-submit-qz').css('display', 'none');
                   that.$('#btn-next').css('display', 'block');
                   that.$('.matching_quiz_custom').css('display', 'none');
+
+
+                  const devElement = document.createElement('div');
+                  devElement.classList.add('bg-quiz-success')
+                  listQz[currentIndex].appendChild(devElement)
                 }
     
               }
@@ -762,6 +767,11 @@
                         });
                       }
                     });
+
+                    const devElement = document.createElement('div');
+                    devElement.classList.add('bg-quiz-success')
+                    listQz[currentIndex].appendChild(devElement)
+
                   } else {}
     
                   if (wrongLabel && submittedInput) {
@@ -852,6 +862,11 @@
                       label.addClass('response-label field-label label-inline choicegroup_correct');
                       choicegroup.appendChild(messagesProblem);
                     });
+
+
+                    const devElement = document.createElement('div');
+                    devElement.classList.add('bg-quiz-success')
+                    listQz[currentIndex].appendChild(devElement)
                   }
     
                 window.SR.readTexts(that.get_sr_status(response.contents));
