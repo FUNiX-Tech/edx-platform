@@ -2,7 +2,7 @@
 // ====================
 // TO-DO: combine this with _home.scss as a cleanup story
 
-$learn-more-horizontal-position: calc(50% - 100px); // calculate the left position for "LEARN MORE" content
+$learn-more-horizontal-position: calc(50% - 72px); // calculate the left position for "LEARN MORE" content
 
 .courses-container {
   @include outer-container;
@@ -77,13 +77,13 @@ $learn-more-horizontal-position: calc(50% - 100px); // calculate the left positi
           position: absolute;
           top: ($baseline*3.25);
           padding: 0 $baseline;
-          width: ($baseline*10);
-          height: ($baseline*2.5);
+          width: ($baseline*7.2);
+          height: ($baseline*1.9);
           border-color: #007AE6;
           border-radius: 4px;
           background: #007AE6;
           color: $white;
-          line-height: ($baseline*2.5);
+          line-height: ($baseline*1.9);
           text-align: center;
           opacity: 0;
           text-transform: none;
