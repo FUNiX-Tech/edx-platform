@@ -2088,9 +2088,7 @@ def get_learner_username(learner_identifier):
 
 
 
-# from openedx.core.djangolib.markup import clean_dangerous_html
-# from lms.djangoapps.courseware.courses import get_course_with_access
-# from common.djangoapps.util.cache import cache, cache_if_anonymous
+
 from common.djangoapps.util.json_request import JsonResponse
 from openedx.core.djangolib.markup import clean_dangerous_html, HTML, Text
 from lms.djangoapps.courseware.courses import get_course_about_section
@@ -2098,15 +2096,17 @@ from openedx.core.lib.exceptions import CourseNotFoundError
 from openedx.features.course_experience.utils import get_course_outline_block_tree
 from lms.djangoapps.course_blocks.api import get_course_blocks
 from xmodule.modulestore.django import modulestore 
+from openedx.core.djangoapps.content.course_overviews.models import CourseOverviewAbout
 
 def get_about_course(request, course_id):
     try:
         course_key = CourseKey.from_string(course_id)
         permission = 'see_exists'
         course = get_course_with_access(request.user, permission, course_key)
-        html = clean_dangerous_html(get_course_about_section(request, course, "overview"))
 
         overview = CourseOverview.get_from_id(course.id)
+        
+       
             
         course_blocks = get_course_outline_block_tree(request, str(course_key))
         block_tree = []
@@ -2116,14 +2116,27 @@ def get_about_course(request, course_id):
                 for vertical in sequential.get('children', []):
                     sequential_tree.append(vertical['display_name'])
                 block_tree.append({sequential['display_name']: sequential_tree})     
+     
+     
+        data = { 
+            "display_name" : overview.display_name,
+            'block_tree': block_tree ,  
+            'course_image_urls': overview.image_urls
+            }
+        
+        course_about = CourseOverviewAbout.getAboutCourse(course_id=course_key)    
+        if course_about is not None : 
+            data['overview'] = course_about.overview
+            data['target'] = course_about.target
+            data['participant'] = course_about.participant
+            data['input_required'] = course_about.input_required
                        
-        block_tree = block_tree[2:]                   
+        # block_tree = block_tree[2:]                   
     except CourseNotFoundError as e:
         return JsonResponse({'error': f'Course not found: {str(e)}'}, status=404)
     except Exception as e:
         return JsonResponse({'error': f'An unexpected error occurred: {str(e)}'}, status=500)
     
 
-            
-    # block_tree = block_tree[1:]                   
-    return JsonResponse({ "display_name" : overview.display_name,'block_tree': block_tree ,   'course_image_urls': overview.image_urls})
+                              
+    return JsonResponse(data)
