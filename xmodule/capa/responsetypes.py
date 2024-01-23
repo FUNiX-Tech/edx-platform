@@ -62,6 +62,9 @@ from .util import (
     is_list_of_files
 )
 
+import xml.etree.ElementTree as ET
+
+
 log = logging.getLogger(__name__)
 
 registry = TagRegistry()
@@ -3934,7 +3937,7 @@ class MatchingResponse(LoncapaResponse):
     human_name = _('Matching Response')
     tags = ['matchingresponse']
     max_inputfields = 1
-    allowed_inputfields = ['matchinggroup','matchingitem']
+    allowed_inputfields = ['matchinggroup','matchingitem', 'matchingexplain']
     correct_matchings = None
     multi_device_support = True
 
@@ -3993,28 +3996,36 @@ class MatchingResponse(LoncapaResponse):
         Initialize name attributes in <choice> stanzas in the <matchinggroup> in this response.
         Masks the choice names if applicable.
         """
+        xml_str = ET.tostring(self.xml, encoding='utf8').decode('utf8')
+        # root = ET.fromstring(xml_str)
+        # print("rootXML_new", xml_str)
+        print("m_setup_response", xml_str)
         i = 0
         for response in self.xml.xpath("matchinggroup"):
             # Is Masking enabled? -- check for shuffle or answer-pool features
             # Masking (self._has_mask) is off, to be re-enabled with a future PR.
             for item in list(response):
-                # The regular, non-masked name:
-                if item.get("name") is not None:
-                    name = "matchingitem_" + item.get("name")
-                else:
-                    name = "matchingitem_" + str(i)
-                    i += 1
-                # If using the masked name, e.g. mask_0, save the regular name
-                # to support unmasking later (for the logs).
-                # Masking is currently disabled so this code is commented, as
-                # the variable `mask_ids` is not defined. (the feature appears to not be fully implemented)
-                # The original work for masking was done by Nick Parlante as part of the OLI Hinting feature.
-                # if self.has_mask():
-                #     mask_name = "mask_" + str(mask_ids.pop())
-                #     self._mask_dict[mask_name] = name
-                #     choice.set("name", mask_name)
-                # else:
-                item.set("name", name)
+                xml_str_new = ET.tostring(item, encoding='utf8').decode('utf8')
+                print("item in matchinggroup", xml_str_new)
+                if item.tag != "matchingexplain":
+
+                    # The regular, non-masked name:
+                    if item.get("name") is not None:
+                        name = "matchingitem_" + item.get("name")
+                    else:
+                        name = "matchingitem_" + str(i)
+                        i += 1
+                    # If using the masked name, e.g. mask_0, save the regular name
+                    # to support unmasking later (for the logs).
+                    # Masking is currently disabled so this code is commented, as
+                    # the variable `mask_ids` is not defined. (the feature appears to not be fully implemented)
+                    # The original work for masking was done by Nick Parlante as part of the OLI Hinting feature.
+                    # if self.has_mask():
+                    #     mask_name = "mask_" + str(mask_ids.pop())
+                    #     self._mask_dict[mask_name] = name
+                    #     choice.set("name", mask_name)
+                    # else:
+                    item.set("name", name)
 
     # UFC - hàm chấm điểm cho các problem
     def get_score(self, student_answers):
@@ -4026,8 +4037,8 @@ class MatchingResponse(LoncapaResponse):
         Arguments:
          - student_answers : dict of (answer_id, answer) where answer = student input (string)
         """
-        print("get_score", student_answers)
-        print("get_score correct_matchings", self.correct_matchings)
+        # print("get_score", student_answers)
+        # print("get_score correct_matchings", self.correct_matchings)
         # student_answers: {'matchingitem_2': 'value_matchingitem_4', 'matchingitem_0': 'matchingitem_1'}
 
         # answer = list(student_answers[self.answer_id].map(lambda item: item.split('+')))
