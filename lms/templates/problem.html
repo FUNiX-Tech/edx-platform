@@ -391,7 +391,7 @@ from openedx.core.djangolib.markup import HTML
 %endif
 
 <%namespace name='static' file='static_content.html'/>
-<h3 class="hd hd-3 problem-header" id="${ short_id }-problem-title" aria-describedby="${ id }-problem-progress" tabindex="-1">
+<h3 class="hd hd-3 problem-header" style='margin-top:0px' id="${ short_id }-problem-title" aria-describedby="${ id }-problem-progress" tabindex="-1">
 
   % if problem['name'] == 'Quiz Problem Custom' :
     Quiz
@@ -425,7 +425,7 @@ from openedx.core.djangolib.markup import HTML
 
 
       % if problem['name'] == 'Quiz Problem Custom' :
-      <div id='problem-buttom' data-problem-name="${problem['name']}" style="padding-top:10px">
+      <div id='problem-buttom' data-problem-name="${problem['name']}" style="padding-top:10px; margin-bottom:0px">
         <span style='display:flex; gap: 10px'>
 
           <button id='btn-next' class='btn-custom' style='display:none'> <span class='btn-span'>
