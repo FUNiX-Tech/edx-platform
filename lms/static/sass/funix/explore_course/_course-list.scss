@@ -114,8 +114,8 @@
 
     ul.courses-list {
         width: $breakpoint-desktop !important;
-        padding-left: calc(($breakpoint-desktop - #{$four-items-width})/2) !important;
-        padding-right: calc(($breakpoint-desktop - #{$four-items-width})/2) !important;
+        padding-left: calc((#{$breakpoint-desktop} - #{$four-items-width})/2) !important;
+        padding-right: calc((#{$breakpoint-desktop} - #{$four-items-width})/2) !important;
     }
     .courses-listing {
         grid-template-columns: repeat(4, 1fr) !important; 
@@ -126,8 +126,8 @@
 @media only screen and (min-width: 1201px) and (max-width: 1399px) {
     ul.courses-list {
         width: $breakpoint-tablet-lg !important;
-        padding-left: calc(($breakpoint-tablet-lg - #{$four-items-width})/2) !important;
-        padding-right: calc(($breakpoint-tablet-lg - #{$four-items-width})/2) !important;
+        padding-left: calc((#{$breakpoint-tablet-lg} - #{$four-items-width})/2) !important;
+        padding-right: calc((#{$breakpoint-tablet-lg} - #{$four-items-width})/2) !important;
 
     }
 
@@ -141,8 +141,8 @@
 @media only screen and (min-width: $breakpoint-tablet-md) and (max-width: $breakpoint-tablet-lg) {
     ul.courses-list {
         width: $breakpoint-tablet-md !important;
-        padding-left: calc(($breakpoint-tablet-md - #{$three-items-width})/2) !important;
-        padding-right: calc(($breakpoint-tablet-md - #{$three-items-width})/2) !important;
+        padding-left: calc((#{$breakpoint-tablet-md} - #{$three-items-width})/2) !important;
+        padding-right: calc((#{$breakpoint-tablet-md} - #{$three-items-width})/2) !important;
     }
 
     .courses-listing {
@@ -155,8 +155,8 @@
 @media only screen and (min-width: $breakpoint-tablet-sm) and (max-width: 991px) {
     ul.courses-list {
         width: $breakpoint-tablet-sm !important;
-        padding-left: calc(($breakpoint-tablet-sm - #{$two-items-width})/2) !important;
-        padding-right: calc(($breakpoint-tablet-sm - #{$two-items-width})/2) !important;
+        padding-left: calc((#{$breakpoint-tablet-sm} - #{$two-items-width})/2) !important;
+        padding-right: calc((#{$breakpoint-tablet-sm} - #{$two-items-width})/2) !important;
     }
 
     .courses-listing {
@@ -172,8 +172,8 @@
         display: flex !important;
         justify-content: center !important;
         width: $breakpoint-mobile-lg !important;
-        padding-left: calc(($breakpoint-mobile-lg - #{$one-item-width})/2) !important;
-        padding-right: calc(($breakpoint-mobile-lg - #{$one-item-width})/2) !important;
+        padding-left: calc((#{$breakpoint-mobile-lg} - #{$one-item-width})/2) !important;
+        padding-right: calc((#{$breakpoint-mobile-lg} - #{$one-item-width})/2) !important;
     }
 
     .courses-listing {
@@ -191,8 +191,8 @@
         width: $breakpoint-mobile-sm !important;
 
         // It's breakpoint-mobile-lg NOT breakpoint-mobile-sm
-        padding-left: calc(($breakpoint-mobile-lg - #{$one-item-width})/2) !important;
-        padding-right: calc(($breakpoint-mobile-lg - #{$one-item-width})/2) !important;
+        padding-left: calc((#{$breakpoint-mobile-lg} - #{$one-item-width})/2) !important;
+        padding-right: calc((#{$breakpoint-mobile-lg} - #{$one-item-width})/2) !important;
     }
 
     .courses-listing {
