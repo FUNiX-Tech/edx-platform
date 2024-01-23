@@ -10,6 +10,7 @@ header.global-header {
     left: 0;
     right: 0;
     z-index: 999;
+    box-shadow: none !important;
 
    
 }
@@ -42,8 +43,8 @@ body > div.window-wrap > header {
                 align-items: center;
 
                 img.logo {
-                    width: 60px;
-                    height: auto;
+                    width: auto;
+                    height: 32px;
                     margin-left: 0;
                 }
             }
@@ -115,9 +116,23 @@ body > div.window-wrap > header {
             gap: 8px;
 
             &:hover {
-                color: $color-active;
-                transition: all 0.15s ease-in-out 0s;
+                span {
+                    color: $color-hover-gray !important;
+                    transition: all 0.15s ease-in-out 0s;
+                }
+                svg > path {
+                    fill: $color-hover-gray;
+                }
+            }
+            &:active {
+                span {
+                    color: $color-active-dark !important;
+                    transition: all 0.15s ease-in-out 0s;
+                }
+                svg > path {
+                    fill: $color-active-dark;
+                }
             }
         }
-    }
+    } 
 }

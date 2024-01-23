@@ -38,6 +38,7 @@
             },
 
             loadNextPage: function() {
+                // console.log('loadNextPage', this.page);
                 if (this.hasNextPage()) {
                     this.sendQuery(this.buildQuery(this.page + 1));
                 }
@@ -46,6 +47,7 @@
         // private
 
             hasNextPage: function() {
+                // console.log('hasNextPage', this.page);
                 var total = this.discovery.get('totalCount');
                 return total - ((this.page + 1) * this.pageSize) > 0;
             },

@@ -16,6 +16,7 @@
             max-width: 1440px;
 
             div.courses {
+                margin-top: 24px !important;
                 padding: 0;
                 width: 100%;
                 height: 100%;
@@ -54,7 +55,7 @@
                                         margin-top: 15px;
                                         height: 88px !important;
                                         overflow: hidden;
-                                        color: var(--Text-Default, #2c3744);
+                                        color: $color-text-default;
                                         font-feature-settings: "clig" off, "liga" off;
 
                                         /* Unit text/Header 4 */
@@ -96,13 +97,13 @@
 }
 
 .courses-container .course .course-image .cover-image {
-    height: 170px !important;
+    height: $img-height !important;
     border-top-right-radius: 4px;
     border-top-left-radius: 4px;
 
     img {
         width: 100%;
-        height: 170px !important;
+        height: $img-height !important;
         object-fit: cover;
     }
 }
@@ -112,9 +113,9 @@
 @media only screen and (min-width: $breakpoint-desktop) {
 
     ul.courses-list {
-        width: 1400px !important;
-        padding-left: calc((1400px - #{$four-items-width})/2) !important;
-        padding-right: calc((1400px - #{$four-items-width})/2) !important;
+        width: $breakpoint-desktop !important;
+        padding-left: calc(($breakpoint-desktop - #{$four-items-width})/2) !important;
+        padding-right: calc(($breakpoint-desktop - #{$four-items-width})/2) !important;
     }
     .courses-listing {
         grid-template-columns: repeat(4, 1fr) !important; 
@@ -122,11 +123,11 @@
 }
 
 // 1201px - 1399px
-@media only screen and (min-width: $breakpoint-tablet-lg) and (max-width: 1399px) {
+@media only screen and (min-width: 1201px) and (max-width: 1399px) {
     ul.courses-list {
-        width: 1200px !important;
-        padding-left: calc((1200px - #{$four-items-width})/2) !important;
-        padding-right: calc((1200px - #{$four-items-width})/2) !important;
+        width: $breakpoint-tablet-lg !important;
+        padding-left: calc(($breakpoint-tablet-lg - #{$four-items-width})/2) !important;
+        padding-right: calc(($breakpoint-tablet-lg - #{$four-items-width})/2) !important;
 
     }
 
@@ -136,12 +137,12 @@
 }
 
 
-// 992px - 1199px
-@media only screen and (min-width: $breakpoint-tablet-md) and (max-width: 1199px) {
+// 992px - 1200px
+@media only screen and (min-width: $breakpoint-tablet-md) and (max-width: $breakpoint-tablet-lg) {
     ul.courses-list {
-        width: 992px !important;
-        padding-left: calc((992px - #{$three-items-width})/2) !important;
-        padding-right: calc((992px - #{$three-items-width})/2) !important;
+        width: $breakpoint-tablet-md !important;
+        padding-left: calc(($breakpoint-tablet-md - #{$three-items-width})/2) !important;
+        padding-right: calc(($breakpoint-tablet-md - #{$three-items-width})/2) !important;
     }
 
     .courses-listing {
@@ -153,9 +154,9 @@
 // 768px - 991px
 @media only screen and (min-width: $breakpoint-tablet-sm) and (max-width: 991px) {
     ul.courses-list {
-        width: 768px !important;
-        padding-left: calc((768px - #{$two-items-width})/2) !important;
-        padding-right: calc((768px - #{$two-items-width})/2) !important;
+        width: $breakpoint-tablet-sm !important;
+        padding-left: calc(($breakpoint-tablet-sm - #{$two-items-width})/2) !important;
+        padding-right: calc(($breakpoint-tablet-sm - #{$two-items-width})/2) !important;
     }
 
     .courses-listing {
@@ -170,9 +171,9 @@
     ul.courses-list {
         display: flex !important;
         justify-content: center !important;
-        width: 576px !important;
-        padding-left: calc((576px - #{$one-item-width})/2) !important;
-        padding-right: calc((576px - #{$one-item-width})/2) !important;
+        width: $breakpoint-mobile-lg !important;
+        padding-left: calc(($breakpoint-mobile-lg - #{$one-item-width})/2) !important;
+        padding-right: calc(($breakpoint-mobile-lg - #{$one-item-width})/2) !important;
     }
 
     .courses-listing {
@@ -187,9 +188,11 @@
     ul.courses-list {
         display: flex !important;
         justify-content: center !important;
-        width: 375px !important;
-        padding-left: calc((576px - #{$one-item-width})/2) !important;
-        padding-right: calc((576px - #{$one-item-width})/2) !important;
+        width: $breakpoint-mobile-sm !important;
+
+        // It's breakpoint-mobile-lg NOT breakpoint-mobile-sm
+        padding-left: calc(($breakpoint-mobile-lg - #{$one-item-width})/2) !important;
+        padding-right: calc(($breakpoint-mobile-lg - #{$one-item-width})/2) !important;
     }
 
     .courses-listing {
@@ -197,14 +200,14 @@
     }
 
     .courses-listing-item {
-        width: 302px !important
+        width: $one-item-width !important
     }
 }
 
 
 @media only screen and (max-width: $breakpoint-mobile-sm) {
     ul.courses-list {
-        width:  375px !important;
+        width:  $breakpoint-mobile-sm !important;
         padding-left: calc((100% - #{$one-item-width})/2) !important;
         padding-right: calc((100% - #{$one-item-width})/2) !important;
     }
