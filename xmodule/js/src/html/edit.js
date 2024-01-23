@@ -10,7 +10,8 @@
      */
     var CUSTOM_FONTS, STANDARD_FONTS, _getFonts;
 
-    CUSTOM_FONTS = "Default='Open Sans', Verdana, Arial, Helvetica, sans-serif;";
+    // CUSTOM_FONTS = "Default='Open Sans', Verdana, Arial, Helvetica, sans-serif;";
+    CUSTOM_FONTS = "Default='Roboto', sans-serif;";
 
     /*
     list of standard tinyMCE fonts: http://www.tinymce.com/wiki.php/Configuration:font_formats
@@ -34,6 +35,7 @@
       "Wingdings=wingdings,zapf dingbats";
 
     _getFonts = function() {
+      return CUSTOM_FONTS;
       return CUSTOM_FONTS + STANDARD_FONTS;
     };
 
@@ -132,7 +134,7 @@
           Disable visual aid on borderless table.
            */
           visual: false,
-          plugins: "lists, link, image, codemirror",
+          plugins: "lists, link, image, codemirror, table",
           codemirror: {
             path: baseUrl + "js/vendor",
             disableFilesMerge: true,
@@ -145,19 +147,32 @@
           /*
           We may want to add "styleselect" when we collect all styles used throughout the LMS
            */
-          toolbar: "formatselect fontselect bold italic underline forecolor wrapAsCode " +
-            "alignleft aligncenter alignright alignjustify " +
-            "bullist numlist outdent indent blockquote link unlink " +
-            ((this.new_image_modal ? 'insertImage' : 'image') + " code"),
+          // toolbar: "formatselect fontselect bold italic underline forecolor wrapAsCode " +
+          //   "alignleft aligncenter alignright alignjustify " +
+          //   "bullist numlist outdent indent blockquote link unlink " +
+          //   ((this.new_image_modal ? 'insertImage' : 'image') + " code"),
+          toolbar: "formatselect bold italic underline table tabledelete | tableprops tablerowprops tablecellprops | tableinsertrowbefore tableinsertrowafter tabledeleterow | tableinsertcolbefore tableinsertcolafter tabledeletecol " +
+          "alignleft aligncenter alignright alignjustify " +
+          "bullist numlist link unlink " +
+          ((this.new_image_modal ? 'insertImage' : 'image') + " code"),
+          // block_formats: edx.StringUtils.interpolate(
+          //   gettext("{paragraph}=p;{preformatted}=pre;{heading3}=h3;{heading4}=h4;{heading5}=h5;{heading6}=h6"),
+          //   {
+          //     paragraph: gettext("Paragraph"),
+          //     preformatted: gettext("Preformatted"),
+          //     heading3: gettext("Heading 3"),
+          //     heading4: gettext("Heading 4"),
+          //     heading5: gettext("Heading 5"),
+          //     heading6: gettext("Heading 6")
+          //   }),
           block_formats: edx.StringUtils.interpolate(
-            gettext("{paragraph}=p;{preformatted}=pre;{heading3}=h3;{heading4}=h4;{heading5}=h5;{heading6}=h6"),
+            gettext("{paragraph}=p;{heading3}=h3;{heading4}=h4;{heading5}=h5;{heading6}=h6"),
             {
-              paragraph: gettext("Paragraph"),
-              preformatted: gettext("Preformatted"),
-              heading3: gettext("Heading 3"),
-              heading4: gettext("Heading 4"),
-              heading5: gettext("Heading 5"),
-              heading6: gettext("Heading 6")
+              paragraph: gettext("Đoạn văn"),
+              heading3: gettext("Tiêu đề 3"),
+              heading4: gettext("Tiêu đề 4"),
+              heading5: gettext("Tiêu đề 5"),
+              heading6: gettext("Tiêu đề 6")
             }),
           width: '100%',
           height: '435px',
