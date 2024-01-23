@@ -22,3 +22,8 @@
 .content-wrapper {
     margin-top: 0;
 }
+
+// override #content margin top of explore courses
+#content {
+    margin-top: 0 !important;
+}
