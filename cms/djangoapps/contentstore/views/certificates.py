@@ -646,14 +646,18 @@ def about_overview (request, course_id) :
     
     }
         return render_to_response('about_course.html' , context)
-    
-    context = {
-          'context_course': course,
-          'overview' : course_about.overview ,
-          'target' : course_about.target,
-          'participant' : course_about.participant ,
-          'input_required' : course_about.input_required
-    
-    }
+    if course_about is not None : 
+        context = {
+            'context_course': course,
+            'overview' : course_about.overview ,
+            'target' : course_about.target,
+            'participant' : course_about.participant ,
+            'input_required' : course_about.input_required
+        
+        }
+    else :
+         context = {
+            'context_course': course,
+            }
     
     return render_to_response('about_course.html' , context)
