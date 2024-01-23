@@ -734,11 +734,12 @@
                         var explanationTitle = $(listQz[currentIndex]).find('.explanation-title');
                         if (explanationTitle.length === 0) {
                           var newElement = $(
+                            '<span class="message">'+
                             '<div class="feedback-hint-correct messages-box">' +
                               '<div class="explanation-title">' +
                                 '<span>Bạn đã trả lời đúng</span>' +
                               '</div>' +
-                            '</div>'
+                            '</div>' + '</span>'
                           );
                           $(listQz[currentIndex]).append(newElement);
                         } else {
@@ -779,18 +780,20 @@
                         var explanation = $(listQz[currentIndex]).find('.explanation-title'); //remove messgae
     
                         $(listQz[currentIndex]).find('.message').remove();
-                      
+                        $(listQz[currentIndex]).find('.feedback-hint-incorrect').remove()
                         if (messagesProblem) {
                           choicegroup.appendChild(messagesProblem);
                           $(listQz[currentIndex]).find('.explanation-title').append('<span>Câu trả lời của bạn chưa chính xác</span>');
                         } else {
     
                           if (explanation.length === 0) {
+                            var spanMessagesBox = $('<span></span>').addClass('message')
                             var newMessgasBox = $('<div></div>').addClass('feedback-hint-incorrect messages-box error-problem-answer ');
                             var title = $('<div></div>').addClass('explanation-title').text('Câu trả lời của bạn chưa chính xác');
                             title.css("padding-bottom", '0px');
                             newMessgasBox.append(title);
-                            $(listQz[currentIndex]).append(newMessgasBox);
+                            spanMessagesBox.append(newMessgasBox);
+                            $(listQz[currentIndex]).append(spanMessagesBox);
                           }
                         }
     
@@ -822,12 +825,14 @@
                           //indicatorError.css('display', 'none');
                           $(listQz[currentIndex]).find('.explanation-title').append('<span>Bạn đã trả lời đúng</span>');
                         }else {
-                          $(listQz[currentIndex]).find('.feedback-hint-incorrect').remove()
-                          var newMessgasBox = $('<div></div>').addClass('feedback-hint-incorrect messages-box');
-                          var title = $('<div></div>').addClass('explanation-title').text('Bạn đã trả lời đúng');
-                          title.css("padding-bottom", '0px');
-                          newMessgasBox.append(title);
-                          $(listQz[currentIndex]).append(newMessgasBox);
+                            $(listQz[currentIndex]).find('.feedback-hint-incorrect').remove()
+                            var newSpanMessage = $('<div></div>').addClass('message')
+                            var newMessgasBox = $('<div></div>').addClass('feedback-hint-incorrect messages-box');
+                            var title = $('<div></div>').addClass('explanation-title').text('Bạn đã trả lời đúng');
+                            title.css("padding-bottom", '0px');
+                            newMessgasBox.append(title);
+                            newSpanMessage.append(newMessgasBox)
+                            $(listQz[currentIndex]).append(newSpanMessage);
                           
                         }
       
