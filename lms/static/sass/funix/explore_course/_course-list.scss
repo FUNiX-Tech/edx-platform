@@ -97,6 +97,8 @@
 
 .courses-container .course .course-image .cover-image {
     height: 170px !important;
+    border-top-right-radius: 4px;
+    border-top-left-radius: 4px;
 
     img {
         width: 100%;
