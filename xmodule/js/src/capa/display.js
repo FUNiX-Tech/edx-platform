@@ -714,7 +714,7 @@
                   var submittedInput = problemParsed.querySelector('input.submitted');
                   var incorrectLabel = problemParsed.querySelector('label.choicegroup_correct');
                   var wrongLabel = problemParsed.querySelector('label.choicegroup_incorrect');
-                  $(listQz[currentIndex]).find('.indicator-container').css('display', 'none');
+                 // $(listQz[currentIndex]).find('.indicator-container').css('display', 'none');
     
                   if (incorrectLabel && submittedInput) {
                     that.$('.btn-submit-qz').css('display', 'none');
@@ -764,7 +764,7 @@
                   } else {}
     
                   if (wrongLabel && submittedInput) {
-                    indicatorError.css('display', 'none');
+                    //indicatorError.css('display', 'none');
                     var indocatorName = $(indicatorError).find('.sr');
     
                     if (indocatorName.text() == 'unanswered') {
@@ -819,7 +819,7 @@
                         $(listQz[currentIndex]).find('.message').remove();
                         if (messagesProblem){
                           choicegroup.appendChild(messagesProblem);
-                          indicatorError.css('display', 'none');
+                          //indicatorError.css('display', 'none');
                           $(listQz[currentIndex]).find('.explanation-title').append('<span>Bạn đã trả lời đúng</span>');
                         }else {
                           $(listQz[currentIndex]).find('.feedback-hint-incorrect').remove()
