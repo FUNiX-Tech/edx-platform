@@ -775,9 +775,8 @@
                   } else {}
     
                   if (wrongLabel && submittedInput) {
-                    //indicatorError.css('display', 'none');
                     var indocatorName = $(indicatorError).find('.sr');
-    
+
                     if (indocatorName.text() == 'unanswered') {
                       indicatorError.remove();
                       choicegroup.appendChild(indicatorErrorParsed);
@@ -792,19 +791,21 @@
                         $(listQz[currentIndex]).find('.message').remove();
                         $(listQz[currentIndex]).find('.feedback-hint-incorrect').remove()
                         if (messagesProblem) {
+                            console.log('======messagesProblem=========')
                           choicegroup.appendChild(messagesProblem);
                           $(listQz[currentIndex]).find('.explanation-title').append('<span>Câu trả lời của bạn chưa chính xác</span>');
                         } else {
-    
-                          if (explanation.length === 0) {
+                            console.log('======not messages problem=========')
                             var spanMessagesBox = $('<span></span>').addClass('message')
                             var newMessgasBox = $('<div></div>').addClass('feedback-hint-incorrect messages-box error-problem-answer ');
                             var title = $('<div></div>').addClass('explanation-title').text('Câu trả lời của bạn chưa chính xác');
                             title.css("padding-bottom", '0px');
                             newMessgasBox.append(title);
+                            console.log('======newbox========',newMessgasBox )
                             spanMessagesBox.append(newMessgasBox);
+                            console.log('=====spanmessage=========',spanMessagesBox )
                             $(listQz[currentIndex]).append(spanMessagesBox);
-                          }
+                        
                         }
     
                         var messgasBox = listQz[currentIndex].querySelector('.feedback-hint-incorrect');
