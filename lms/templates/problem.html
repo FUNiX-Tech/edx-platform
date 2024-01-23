@@ -793,6 +793,8 @@ from openedx.core.djangolib.markup import HTML
           const title = problemList[numberError - 1].querySelector('.explanation-title');
           title.textContent = 'Câu trả lời của bạn chưa chính xác';
         } else {
+          const newMessages = document.createElement('span')
+          newMessages.classList.add('message')
           const newMessgasBox = document.createElement('div');
           newMessgasBox.classList.add('feedback-hint-incorrect', 'error-problem-answer' , "messages-box");
           const title = document.createElement('div');
@@ -800,7 +802,8 @@ from openedx.core.djangolib.markup import HTML
           title.style.paddingBottom = '0px'
           title.textContent = 'Câu trả lời của bạn chưa chính xác';
           newMessgasBox.appendChild(title);
-          problemList[numberError - 1].appendChild(newMessgasBox);
+          newMessages.appendChild(newMessgasBox);
+          problemList[numberError - 1].appendChild(newMessages);
 
         }
       });
@@ -814,7 +817,7 @@ from openedx.core.djangolib.markup import HTML
         return 
       }
       if (problemElement) {
-        console.log('============', problemElement)
+
         const titleElement = problemElement.querySelector('.explanation-title');
         if (titleElement) {
           titleElement.textContent = 'Bạn đã trả lời đúng';
