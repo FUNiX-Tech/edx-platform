@@ -82,7 +82,7 @@
             color: theme-color("dark");
             line-height: 1em;
             display: none;
-
+      font-family:'Roboto', sans-serif ;
             .course-name {
                 display: block;
                 font-size: $font-size-base;
@@ -261,7 +261,7 @@
 
         // Display the menu icon and allow for transition to an X on click
         .hamburger-menu {
-            @include right($baseline * 1.9);
+            @include right($baseline * 0.8);
 
             position: absolute;
             top: $baseline * 0.95;

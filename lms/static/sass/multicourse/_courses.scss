@@ -228,29 +228,29 @@ $facet-background-color: #007db8;
     @include rtl() { $layout-direction: "RTL"; }
 
     .search-status-label {
-      @extend %t-title3;
+      // @extend %t-title3;
 
-      @include span-columns(9);
+      // @include span-columns(9);
 
-      min-height: $course-search-input-height;
+      // min-height: $course-search-input-height;
 
-      @include media($bp-tiny) {
-        @include fill-parent();
-        @include font-size(20);
-      }
+      // @include media($bp-tiny) {
+      //   @include fill-parent();
+      //   @include font-size(20);
+      // }
 
-      @include media($bp-small) {
-        @include span-columns(4);
-        @include font-size(20);
-      }
+      // @include media($bp-small) {
+      //   @include span-columns(4);
+      //   @include font-size(20);
+      // }
 
-      @include media($bp-medium) {
-        @include span-columns(4);
-      }
+      // @include media($bp-medium) {
+      //   @include span-columns(4);
+      // }
 
-      @include media($bp-large) {
-        @include span-columns(8);
-      }
+      // @include media($bp-large) {
+      //   @include span-columns(8);
+      // }
     }
 
     .wrapper-search-input {
