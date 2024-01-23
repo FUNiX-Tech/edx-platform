@@ -610,3 +610,50 @@ def setting_survey_form (request, course_id):
 
     
     return render_to_response('survey_form.html' ,context)
+
+
+from openedx.core.djangoapps.content.course_overviews.models import CourseOverviewAbout
+@login_required
+@ensure_csrf_cookie
+def about_overview (request, course_id) :
+    
+    course_key = CourseKey.from_string(course_id)
+   
+    try:
+        course = _get_course_and_check_access(course_key, request.user)
+    except PermissionDenied:
+        msg = _('PermissionDenied: Failed in authenticating {user}').format(user=request.user)
+        return JsonResponse({"error": msg}, status=403)
+    
+    if course is None :
+        return JsonResponse( status=403)
+    
+    course_about = CourseOverviewAbout.getAboutCourse(course_id=course_key)
+
+    if request.method == 'POST':
+        overview = request.POST.get('overview')
+        target =  request.POST.get('target_course')
+        input_required = request.POST.get('input_required')
+        participant_course = request.POST.get('participant_course')
+        
+        course_instance = CourseOverviewAbout.setAboutCourse(course_id=course_key ,overview=overview,target=target, participant=participant_course, input_required=input_required )
+        context = {
+          'context_course': course,
+          'overview' : overview ,
+          'target' : target,
+          'participant' : participant_course ,
+          'input_required' : input_required
+    
+    }
+        return render_to_response('about_course.html' , context)
+    
+    context = {
+          'context_course': course,
+          'overview' : course_about.overview ,
+          'target' : course_about.target,
+          'participant' : course_about.participant ,
+          'input_required' : course_about.input_required
+    
+    }
+    
+    return render_to_response('about_course.html' , context)

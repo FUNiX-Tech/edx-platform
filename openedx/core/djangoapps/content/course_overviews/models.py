@@ -1284,3 +1284,50 @@ def render_type_lab_xblock (block_id , email):
    except:
        return ''
 
+
+
+# course about
+class CourseOverviewAbout (models.Model):
+  
+    course_id = models.CharField(max_length=255)
+    overview = models.TextField(default='')
+    target = models.TextField(default='')
+    participant =  models.TextField(default='')
+    input_required = models.TextField(default='')
+    
+    def __str__ (self) :
+        return self.course_id
+    
+    @classmethod
+    def setAboutCourse (self, course_id, overview=None, target=None, participant=None, input_required=None):
+        try:
+            course_instance = CourseOverviewAbout.objects.get(course_id=course_id)
+            course_instance.overview = overview
+            course_instance.target = target
+            course_instance.participant = participant
+            course_instance.input_required = input_required
+
+        except CourseOverviewAbout.DoesNotExist:
+
+            course_instance = CourseOverviewAbout(
+                course_id=course_id,
+                overview=overview,
+                target=target,
+                participant=participant,
+                input_required=input_required
+            )
+
+        course_instance.save()
+
+        return course_instance
+    
+    @classmethod
+    def getAboutCourse(self, course_id):
+        try:
+            course_instance = CourseOverviewAbout.objects.get(course_id=course_id)
+        except CourseOverviewAbout.DoesNotExist:
+            return None
+            
+        return course_instance
+    
+        
