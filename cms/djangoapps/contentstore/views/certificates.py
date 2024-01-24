@@ -659,7 +659,10 @@ def about_overview (request, course_id) :
           'participant' : participant_course ,
           'input_required' : input_required
     
-    }
+        }
+        context.update({
+            "course_teachers" : course_teacher
+        })
         return render_to_response('about_course.html' , context)
     
     context = {
@@ -673,7 +676,7 @@ def about_overview (request, course_id) :
             'input_required' : course_about.input_required
         
         }) 
-    print('======course_teacher ======', course_teacher)
+
     if course_teacher is not None :
         context.update({
             "course_teachers" : course_teacher
