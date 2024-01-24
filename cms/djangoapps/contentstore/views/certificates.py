@@ -686,3 +686,27 @@ def about_overview (request, course_id) :
    
     
     return render_to_response('about_course.html' , context)
+
+
+from rest_framework.decorators import api_view
+
+@api_view(['POST'])
+@login_required
+@ensure_csrf_cookie
+def remove_teacher(request):
+    if request.method == 'POST':
+        teacher_id = request.data.get('teacherId')
+
+  
+        if teacher_id is not None:
+
+            success = CourseOverviewAboutTeacher.remove_teacher(teacher_id=teacher_id)
+            
+            if success:
+                return JsonResponse({"status": "success", "message": "Teacher has been successfully deleted."})
+            else:
+                return JsonResponse({"status": "error", "message": "Teacher not found. Deletion unsuccessful."})
+        else:
+            return JsonResponse({"status": "error", "message": "Missing teacherId information in the request."})
+    else:
+        return JsonResponse({"status": "error", "message": "Invalid request. Only POST requests are accepted."})

@@ -2158,3 +2158,4 @@ def get_about_course(request, course_id):
 
                               
     return JsonResponse(data)
+

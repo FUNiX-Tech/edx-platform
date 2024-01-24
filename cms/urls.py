@@ -253,7 +253,8 @@ if settings.FEATURES.get('CERTIFICATES_HTML_VIEW'):
         certificates_detail_handler,
         certificates_list_handler,
         setting_survey_form ,
-        about_overview
+        about_overview ,
+        remove_teacher
     )
 
     urlpatterns += [
@@ -384,5 +385,11 @@ urlpatterns += [
 
 
 urlpatterns += [
-    path('about/<str:course_id>' , about_overview , name='course_overview')
+    path('about/<str:course_id>' , about_overview , name='course_overview'),
+]
+
+
+
+urlpatterns += [
+    path('api/overview/about/remove_teacher',remove_teacher, name='remove_teacher' )
 ]

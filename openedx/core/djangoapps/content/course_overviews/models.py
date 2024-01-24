@@ -1374,3 +1374,12 @@ class CourseOverviewAboutTeacher (models.Model):
             return None
             
         return course_teacher
+
+    @classmethod
+    def remove_teacher(self, teacher_id):
+        try:
+            teacher_to_remove = CourseOverviewAboutTeacher.objects.get(id=teacher_id)
+            teacher_to_remove.delete()
+            return True 
+        except CourseOverviewAboutTeacher.DoesNotExist:
+            return False

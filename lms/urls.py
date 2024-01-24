@@ -1107,7 +1107,8 @@ urlpatterns += [
 
 # about course overview 
 # from openedx.core.djangoapps.content.course_overviews.api import   get_about_course
-from lms.djangoapps.courseware.views.views import get_about_course
+from lms.djangoapps.courseware.views.views import get_about_course , remove_teacher
 urlpatterns += [
-    path('api/overview/about/<str:course_id>' , get_about_course , name='about_course' )
+    path('api/overview/about/<str:course_id>' , get_about_course , name='about_course' ) ,
+    path('api/overview/about/remove_teacher',remove_teacher, name='remove_teacher' )
 ]
