@@ -791,19 +791,19 @@
                         $(listQz[currentIndex]).find('.message').remove();
                         $(listQz[currentIndex]).find('.feedback-hint-incorrect').remove()
                         if (messagesProblem) {
-                            console.log('======messagesProblem=========')
+
                           choicegroup.appendChild(messagesProblem);
                           $(listQz[currentIndex]).find('.explanation-title').append('<span>Câu trả lời của bạn chưa chính xác</span>');
                         } else {
-                            console.log('======not messages problem=========')
+
                             var spanMessagesBox = $('<span></span>').addClass('message')
                             var newMessgasBox = $('<div></div>').addClass('feedback-hint-incorrect messages-box error-problem-answer ');
                             var title = $('<div></div>').addClass('explanation-title').text('Câu trả lời của bạn chưa chính xác');
                             title.css("padding-bottom", '0px');
                             newMessgasBox.append(title);
-                            console.log('======newbox========',newMessgasBox )
+
                             spanMessagesBox.append(newMessgasBox);
-                            console.log('=====spanmessage=========',spanMessagesBox )
+
                             $(listQz[currentIndex]).append(spanMessagesBox);
                         
                         }
