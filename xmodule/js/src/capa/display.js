@@ -752,7 +752,7 @@
                         }
     
                         // $(listQz[currentIndex]).find('.explanation-title').append('<span>Bạn đã trả lời đúng</span>');
-                        indicatorError.css('display', 'none');
+                        // indicatorError.css('display', 'none');
                         element.classList.remove('err-number-qusetion');
                         checkedInput.each(function () {
                           var input = $(this);
