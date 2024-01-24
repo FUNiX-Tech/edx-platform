@@ -1854,6 +1854,8 @@ class MatchingGroup(InputTypeBase):
                 <matchingitem pos="left">Left 3: will be hide, no matchingvalue</matchingitem>
                 <matchingitem pos="right">Right 3</matchingitem>
 
+                <matchingexplain> matchingexplain 1 </matchingexplain>
+
             </matchinggroup>
         </matchingresponse>
     """
@@ -1868,7 +1870,18 @@ class MatchingGroup(InputTypeBase):
         try:
             # print("self MatchingGroup new", vars(self))
             # print("self MatchingGroup new", self.status)
-            print("setup_func")
+            print("setup_func_new", self.xml)
+            # xml_str = ET.tostring(self.xml, encoding='utf8').decode('utf8')
+            # print("rootXML_new setup_func", xml_str)
+
+            # create matching_explain list
+            matching_explains = []
+            # root = ET.tostring(self.xml)
+            # print("rootXML_new setup_func", root)
+            for matchingexplain in self.xml.findall('.//matchingexplain'):
+                matching_explains.append(matchingexplain.text.strip())
+
+            print("matching_explains_new", matching_explains)
 
             matching_items, left_items, right_items, matchingitems = self.extract_matching_items(self.xml, i18n, False, self.value)
             self.matching_items = matching_items
@@ -1877,6 +1890,7 @@ class MatchingGroup(InputTypeBase):
             self.matchingitems = matchingitems
             self.matching_result_status = self.status
             self._matching_items_map = dict(self.matching_items,)
+            self.matching_explains = matching_explains
 
         except Exception as e:
             raise Exception(str(e))
@@ -1893,17 +1907,8 @@ class MatchingGroup(InputTypeBase):
     # UFC - biến truyền vào dùng để render ra template = "matchinggroup.html"
     def _extra_context(self):
         # print("MatchingGroup_03")
-        # print("MatchingGroup_03 new", vars(self))
-        # print("MatchingGroup_03 new", self.status)
-
-        print("_extra_context")
-        for left_item, right_item in self.matchingitems:
-
-            # print("left_item", left_item)
-            # print("right_item", right_item)
-
-
-            pass
+        # xml_str = ET.tostring(self.xml, encoding='utf8').decode('utf8')
+        # print("rootXML_new _extra_context", xml_str)
 
 
         return {
@@ -1913,18 +1918,18 @@ class MatchingGroup(InputTypeBase):
             'matchingitems': self.matchingitems,
             'test_name_context': 'test_name_context',
             'matching_result_status': self.matching_result_status,
+            'matching_explains': self.matching_explains,
         }
 
     @staticmethod
     def extract_matching_items(element, i18n, text_only=False, value=None):
         # print("MatchingGroup_04", value)
-        xml_str = ET.tostring(element, encoding='utf8').decode('utf8')
-        root = ET.fromstring(xml_str)
-        print("rootXML_new", xml_str)
+        # xml_str = ET.tostring(element, encoding='utf8').decode('utf8')
+        # print("rootXML_new", xml_str)
 
         student_answer = {}
 
-        print("value_new", value)
+        # print("value_new", value)
         # UFC - có thể chỗ này gây ra bug student_answer
         if value:
             for answer_item in list(map(lambda item: item.split('+'), value)):
@@ -1956,13 +1961,13 @@ class MatchingGroup(InputTypeBase):
 
         # UFC có thể chỗ này gây ra bug
         # print("macthingitems rerun left_items", left_items)
-        print("left_items first", left_items)
-        print("left_items_obj first", left_items_obj)
-        print("right_items first", right_items)
-        print("right_items_obj first", right_items_obj)
+        # print("left_items first", left_items)
+        # print("left_items_obj first", left_items_obj)
+        # print("right_items first", right_items)
+        # print("right_items_obj first", right_items_obj)
 
 
-        print("student_answer first", student_answer)
+        # print("student_answer first", student_answer)
         i = 0
         for ritem in right_items:
             # Nếu student đã submit thì sort lại
@@ -1970,8 +1975,8 @@ class MatchingGroup(InputTypeBase):
                 left_name = left_items[i][0]
                 right_name = student_answer[left_name]
                 # right_name = student_answer.get(left_name)
-                print("left_name-new", left_name)
-                print("right_name-new", right_name)
+                # print("left_name-new", left_name)
+                # print("right_name-new", right_name)
 
                 # right_item = right_items_obj.get(right_name)
                 right_item = right_items_obj[right_name]
@@ -1981,14 +1986,12 @@ class MatchingGroup(InputTypeBase):
                 macthingitems.append((left_items[i], ritem))
 
             # macthingitems.append((left_items[i], ritem))
-
             i += 1
 
         # Nếu student chưa submit thì shuffle
-        print("macthingitems first", macthingitems)
+        # print("macthingitems first", macthingitems)
         if not value:
             macthingitems = MatchingGroup.do_shuffle(macthingitems)
-
             pass
 
         # print("macthingitems rerun after", macthingitems)

@@ -181,7 +181,6 @@ from openedx.core.djangolib.markup import HTML
         grid-template-columns: 1fr 1fr;
         column-gap: 1rem;
         background-color: #e6e6e8;
-        text-align: center;
         padding: 0 !important;
         margin: 0 !important;
     }
@@ -191,6 +190,7 @@ from openedx.core.djangolib.markup import HTML
         font-size: 1.25rem;
         font-weight: 500;
         margin: 0 !important;
+        text-align: center !important;
     }
 
     .matchinggroup {
@@ -447,16 +447,15 @@ from openedx.core.djangolib.markup import HTML
 
       % elif problem['name'] == 'Matching Problem':
       <button type="button" class="submit btn-brand submit_matching_btn" data-submitting="${ submit_button_submitting }" data-value="${ submit_button }" data-should-enable-submit-button="${ should_enable_submit_button }" aria-describedby="submission_feedback_${short_id}" ${'' if should_enable_submit_button else 'disabled'}>
-        Trả lời matching
+        Trả lời
       </button>
-
       %endif
 
       % if demand_hint_possible:
         % if problem['name'] != 'Quiz Problem Custom':
             <span class="problem-action-button-wrapper">
               <button type="button" class="hint-button problem-action-btn btn-link btn-small" data-value="${_('Hint')}" ${'' if should_enable_next_hint else 'disabled'}>${_('Hint')}</button>
-          </span>
+            </span>
         %endif
 
       % endif
@@ -658,11 +657,11 @@ from openedx.core.djangolib.markup import HTML
         }
 
 
-      
-        
+
+
         const matchingDiv = problemList[i].querySelector('div[question_matching="True"]')
 
-        
+
         if(matchingDiv){
           const matchingError = problemList[i].querySelector('.error_result')
           const matchingSucces =  problemList[i].querySelector('.success_result')
@@ -684,7 +683,7 @@ from openedx.core.djangolib.markup import HTML
             const resultMatchingIncorrect = problemList[i].querySelector('.matching_result_container.error_result')
 
             const matchingSucces =  problemList[i].querySelector('.success_result')
-           
+
 
             if (matchingDiv) {
               btnSubmit.style.display = 'none';
@@ -694,7 +693,7 @@ from openedx.core.djangolib.markup import HTML
               }else {
                 matchingBtn.style.display = 'block'
               }
-            
+
             } else {
                 matchingBtn.style.display = 'none'
             }
@@ -753,12 +752,12 @@ from openedx.core.djangolib.markup import HTML
         });
 
 
-     
+
         if ( submittedInput && incorrectLabel ){
           const devElement = document.createElement('div');
           devElement.classList.add('bg-quiz-success')
           problemList[i].appendChild(devElement)
-         
+
         }
 
 
@@ -777,9 +776,9 @@ from openedx.core.djangolib.markup import HTML
         const numberError = elementError.textContent;
         const indicatorError = problemList[numberError - 1].querySelector('.indicator-container');
         const matchingQz = problemList[numberError - 1].querySelector('div[question_matching="True"]')
-       
+
         if (matchingQz){
-          return 
+          return
         }
 
         if (indicatorError){
@@ -814,7 +813,7 @@ from openedx.core.djangolib.markup import HTML
       const problemElement = problemList[numberSubmitted - 1];
       const matchingQz = problemElement.querySelector('div[question_matching="True"]')
       if (matchingQz){
-        return 
+        return
       }
       if (problemElement) {
 
@@ -917,7 +916,7 @@ from openedx.core.djangolib.markup import HTML
           if (matchingDiv) {
             const matchingSuccess = problemList[currentIndex].querySelector('.success_result')
             const matchingError = problemList[currentIndex].querySelector('.error_result')
-  
+
             if (matchingSuccess){
               matchingBtn.style.display ='none'
               btnSubmit.style.display = 'none';
@@ -931,7 +930,7 @@ from openedx.core.djangolib.markup import HTML
               matchingBtn.style.display ='block'
               btnSubmit.style.display = 'none';
             }
-           
+
           } else {
             matchingBtn.style.display ='none'
           }
@@ -987,15 +986,15 @@ from openedx.core.djangolib.markup import HTML
         });
 
         btn.addEventListener("dragend", function (e) {
-           
+
             btn.innerHTML = draggedItem;
             draggedItem = null;
 
             const inputName = btn.dataset.inputName
-           
+
 
             const imgEle = document.querySelectorAll(`img[data-right-result]`);
-           
+
             const imgValue = [];
             imgEle.forEach(function(img) {
 
@@ -1005,10 +1004,10 @@ from openedx.core.djangolib.markup import HTML
                 }
 
             });
-           
+
 
             const inputEle = document.querySelectorAll(`input[data-left-value]`);
-            
+
 
             const inputValue = [];
             let i = 0;
