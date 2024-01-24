@@ -2,7 +2,7 @@
 // ====================
 // TO-DO: combine this with _home.scss as a cleanup story
 
-$learn-more-horizontal-position: calc(50% - 100px); // calculate the left position for "LEARN MORE" content
+$learn-more-horizontal-position: calc(50% - 72px); // calculate the left position for "LEARN MORE" content
 
 .courses-container {
   @include outer-container;
@@ -28,14 +28,22 @@ $learn-more-horizontal-position: calc(50% - 100px); // calculate the left positi
       @include transition(all $tmg-f3 linear 0s);
 
       position: relative;
-      border-bottom: 3px solid $action-primary-bg;
-      box-shadow: 0 1px 10px 0 $black-t0, inset 0 0 0 1px $white-t3;
+      // border-bottom: 3px solid $action-primary-bg;
+      // box-shadow: 0 1px 10px 0 $black-t0, inset 0 0 0 1px $white-t3;
       background: $body-bg;
       width: 100%;
+
+
+      // STATE: hover
+      &:hover {
+        box-shadow: 2px 8px 8px 0px rgba(44, 55, 68, 0.04), 2px 20px 24px 0px rgba(44, 55, 68, 0.10);        
+        filter:brightness(1.2)
+      }
 
       .course-image .cover-image {
         height: $course-image-height;
         overflow: hidden;
+
 
         // places the shadow on top of the course image while hovering over the course card
         &::before {
@@ -47,7 +55,8 @@ $learn-more-horizontal-position: calc(50% - 100px); // calculate the left positi
           top: 0;
           bottom: 88px;
           opacity: 0;
-          background-image: url('#{$static-path}/images/default_course_hover_thumb.jpeg'); ;
+          // background-image: url('#{$static-path}/images/default_course_hover_thumb.jpeg');
+          
           width: 100%;
           height: auto;
           content: '';
@@ -66,15 +75,15 @@ $learn-more-horizontal-position: calc(50% - 100px); // calculate the left positi
           @extend %ui-depth2;
 
           position: absolute;
-          top: ($baseline*3.75);
+          top: ($baseline*3.25);
           padding: 0 $baseline;
-          width: ($baseline*10);
-          height: ($baseline*2.5);
+          width: ($baseline*7.2);
+          height: ($baseline*1.9);
           border-color: #007AE6;
           border-radius: 4px;
           background: #007AE6;
           color: $white;
-          line-height: ($baseline*2.5);
+          line-height: ($baseline*1.9);
           text-align: center;
           opacity: 0;
           text-transform: none;
@@ -139,13 +148,13 @@ $learn-more-horizontal-position: calc(50% - 100px); // calculate the left positi
       &:focus {
         .cover-image {
           &::before {
-            @include transition(opacity $tmg-f2 ease-out $tmg-f2);
+            // @include transition(opacity $tmg-f2 ease-out $tmg-f2);
 
             opacity: 1;
           }
 
           .learn-more {
-            @include transition(opacity $tmg-f2 ease-out $tmg-f2);
+            // @include transition(opacity $tmg-f2 ease-out $tmg-f2);
 
             opacity: 1;
           }

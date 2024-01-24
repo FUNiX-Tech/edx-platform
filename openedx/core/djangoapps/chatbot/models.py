@@ -20,7 +20,6 @@ class ChatbotQuery(TimeStampedModel):
 
     STATUS_CHOICES = [
         ('idle', 'Idle'), 
-        ('pending', 'Pending'), 
         ('failed', 'Failed'), 
         ('succeeded', 'Succeeded'),
         ('canceled', 'Canceled'),
@@ -39,8 +38,11 @@ class ChatbotQuery(TimeStampedModel):
 
     response_msg = models.TextField(null=True)
 
-    status = models.CharField(max_length=9, choices=STATUS_CHOICES, default='pending') 
+    status = models.CharField(max_length=9, choices=STATUS_CHOICES, default='idle') 
 
     vote = models.CharField(max_length=4, choices=VOTE_CHOICES, null=True) 
 
+    feedback = models.TextField(max_length=500, default='')
 
+class ChatbotError(TimeStampedModel):
+    error_msg = models.TextField(default='')

@@ -1,6 +1,8 @@
 $color-active: #007ae6;
 $color-active-light: #f2f9ff;
+$color-active-dark: #2c3744;
 $color-hover: #025dae;
+$color-hover-gray: #8097B1;
 
 $background-color-hover: #eef7ff;
 $background-content: #fafbfb;
@@ -47,17 +49,22 @@ $fz-h6: 13px;
 $fz-p: 1rem;
 
 // Bootstrap Breakpoints
-$breakpoint-mobile: 395px;
-$breakpoint-tablet-vs: 648px;
-$breakpoint-tablet-sm: 746px;
+$breakpoint-mobile-sm: 375px;
+$breakpoint-mobile-lg: 576px;
+$breakpoint-tablet-sm: 768px;
 $breakpoint-tablet-md: 992px;
-$breakpoint-tablet-lg: 1133px;
-$breakpoint-desktop: 1440px;
+$breakpoint-tablet-lg: 1200px;
+$breakpoint-desktop: 1400px;
 
-$padding-mobile: 36px;
-$padding-tablet-sm: 56px;
-$padding-tablet-lg: 88px;
-$padding-desktop: 80px;
+$padding-header-footer: 16px;
+
 
 $footer-height: 148px;
-$header-height: 58px;
+$header-height: 64px;
+
+$four-items-width: 1280px;
+$three-items-width: 954px;
+$two-items-width: 628px;  
+$one-item-width: 302px;
+
+$img-height: 170px;

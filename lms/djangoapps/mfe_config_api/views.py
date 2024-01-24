@@ -68,4 +68,6 @@ class MFEConfigView(APIView):
                 settings.MFE_CONFIG_OVERRIDES,
             )
             mfe_config.update(app_config.get(mfe, {}))
+
+
         return JsonResponse(mfe_config, status=status.HTTP_200_OK)

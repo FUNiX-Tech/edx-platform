@@ -16,14 +16,16 @@
             max-width: 1440px;
 
             div.courses {
+                margin-top: 24px !important;
                 padding: 0;
                 width: 100%;
                 height: 100%;
+                display: flex !important;
+                justify-content: center;
 
                 ul.courses-list {
                     display: grid !important;
                     gap: 24px;
-                    padding: 0 !important;
                     width: 100%; /* Explicit width */
                     grid-auto-rows: auto; /* Added */
 
@@ -53,7 +55,7 @@
                                         margin-top: 15px;
                                         height: 88px !important;
                                         overflow: hidden;
-                                        color: var(--Text-Default, #2c3744);
+                                        color: $color-text-default;
                                         font-feature-settings: "clig" off, "liga" off;
 
                                         /* Unit text/Header 4 */
@@ -64,15 +66,15 @@
                                         line-height: 150%; /* 27px */
                                     }
 
-                                    span.course-code,
-                                    span.course-organization {
-                                        display: none;
-                                    }
+                                    // span.course-code,
+                                    // span.course-organization {
+                                    //     display: none;
+                                    // }
                                 }
 
-                                div.course-date {
-                                    display: none;
-                                }
+                                // div.course-date {
+                                //     display: none;
+                                // }
                             }
                         }
                     }
@@ -95,50 +97,118 @@
 }
 
 .courses-container .course .course-image .cover-image {
-    height: 12.5rem !important;
+    height: $img-height !important;
+    border-top-right-radius: 4px;
+    border-top-left-radius: 4px;
+
+    img {
+        width: 100%;
+        height: $img-height !important;
+        object-fit: cover;
+    }
 }
 
+
+// > 1400px
 @media only screen and (min-width: $breakpoint-desktop) {
-    .courses-listing-item {
-        grid-template-columns: repeat(auto-fill, minmax(215px, -1fr)); 
 
-
+    ul.courses-list {
+        width: $breakpoint-desktop !important;
+        padding-left: calc((#{$breakpoint-desktop} - #{$four-items-width})/2) !important;
+        padding-right: calc((#{$breakpoint-desktop} - #{$four-items-width})/2) !important;
+    }
+    .courses-listing {
+        grid-template-columns: repeat(4, 1fr) !important; 
     }
 }
 
-@media only screen and (min-width: $breakpoint-tablet-lg) and (max-width: $breakpoint-desktop) {
-    .courses-listing-item {
-         grid-template-columns: repeat(auto-fill, minmax(215px, 1fr)); 
+// 1201px - 1399px
+@media only screen and (min-width: 1201px) and (max-width: 1399px) {
+    ul.courses-list {
+        width: $breakpoint-tablet-lg !important;
+        padding-left: calc((#{$breakpoint-tablet-lg} - #{$four-items-width})/2) !important;
+        padding-right: calc((#{$breakpoint-tablet-lg} - #{$four-items-width})/2) !important;
 
+    }
+
+    .courses-listing {
+        grid-template-columns: repeat(4,1fr) !important;
     }
 }
 
+
+// 992px - 1200px
 @media only screen and (min-width: $breakpoint-tablet-md) and (max-width: $breakpoint-tablet-lg) {
-    .courses-listing-item {
-    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); 
+    ul.courses-list {
+        width: $breakpoint-tablet-md !important;
+        padding-left: calc((#{$breakpoint-tablet-md} - #{$three-items-width})/2) !important;
+        padding-right: calc((#{$breakpoint-tablet-md} - #{$three-items-width})/2) !important;
+    }
 
+    .courses-listing {
+        grid-template-columns: repeat(3,1fr) !important;
+    }
+
+}
+
+// 768px - 991px
+@media only screen and (min-width: $breakpoint-tablet-sm) and (max-width: 991px) {
+    ul.courses-list {
+        width: $breakpoint-tablet-sm !important;
+        padding-left: calc((#{$breakpoint-tablet-sm} - #{$two-items-width})/2) !important;
+        padding-right: calc((#{$breakpoint-tablet-sm} - #{$two-items-width})/2) !important;
+    }
+
+    .courses-listing {
+        grid-template-columns: repeat(2,1fr) !important;
     }
 }
 
-@media only screen and (min-width: $breakpoint-tablet-sm) and (max-width: $breakpoint-tablet-md) {
-    .courses-listing-item {
-        grid-template-columns: repeat(auto-fill, minmax(210px, 1fr));
+// 576px - 767px
+@media only screen and (min-width: $breakpoint-mobile-lg) and (max-width: 767px) {
 
+
+    ul.courses-list {
+        display: flex !important;
+        justify-content: center !important;
+        width: $breakpoint-mobile-lg !important;
+        padding-left: calc((#{$breakpoint-mobile-lg} - #{$one-item-width})/2) !important;
+        padding-right: calc((#{$breakpoint-mobile-lg} - #{$one-item-width})/2) !important;
+    }
+
+    .courses-listing {
+        grid-template-columns: repeat(1,1fr) !important;
     }
 }
 
-@media only screen and (min-width: $breakpoint-tablet-vs) and (max-width: $breakpoint-tablet-sm) {
-    .courses-listing-item {
-        grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); 
+// 375px - 575px
+@media only screen and (min-width: $breakpoint-mobile-sm) and (max-width: 575px) {
 
+
+    ul.courses-list {
+        display: flex !important;
+        justify-content: center !important;
+        width: $breakpoint-mobile-sm !important;
+
+        // It's breakpoint-mobile-lg NOT breakpoint-mobile-sm
+        padding-left: calc((#{$breakpoint-mobile-lg} - #{$one-item-width})/2) !important;
+        padding-right: calc((#{$breakpoint-mobile-lg} - #{$one-item-width})/2) !important;
+    }
+
+    .courses-listing {
+        grid-template-columns: repeat(1,1fr) !important;
+    }
+
+    .courses-listing-item {
+        width: $one-item-width !important
     }
 }
 
 
-@media only screen and (max-width: $breakpoint-mobile) {
-    .courses-listing-item {
-        width: 100% !important;
-        margin: 0 !important;
-        padding: 0 !important;
+@media only screen and (max-width: $breakpoint-mobile-sm) {
+    ul.courses-list {
+        width:  $breakpoint-mobile-sm !important;
+        padding-left: calc((100% - #{$one-item-width})/2) !important;
+        padding-right: calc((100% - #{$one-item-width})/2) !important;
     }
 }

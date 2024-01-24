@@ -4,17 +4,135 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 104px !important;
+    // height: 104px !important;
     width: 100% !important;
+    // margin-top: 24px;
+    // margin-bottom: 24px !important;
+
+    div.search-container {
+        display: flex;
+        margin-top: 24px;
+        margin-bottom: 24px;
+        flex-direction: column-reverse;
+        justify-content: flex-start;
+        align-items: flex-start;
+        width: 100%;
+        gap: 24px;
+
+        @media only screen and (min-width: $breakpoint-desktop) {
+            width: 620px !important;
+        }
+    
+        @media only screen and (min-width: $breakpoint-tablet-lg) and (max-width: $breakpoint-desktop) {
+            width: 620px !important;
+        }
+    
+        @media only screen and (min-width: $breakpoint-tablet-md) and (max-width: $breakpoint-tablet-lg) {
+            width: $three-items-width !important;
+        } 
+    
+        @media only screen and (min-width: $breakpoint-tablet-sm) and (max-width: $breakpoint-tablet-md) {
+            margin-left: 16px !important;
+            margin-right: 16px !important
+        }
+    
+        @media only screen and (min-width: $breakpoint-mobile-lg) and (max-width: $breakpoint-tablet-sm) {
+            margin-left: 16px !important;
+            margin-right: 16px !important
+        }
+        @media only screen and (min-width: $breakpoint-mobile-sm) and (max-width: $breakpoint-mobile-lg) {
+            margin-left: 16px !important;
+            margin-right: 16px !important
+        }
+        @media only screen and (max-width: $breakpoint-mobile-sm) {
+            margin-left: 16px !important;
+            margin-right: 16px !important
+        }
+
+        #discovery-message {
+            color: var(--Text-Default, #2C3744);
+font-feature-settings: 'clig' off, 'liga' off;
+/* Unit text/Paragraph 1 Medium */
+font-family: Roboto;
+font-size: 16px;
+font-style: normal;
+font-weight: 500;
+line-height: 150%; /* 24px */   
+        }
+
+    }
 }
 
 form.wrapper-search-input {
 
     width: 100% !important;
     height: 56px !important;
-    @media only screen and (min-width: $breakpoint-desktop) {
-        width: 620px !important;
+
+    &:hover {
+        input {
+            border: 1px solid $color-hover-gray !important;
+            border-left: 0px !important;
+        }
+
+        button.discovery-submit {
+            border: 1px solid $color-hover-gray !important;
+            border-right: 0 !important
+        }
     }
+
+    &:active {
+        input {
+            border: 1px solid $color-active-dark !important;
+            border-left: 0px !important;
+        }
+
+        button.discovery-submit {
+            border: 1px solid $color-active-dark !important;
+            border-right: 0 !important
+        }
+    }
+    &:focus {
+        input {
+            border: 1px solid $color-active-dark !important;
+            border-left: 0 !important;
+        }
+    
+        button.discovery-submit {
+            border: 1px solid $color-active-dark !important;
+            border-right: 0 !important
+
+            
+        }
+    }
+    // @media only screen and (min-width: $breakpoint-desktop) {
+    //     width: 620px !important;
+    // }
+
+    // @media only screen and (min-width: $breakpoint-tablet-lg) and (max-width: $breakpoint-desktop) {
+    //     width: 620px !important;
+    // }
+
+    // @media only screen and (min-width: $breakpoint-tablet-md) and (max-width: $breakpoint-tablet-lg) {
+    //     width: $three-items-width !important;
+    // } 
+
+    // @media only screen and (min-width: $breakpoint-tablet-sm) and (max-width: $breakpoint-tablet-md) {
+    //     margin-left: 16px !important;
+    //     margin-right: 16px !important
+    // }
+
+    // @media only screen and (min-width: $breakpoint-mobile-lg) and (max-width: $breakpoint-tablet-sm) {
+    //     margin-left: 16px !important;
+    //     margin-right: 16px !important
+    // }
+    // @media only screen and (min-width: $breakpoint-mobile-sm) and (max-width: $breakpoint-mobile-lg) {
+    //     margin-left: 16px !important;
+    //     margin-right: 16px !important
+    // }
+    // @media only screen and (max-width: $breakpoint-mobile-sm) {
+    //     margin-left: 16px !important;
+    //     margin-right: 16px !important
+    // }
 
     input {
         padding: 12px !important;
@@ -37,7 +155,13 @@ form.wrapper-search-input {
         border-right: 0px !important;
         border-top-left-radius: 4px;
         border-bottom-left-radius: 4px;
+        border-top-right-radius: 0px;
+        border-bottom-right-radius: 0xp;
         color: $color-subdued;
+
+        &:hover {
+            background-color: #fff !important;
+        }
 
         .search-icon {
             color: $color-subdued;
