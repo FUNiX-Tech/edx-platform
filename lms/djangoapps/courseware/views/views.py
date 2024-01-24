@@ -2096,7 +2096,7 @@ from openedx.core.lib.exceptions import CourseNotFoundError
 from openedx.features.course_experience.utils import get_course_outline_block_tree
 from lms.djangoapps.course_blocks.api import get_course_blocks
 from xmodule.modulestore.django import modulestore 
-from openedx.core.djangoapps.content.course_overviews.models import CourseOverviewAbout
+from openedx.core.djangoapps.content.course_overviews.models import CourseOverviewAbout, CourseOverviewAboutTeacher
 
 def get_about_course(request, course_id):
     try:
@@ -2125,11 +2125,29 @@ def get_about_course(request, course_id):
             }
         
         course_about = CourseOverviewAbout.getAboutCourse(course_id=course_key)    
+        course_teacher = CourseOverviewAboutTeacher.get_about_teacher(course_id=course_key)
         if course_about is not None : 
             data['overview'] = course_about.overview
             data['target'] = course_about.target
             data['participant'] = course_about.participant
             data['input_required'] = course_about.input_required
+        if len(course_teacher) > 0 :
+            teachers = []
+            for teacher in course_teacher:
+                data_teacher = {'name' : teacher.name,
+                                'img_url': str(teacher.img) ,
+                                'position' : teacher.position,
+                                'workplace': teacher.workplace , 
+                                "sex" : teacher.sex,
+                                "isTeacherStart" : teacher.is_teacher_start,
+                                "isDesign" : teacher.is_design,
+                                "isExpert" : teacher.is_expert
+                                }
+                teachers.append(data_teacher)
+                
+
+            data['teachers'] = teachers   
+
                        
         # block_tree = block_tree[2:]                   
     except CourseNotFoundError as e:
