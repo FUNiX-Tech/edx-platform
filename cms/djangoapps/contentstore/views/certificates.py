@@ -638,20 +638,7 @@ def about_overview (request, course_id) :
         participant_course = request.POST.get('participant_course')
         
         course_instance = CourseOverviewAbout.setAboutCourse(course_id=course_key ,overview=overview,target=target, participant=participant_course, input_required=input_required )
- 
-        # teacher course
-        name =  request.POST.get('name')
-        if name is not None :
-            position = request.POST.get('position')
-            workplace = request.POST.get('workplace')
-            img = request.POST.get('img')
-            sex = request.POST.get('sex')
-            isTeacherStart = request.POST.get('isTeacherStart') is not None 
-            isDesign = request.POST.get('isDesign') is not None 
-            isExpert = request.POST.get('isExpert') is not None 
-      
-            CourseOverviewAboutTeacher.set_about_teacher(course_id, name, position, workplace, img, sex, isTeacherStart, isDesign, isExpert)
-        
+
         context = {
           'context_course': course,
           'overview' : overview ,
@@ -660,6 +647,21 @@ def about_overview (request, course_id) :
           'input_required' : input_required
     
         }
+        # teacher course
+        name =  request.POST.get('name')
+        position = request.POST.get('position')
+        workplace = request.POST.get('workplace')
+        if len(name) > 0 and len(workplace) > 0 and len(position) > 0  :
+          
+            img = request.POST.get('img')
+            sex = request.POST.get('sex')
+            isTeacherStart = request.POST.get('isTeacherStart') is not None 
+            isDesign = request.POST.get('isDesign') is not None 
+            isExpert = request.POST.get('isExpert') is not None 
+      
+            CourseOverviewAboutTeacher.set_about_teacher(course_id, name, position, workplace, img, sex, isTeacherStart, isDesign, isExpert)
+        
+        
         context.update({
             "course_teachers" : course_teacher
         })
