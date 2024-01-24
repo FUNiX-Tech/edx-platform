@@ -2110,18 +2110,36 @@ def get_about_course(request, course_id):
             
         course_blocks = get_course_outline_block_tree(request, str(course_key))
         block_tree = []
+        quiz = 0
+        lab = 0
+        project = 0
         for chapter in course_blocks.get('children', []):
             for sequential in chapter.get('children', []):
                 sequential_tree = []
                 for vertical in sequential.get('children', []):
+                   
                     sequential_tree.append(vertical['display_name'])
-                block_tree.append({sequential['display_name']: sequential_tree})     
-     
+                    for a in vertical.get('children') :
+                      
+                        if 'problem' in a['type']:
+                            quiz += 1
+                            break
+                        if 'labxblock' in a['type'] : 
+                            lab += 1
+                            break
+                        if 'assignmentxblock' in a['type']:
+                            project += 1
+                            break
+                        
+                block_tree.append({sequential['display_name']: sequential_tree}) 
      
         data = { 
             "display_name" : overview.display_name,
             'block_tree': block_tree ,  
-            'course_image_urls': overview.image_urls
+            'course_image_urls': overview.image_urls ,
+            "quiz" : quiz,
+            'lab' : lab ,
+            "project" : project
             }
         
         course_about = CourseOverviewAbout.getAboutCourse(course_id=course_key)    
