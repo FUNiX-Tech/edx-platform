@@ -391,7 +391,7 @@ from openedx.core.djangolib.markup import HTML
 %endif
 
 <%namespace name='static' file='static_content.html'/>
-<h3 class="hd hd-3 problem-header" style='margin-top:0px' id="${ short_id }-problem-title" aria-describedby="${ id }-problem-progress" tabindex="-1">
+<h3 class="hd hd-3 problem-header" id="${ short_id }-problem-title" aria-describedby="${ id }-problem-progress" tabindex="-1">
 
   % if problem['name'] == 'Quiz Problem Custom' :
     Quiz
@@ -425,7 +425,7 @@ from openedx.core.djangolib.markup import HTML
 
 
       % if problem['name'] == 'Quiz Problem Custom' :
-      <div id='problem-buttom' data-problem-name="${problem['name']}" style="padding-top:10px; margin-bottom:0px">
+      <div id='problem-buttom' data-problem-name="${problem['name']}" style="padding-top:10px">
         <span style='display:flex; gap: 10px'>
 
           <button id='btn-next' class='btn-custom' style='display:none'> <span class='btn-span'>
@@ -792,8 +792,8 @@ from openedx.core.djangolib.markup import HTML
           const title = problemList[numberError - 1].querySelector('.explanation-title');
           title.textContent = 'Câu trả lời của bạn chưa chính xác';
         } else {
-          const newMessages = document.createElement('span')
-          newMessages.classList.add('message')
+          const messageSpan = document.createElement('div')
+          messageSpan.classList.add('message')
           const newMessgasBox = document.createElement('div');
           newMessgasBox.classList.add('feedback-hint-incorrect', 'error-problem-answer' , "messages-box");
           const title = document.createElement('div');
@@ -801,9 +801,8 @@ from openedx.core.djangolib.markup import HTML
           title.style.paddingBottom = '0px'
           title.textContent = 'Câu trả lời của bạn chưa chính xác';
           newMessgasBox.appendChild(title);
-          newMessages.appendChild(newMessgasBox);
-          problemList[numberError - 1].appendChild(newMessages);
-
+          messageSpan.appendChild(newMessgasBox);
+          problemList[numberError - 1].appendChild(messageSpan);
         }
       });
 
@@ -816,7 +815,7 @@ from openedx.core.djangolib.markup import HTML
         return
       }
       if (problemElement) {
-
+        console.log('============', problemElement)
         const titleElement = problemElement.querySelector('.explanation-title');
         if (titleElement) {
           titleElement.textContent = 'Bạn đã trả lời đúng';
