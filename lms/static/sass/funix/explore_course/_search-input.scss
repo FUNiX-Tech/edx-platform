@@ -83,6 +83,7 @@ form.wrapper-search-input {
     &:active {
         input {
             border: 1px solid $color-active-dark !important;
+            border-left: 0px !important;
         }
 
         button.discovery-submit {
