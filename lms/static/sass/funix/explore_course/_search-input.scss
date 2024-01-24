@@ -71,6 +71,7 @@ form.wrapper-search-input {
     &:hover {
         input {
             border: 1px solid $color-hover-gray !important;
+            border-left: 0px !important;
         }
 
         button.discovery-submit {
@@ -82,6 +83,7 @@ form.wrapper-search-input {
     &:active {
         input {
             border: 1px solid $color-active-dark !important;
+            border-left: 0px !important;
         }
 
         button.discovery-submit {
@@ -92,6 +94,7 @@ form.wrapper-search-input {
     &:focus {
         input {
             border: 1px solid $color-active-dark !important;
+            border-left: 0 !important;
         }
     
         button.discovery-submit {
