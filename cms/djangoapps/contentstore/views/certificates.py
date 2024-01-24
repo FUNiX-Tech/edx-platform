@@ -612,7 +612,7 @@ def setting_survey_form (request, course_id):
     return render_to_response('survey_form.html' ,context)
 
 
-from openedx.core.djangoapps.content.course_overviews.models import CourseOverviewAbout
+from openedx.core.djangoapps.content.course_overviews.models import CourseOverviewAbout, CourseOverviewAboutTeacher
 @login_required
 @ensure_csrf_cookie
 def about_overview (request, course_id) :
@@ -629,14 +629,29 @@ def about_overview (request, course_id) :
         return JsonResponse( status=403)
     
     course_about = CourseOverviewAbout.getAboutCourse(course_id=course_key)
-
+    course_teacher = CourseOverviewAboutTeacher.get_about_teacher(course_id=course_key)
     if request.method == 'POST':
+        # overview course
         overview = request.POST.get('overview')
         target =  request.POST.get('target_course')
         input_required = request.POST.get('input_required')
         participant_course = request.POST.get('participant_course')
         
         course_instance = CourseOverviewAbout.setAboutCourse(course_id=course_key ,overview=overview,target=target, participant=participant_course, input_required=input_required )
+ 
+        # teacher course
+        name =  request.POST.get('name')
+        if name is not None :
+            position = request.POST.get('position')
+            workplace = request.POST.get('workplace')
+            img = request.POST.get('img')
+            sex = request.POST.get('sex')
+            isTeacherStart = request.POST.get('isTeacherStart') is not None 
+            isDesign = request.POST.get('isDesign') is not None 
+            isExpert = request.POST.get('isExpert') is not None 
+      
+            CourseOverviewAboutTeacher.set_about_teacher(course_id, name, position, workplace, img, sex, isTeacherStart, isDesign, isExpert)
+        
         context = {
           'context_course': course,
           'overview' : overview ,
@@ -646,18 +661,23 @@ def about_overview (request, course_id) :
     
     }
         return render_to_response('about_course.html' , context)
-    if course_about is not None : 
-        context = {
+    
+    context = {
             'context_course': course,
+            }
+    if course_about is not None : 
+        context.update({
             'overview' : course_about.overview ,
             'target' : course_about.target,
             'participant' : course_about.participant ,
             'input_required' : course_about.input_required
         
-        }
-    else :
-         context = {
-            'context_course': course,
-            }
+        }) 
+    print('======course_teacher ======', course_teacher)
+    if course_teacher is not None :
+        context.update({
+            "course_teachers" : course_teacher
+        })
+   
     
     return render_to_response('about_course.html' , context)

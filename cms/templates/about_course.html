@@ -14,6 +14,8 @@ from openedx.core.djangolib.js_utils import (
 )
 import six
 from six.moves.urllib.parse import quote
+
+
 %>
 
 <%block name="title">Course About</%block>
@@ -66,6 +68,57 @@ from six.moves.urllib.parse import quote
                          %endif
                     </textarea>
             </div>
+
+            <div>
+                <h1>Teacher</h1>
+                <div >
+                    %if course_teachers is not None :
+                        %for teacher in course_teachers:
+                            <div>
+                                <img src=${teacher.img} alt=${teacher.name} width='56px'/>
+                                <span>${teacher.name}</span>
+                            </div>
+                        %endfor
+                    %endif
+
+                </div>
+                <div class=''>
+                    <span>Tên : </span>
+                    <input name='name' type='text' id='name' />
+                </div>
+
+                <div class=''>
+                    <span>Chức vụ : </span>
+                    <input name='position' type='text' id='position' />
+                </div>
+
+                <div class=''>
+                    <span>Nơi làm việc : </span>
+                    <input name='workplace' type='text' id='workplace' />
+                </div>
+
+                <div class=''>
+                    <span>hình ảnh (url) : </span>
+                    <input name='img' type='url' id='img' />
+                </div>
+                <div>
+                    <span for="sex">giớ tính:</span>
+
+                        <select name="sex" id="sex">
+                            <option value=>Select a gender</option>
+                            <option value="male">Nam</option>
+                            <option value="female">Nữ</option>
+                        </select>
+                </div>
+                <div>
+                    <input type="checkbox" id="isTeacherStart" name="isTeacherStart" value="isTeacherStart">
+                    <label for="vehicle1">Teacher Start </label><br>
+                    <input type="checkbox" id="isDesign" name="isDesign" value="isDesign">
+                    <label for="vehicle2"> Chuyên gia thiết kế</label><br>
+                    <input type="checkbox" id="isExpert" name="isExpert" value="isExpert">
+                    <label for="vehicle3"> Chuyên gia phản biện</label><br>
+                </div>
+            </div>
     
             <button type="submit">
                 Save
@@ -79,8 +132,9 @@ from six.moves.urllib.parse import quote
     
 </div>
 
-<script>
+<script >
 
+    
 
     function initTinyMCE(selector){
         tinymce.init({

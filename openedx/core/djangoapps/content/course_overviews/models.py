@@ -1331,3 +1331,46 @@ class CourseOverviewAbout (models.Model):
         return course_instance
     
         
+class CourseOverviewAboutTeacher (models.Model):
+    
+    course_id = models.CharField(max_length=255)
+    name = models.CharField(max_length=255)
+    position = models.CharField(max_length=255)
+    workplace = models.CharField(max_length=255)
+    img = models.ImageField(max_length=255)
+    sex = models.CharField(max_length=50)
+    is_teacher_start = models.BooleanField(default=False)
+    is_design = models.BooleanField(default=False)
+    is_expert =  models.BooleanField(default=False)
+    
+    def __str__ (self) :
+        return self.name
+    
+    @classmethod 
+    def set_about_teacher (self, course_id, name=None, position=None , workplace=None, img=None, sex=None, isTeacherStart=None, isDesign=None, isExpert=None) :
+        
+        course_teacher = CourseOverviewAboutTeacher(
+                name=name,
+                course_id=course_id,
+                position=position,
+                workplace=workplace,
+                img=img,
+                sex = sex,
+                is_teacher_start=isTeacherStart ,
+                is_design=isDesign,
+                is_expert=isExpert
+            ) 
+            
+        course_teacher.save()
+        
+        return course_teacher
+    
+    @classmethod
+    def get_about_teacher(self, course_id):
+        try:
+    
+            course_teacher = CourseOverviewAboutTeacher.objects.filter(course_id=course_id)
+        except CourseOverviewAboutTeacher.DoesNotExist:
+            return None
+            
+        return course_teacher
