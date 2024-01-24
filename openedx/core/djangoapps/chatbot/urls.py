@@ -11,4 +11,5 @@ urlpatterns = [
     path("query/vote/", views.chatbot_vote_response_view),
     path("session/<int:skip>/<int:limit>/", views.chatbot_fetch_session_list_view),
     path("session/new/", views.chatbot_start_new_session_view),
+    path("error/", views.chatbot_save_error_view),
 ]

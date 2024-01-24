@@ -1,8 +1,8 @@
 import json
 import math
 import logging
-from django.http import HttpResponse, HttpResponseNotFound, JsonResponse
-from .models import ChatbotSession, ChatbotQuery
+from django.http import JsonResponse, HttpResponseForbidden
+from .models import ChatbotSession, ChatbotQuery, ChatbotError
 from .serializer import chatbot_query_list_serializer, chatbot_query_serializer, chatbot_session_list_serializer
 from django.contrib.auth.decorators import login_required
 from django.views.decorators.http import require_http_methods
@@ -13,12 +13,20 @@ from .api import get_chatbot_bearer_token, get_chatbot_api_url
 @require_http_methods('GET')
 @login_required
 def chatbot_fetch_query_list_view(request, session_id, skip, limit):
+    # all = ChatbotQuery.objects.all()
+    # for q in all:
+    #     if q.status == 'idle' or q.status == 'pending':
+    #         q.status = 'failed'
+    #         q.save()
+
+    #     if not q.query_msg:
+    #         q.delete()
+
+
     user = request.user
     
     if session_id == '0':
         last_query = ChatbotQuery.objects.filter(session__student=request.user).last()
-
-
         query_list = [] if last_query is None else last_query.session.chatbot_queries.order_by('-id').all()[skip:skip + limit]
         total = 0 if last_query is None else last_query.session.chatbot_queries.count()
         total_page = math.ceil(total/limit)
@@ -63,57 +71,66 @@ def chatbot_fetch_session_list_view(request, skip, limit):
         status=200
     )
 
-@require_http_methods('POST')
+@require_http_methods(['POST', 'PUT'])
 @login_required
 def chatbot_query_view(request):
     """
-    Gửi query đến chatbot
+    Create/update query item
     """
     request_data = json.loads(request.body.decode('utf8'))
 
     query_msg = request_data.get('query_msg')
     session_id = request_data.get('session_id')
+    response_msg = request_data.get('response_msg') or ''
+    status = request_data.get('status')
+    id = request_data.get('id')
+    hash = request_data.get('hash')
+    error = request_data.get('error')
+
+    if error:
+        _save_error(error)
 
     session = ChatbotSession.objects.filter(id=session_id).last()
 
-    if session is None: 
-        session = ChatbotSession.objects.create(student=request.user)
+
 
     try:
-        created_query = ChatbotQuery.objects.create(session=session, query_msg=query_msg)
+        if request.method == 'POST':
+            if not query_msg:
+                return JsonResponse(
+                    {
+                        'message': _('Missing query message.'),
+                        'hash': hash
+                    }, 
+                    status=400
+                )
+            if session is None: 
+                session = ChatbotSession.objects.create(student=request.user)
+
+            query_item = ChatbotQuery.objects.create(session=session, query_msg=query_msg, response_msg=response_msg, status=status)
+
+        if request.method == 'PUT':
+            query_item = ChatbotQuery.objects.filter(id=id).first()
+            query_item.status = status
+            query_item.response_msg = response_msg
+            query_item.save()
+
     except Exception as e:
         logging.error(str(e))
+        _save_error(str(e))
         return JsonResponse(
             {
                 'message': _('Internal Server Error'),
-                'hash': request_data.get('hash')
+                'hash': hash
             }, 
             status=500
         )
 
-    response_msg = _chatbot_get_response(query_msg, session.id)
-  
-    if response_msg is None: 
-        created_query.status = 'failed'
-        created_query.save()
-        return JsonResponse(
-            {
-                'message': _('Failed'),
-                'data': chatbot_query_serializer(created_query),
-                'hash': request_data.get('hash')
-            }, 
-            status=200
-        )
-
-    created_query.status = 'succeeded'
-    created_query.response_msg = response_msg
-    created_query.save()
-
     return JsonResponse(
         {
             'message': _('success'),
-            'data': chatbot_query_serializer(created_query),
-            'hash': request_data.get('hash')
+            'data': chatbot_query_serializer(query_item),
+            'hash': hash
         }, 
         status=200
     )
@@ -210,7 +227,6 @@ def chatbot_give_feedback_view(request):
             }
         }
     )
-    
 
 @require_http_methods('POST')
 @login_required
@@ -280,7 +296,6 @@ def chatbot_retry_query_view(request):
         status=200
     )
 
-
 @require_http_methods('PUT')
 @login_required
 def chatbot_cancel_query_view(request):
@@ -311,6 +326,36 @@ def chatbot_cancel_query_view(request):
         },
         status=200
     )
+
+@require_http_methods('POST')
+def chatbot_save_error_view(request):
+    data = json.loads(request.body.decode('utf8'))
+
+    error_msg = data.get('error_msg')
+    if not error_msg:
+        return JsonResponse(
+            {
+                'message': 'Missing error message.'
+            }, 
+            status=400
+        )
+
+    try: 
+        ChatbotError.objects.create(error_msg=error_msg)
+        return JsonResponse(
+            {
+                'message': _('success')
+            },
+            status=200
+        )
+    except Exception as e: 
+        print(str(e))
+        return JsonResponse(
+            {
+                'message': str(e), 
+            },
+            status=500
+        )
 
 # helper function
 def _chatbot_get_response(query_msg, session_id):
@@ -345,3 +390,9 @@ def _chatbot_get_response(query_msg, session_id):
 def _print_chatbot_error(msg):
     error_msg = f"[ CHATBOT_ERROR ]: {msg}"
     print(error_msg)
+
+def _save_error(msg):
+    try:
+        ChatbotError.objects.create(error_msg=msg)
+    except Exception as e:
+        _print_chatbot_error(f"Got error when saving ChatbotError: {str(e)}. The error need to be saved: {msg}")
