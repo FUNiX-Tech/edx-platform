@@ -327,6 +327,36 @@ def chatbot_cancel_query_view(request):
         status=200
     )
 
+@require_http_methods('POST')
+def chatbot_save_error_view(request):
+    data = json.loads(request.body.decode('utf8'))
+
+    error_msg = data.get('error_msg')
+    if not error_msg:
+        return JsonResponse(
+            {
+                'message': 'Missing error message.'
+            }, 
+            status=400
+        )
+
+    try: 
+        ChatbotError.objects.create(error_msg=error_msg)
+        return JsonResponse(
+            {
+                'message': _('success')
+            },
+            status=200
+        )
+    except Exception as e: 
+        print(str(e))
+        return JsonResponse(
+            {
+                'message': str(e), 
+            },
+            status=500
+        )
+
 # helper function
 def _chatbot_get_response(query_msg, session_id):
     url = get_chatbot_api_url()

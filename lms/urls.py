@@ -1071,7 +1071,8 @@ from lms.djangoapps.funix_portal_api.views import (
     GradeLearningProjectXblockAPIView,
     get_portal_host, 
     get_resume_path,
-    funix_get_thumb
+    funix_get_thumb, 
+    get_site_config
 )
 
 # funix portal api
@@ -1087,6 +1088,12 @@ urlpatterns +=[
 urlpatterns += [
     path('thumb/', funix_get_thumb, name='funix_get_thumb'),
 ]
+
+# image 
+urlpatterns += [
+    path('api/site_config/', get_site_config, name='get_site_config'),
+]
+
 
 
 # assignmentxblock-xblock js translation

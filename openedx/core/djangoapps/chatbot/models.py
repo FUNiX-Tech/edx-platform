@@ -44,7 +44,5 @@ class ChatbotQuery(TimeStampedModel):
 
     feedback = models.TextField(max_length=500, default='')
 
-
-
 class ChatbotError(TimeStampedModel):
     error_msg = models.TextField(default='')
