@@ -376,7 +376,7 @@ def get_course_about_section(request, course, section_key):
     if section_key in html_sections:
         try:
             loc = course.location.replace(category='about', name=section_key)
-
+            # print('====loc========', loc)
             # Use an empty cache
             field_data_cache = FieldDataCache([], course.id, request.user)
             about_module = get_module(
@@ -401,6 +401,8 @@ def get_course_about_section(request, course, section_key):
                         "Error rendering course=%s, section_key=%s",
                         course, section_key
                     )
+                    
+            # print('===html============', section_key,html)
             return html
 
         except ItemNotFoundError:

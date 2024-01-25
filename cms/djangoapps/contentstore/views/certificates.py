@@ -610,3 +610,103 @@ def setting_survey_form (request, course_id):
 
     
     return render_to_response('survey_form.html' ,context)
+
+
+from openedx.core.djangoapps.content.course_overviews.models import CourseOverviewAbout, CourseOverviewAboutTeacher
+@login_required
+@ensure_csrf_cookie
+def about_overview (request, course_id) :
+    
+    course_key = CourseKey.from_string(course_id)
+   
+    try:
+        course = _get_course_and_check_access(course_key, request.user)
+    except PermissionDenied:
+        msg = _('PermissionDenied: Failed in authenticating {user}').format(user=request.user)
+        return JsonResponse({"error": msg}, status=403)
+    
+    if course is None :
+        return JsonResponse( status=403)
+    
+    course_about = CourseOverviewAbout.getAboutCourse(course_id=course_key)
+    course_teacher = CourseOverviewAboutTeacher.get_about_teacher(course_id=course_key)
+    if request.method == 'POST':
+        # overview course
+        overview = request.POST.get('overview')
+        target =  request.POST.get('target_course')
+        input_required = request.POST.get('input_required')
+        participant_course = request.POST.get('participant_course')
+        
+        course_instance = CourseOverviewAbout.setAboutCourse(course_id=course_key ,overview=overview,target=target, participant=participant_course, input_required=input_required )
+
+        context = {
+          'context_course': course,
+          'overview' : overview ,
+          'target' : target,
+          'participant' : participant_course ,
+          'input_required' : input_required
+    
+        }
+        # teacher course
+        name =  request.POST.get('name')
+        position = request.POST.get('position')
+        workplace = request.POST.get('workplace')
+        if len(name) > 0 and len(workplace) > 0 and len(position) > 0  :
+          
+            img = request.POST.get('img')
+            sex = request.POST.get('sex')
+            isTeacherStart = request.POST.get('isTeacherStart') is not None 
+            isDesign = request.POST.get('isDesign') is not None 
+            isExpert = request.POST.get('isExpert') is not None 
+      
+            CourseOverviewAboutTeacher.set_about_teacher(course_id, name, position, workplace, img, sex, isTeacherStart, isDesign, isExpert)
+        
+        
+        context.update({
+            "course_teachers" : course_teacher
+        })
+        return render_to_response('about_course.html' , context)
+    
+    context = {
+            'context_course': course,
+            }
+    if course_about is not None : 
+        context.update({
+            'overview' : course_about.overview ,
+            'target' : course_about.target,
+            'participant' : course_about.participant ,
+            'input_required' : course_about.input_required
+        
+        }) 
+
+    if course_teacher is not None :
+        context.update({
+            "course_teachers" : course_teacher
+        })
+   
+    
+    return render_to_response('about_course.html' , context)
+
+
+from rest_framework.decorators import api_view
+
+@api_view(['POST'])
+@login_required
+@ensure_csrf_cookie
+def remove_teacher(request):
+    if request.method == 'POST':
+        teacher_id = request.data.get('teacherId')
+
+  
+        if teacher_id is not None:
+
+            success = CourseOverviewAboutTeacher.remove_teacher(teacher_id=teacher_id)
+            
+            if success:
+                return JsonResponse({"status": "success", "message": "Teacher has been successfully deleted."})
+            else:
+                return JsonResponse({"status": "error", "message": "Teacher not found. Deletion unsuccessful."})
+        else:
+            return JsonResponse({"status": "error", "message": "Missing teacherId information in the request."})
+    else:
+        return JsonResponse({"status": "error", "message": "Invalid request. Only POST requests are accepted."})

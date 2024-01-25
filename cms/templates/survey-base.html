@@ -39,7 +39,8 @@ from openedx.core.release import RELEASE_LINE
         % endif
         ${settings.STUDIO_NAME}
     </title>
-
+    <script src="https://cdn.ckeditor.com/ckeditor5/41.0.0/classic/ckeditor.js"></script>
+    <script src="https://cdn.tiny.cloud/1/e8m57wt90fewukjwunw6kd8fs5q2zcvjo250hrmcncfmtoeb/tinymce/4/tinymce.min.js" referrerpolicy="origin"></script>
     <%
       jsi18n_path = "js/i18n/{language}/djangojs.js".format(language=LANGUAGE_CODE)
     %>
