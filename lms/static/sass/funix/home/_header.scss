@@ -11,6 +11,8 @@ header.global-header {
     right: 0;
     z-index: 999;
     box-shadow: none !important;
+    display: flex !important;
+    align-items: center;
 
    
 }
@@ -20,7 +22,7 @@ body > div.window-wrap > header {
         display: flex;
         align-items: center;
         // max-width: 1440px !important;
-        margin: auto;
+        width: 100%;
 
         @media only screen and (min-width: $breakpoint-tablet-md) {
             justify-content: space-between;
