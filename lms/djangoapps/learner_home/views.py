@@ -18,7 +18,7 @@ from edx_rest_framework_extensions.auth.jwt.authentication import JwtAuthenticat
 from edx_rest_framework_extensions.auth.session.authentication import SessionAuthenticationAllowInactiveUser
 from common.djangoapps.course_modes.models import CourseMode
 from common.djangoapps.edxmako.shortcuts import marketing_link
-from common.djangoapps.student.helpers import cert_info, get_resume_urls_for_enrollments
+from common.djangoapps.student.helpers import cert_info, get_resume_urls_for_enrollments, get_begin_urls_for_enrollments
 from common.djangoapps.student.models import CourseEnrollment, get_user_by_username_or_email
 from common.djangoapps.student.toggles import should_show_amplitude_recommendations
 from common.djangoapps.student.views.dashboard import (
@@ -322,6 +322,7 @@ def get_complate_course(response_data_course, request):
 
 
 
+
 class InitializeView(RetrieveAPIView):  # pylint: disable=unused-argument
     """List of courses a user is enrolled in or entitled to"""
 
@@ -418,6 +419,8 @@ class InitializeView(RetrieveAPIView):  # pylint: disable=unused-argument
   
         }
 
+        begin_course_urls = get_begin_urls_for_enrollments(course_enrollments)
+
         context = {
             # "ecommerce_payment_page": ecommerce_payment_page,
             # "cert_statuses": cert_statuses,
@@ -431,16 +434,18 @@ class InitializeView(RetrieveAPIView):  # pylint: disable=unused-argument
             # "unfulfilled_entitlement_pseudo_sessions": unfulfilled_entitlement_pseudo_sessions,
             # "pseudo_session_course_overviews": pseudo_session_course_overviews,
             "programs": programs,
+
+            # uuuuv funix
+            "begin_course_urls": begin_course_urls
         }
 
         response_data = LearnerDashboardSerializer(
             learner_dash_data, context=context
         ).data
         
-    # add complate block
+        # add complate block
         get_complate_course(response_data_course=response_data['courses'],request=request)
         
-            
         return Response(response_data)
 
 
