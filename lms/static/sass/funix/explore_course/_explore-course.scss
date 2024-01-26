@@ -1,35 +1,19 @@
 body {
     min-height: 100vh;
-
     div.window-wrap {
         position: relative;
     }
-
 }
 
 #content {
     min-height: calc(100vh - #{$footer-height} - #{$header-height});
     margin-top: $header-height;
     padding-bottom: 48px !important;
+    padding-left: 0 !important;
+    padding-right: 0 !important;
 
 
-    @media only screen and (max-width: $breakpoint-tablet-sm) {
-        padding-left: $padding-mobile;
-        padding-right: $padding-mobile;
-    }
-
-    @media only screen and (min-width: $breakpoint-tablet-sm) and (max-width: $breakpoint-tablet-lg) {
-        padding-left: $padding-tablet-sm;
-        padding-right: $padding-tablet-sm;
-    }
-
-    @media only screen and (min-width: $breakpoint-tablet-lg) and (max-width: $breakpoint-desktop) {
-        padding-left: $padding-tablet-lg;
-        padding-right: $padding-tablet-lg;
-    }
-
-    @media only screen and (min-width: $breakpoint-desktop) {
-        padding-left: $padding-desktop;
-        padding-right: $padding-desktop;
-    }
+    // padding-left: $padding-body-desktop !important;
+    // padding-right: $padding-body-desktop !important;
 }
+

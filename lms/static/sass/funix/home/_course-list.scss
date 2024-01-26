@@ -3,7 +3,7 @@
 }
 
 .courses-listing {
-    padding: 1rem !important;
+    // padding: 1rem !important;
     justify-content: stretch;
     display: grid;
     grid-template-columns: repeat(4, 1fr);
@@ -14,7 +14,7 @@
     .courses-listing-item {
         display: flex;
         padding: 0.5rem;
-        width: 100% !important;
+        // width: 100% !important;
         margin: 0 !important;
         max-height: none !important;
     }
