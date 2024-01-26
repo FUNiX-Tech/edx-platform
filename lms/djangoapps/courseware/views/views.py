@@ -792,11 +792,14 @@ class EnrollStaffView(View):
 @ensure_valid_course_key
 @cache_if_anonymous()
 def course_about(request, course_id):  # pylint: disable=too-many-statements
+    
     """
     Display the course's about page.
     """
     course_key = CourseKey.from_string(course_id)
-
+    url_mfe =configuration_helpers.get_value('LEARNING_MICROFRONTEND_URL',settings.LEARNING_MICROFRONTEND_URL)
+    return redirect(f'{url_mfe}/{course_id}/about')
+    
     # If a user is not able to enroll in a course then redirect
     # them away from the about page to the dashboard.
     if not can_self_enroll_in_course(course_key):
@@ -808,6 +811,7 @@ def course_about(request, course_id):  # pylint: disable=too-many-statements
 
     with modulestore().bulk_operations(course_key):
         permission = get_permission_for_course_about()
+        
         course = get_course_with_access(request.user, permission, course_key)
         course_details = CourseDetails.populate(course)
         modes = CourseMode.modes_for_course_dict(course_key)
@@ -901,6 +905,7 @@ def course_about(request, course_id):  # pylint: disable=too-many-statements
         }
 
         course_about_template = 'courseware/course_about.html'
+        print('================', course)
         try:
             # .. filter_implemented_name: CourseAboutRenderStarted
             # .. filter_type: org.openedx.learning.course_about.render.started.v1
@@ -2082,3 +2087,95 @@ def get_learner_username(learner_identifier):
     learner = User.objects.filter(Q(username=learner_identifier) | Q(email=learner_identifier)).first()
     if learner:
         return learner.username
+
+
+
+
+from common.djangoapps.util.json_request import JsonResponse
+from openedx.core.djangolib.markup import clean_dangerous_html, HTML, Text
+from lms.djangoapps.courseware.courses import get_course_about_section
+from openedx.core.lib.exceptions import CourseNotFoundError
+from openedx.features.course_experience.utils import get_course_outline_block_tree
+from lms.djangoapps.course_blocks.api import get_course_blocks
+from xmodule.modulestore.django import modulestore 
+from openedx.core.djangoapps.content.course_overviews.models import CourseOverviewAbout, CourseOverviewAboutTeacher
+
+def get_about_course(request, course_id):
+    try:
+        course_key = CourseKey.from_string(course_id)
+        permission = 'see_exists'
+        course = get_course_with_access(request.user, permission, course_key)
+
+        overview = CourseOverview.get_from_id(course.id)
+        
+       
+            
+        course_blocks = get_course_outline_block_tree(request, str(course_key))
+        block_tree = []
+        quiz = 0
+        lab = 0
+        project = 0
+        for chapter in course_blocks.get('children', []):
+            for sequential in chapter.get('children', []):
+                sequential_tree = []
+                for vertical in sequential.get('children', []):
+                   
+                    sequential_tree.append(vertical['display_name'])
+                    for a in vertical.get('children') :
+                      
+                        if 'problem' in a['type']:
+                            quiz += 1
+                            break
+                        if 'labxblock' in a['type'] : 
+                            lab += 1
+                            break
+                        if 'assignmentxblock' in a['type']:
+                            project += 1
+                            break
+                        
+                block_tree.append({sequential['display_name']: sequential_tree}) 
+     
+        data = { 
+            "display_name" : overview.display_name,
+            'block_tree': block_tree ,  
+            'course_image_urls': overview.image_urls ,
+            "quiz" : quiz,
+            'lab' : lab ,
+            "project" : project
+            }
+        
+        course_about = CourseOverviewAbout.getAboutCourse(course_id=course_key)    
+        course_teacher = CourseOverviewAboutTeacher.get_about_teacher(course_id=course_key)
+        if course_about is not None : 
+            data['overview'] = course_about.overview
+            data['target'] = course_about.target
+            data['participant'] = course_about.participant
+            data['input_required'] = course_about.input_required
+        if len(course_teacher) > 0 :
+            teachers = []
+            for teacher in course_teacher:
+                data_teacher = {'name' : teacher.name,
+                                'img_url': str(teacher.img) ,
+                                'position' : teacher.position,
+                                'workplace': teacher.workplace , 
+                                "sex" : teacher.sex,
+                                "isTeacherStart" : teacher.is_teacher_start,
+                                "isDesign" : teacher.is_design,
+                                "isExpert" : teacher.is_expert
+                                }
+                teachers.append(data_teacher)
+                
+
+            data['teachers'] = teachers   
+
+                       
+        # block_tree = block_tree[2:]                   
+    except CourseNotFoundError as e:
+        return JsonResponse({'error': f'Course not found: {str(e)}'}, status=404)
+    except Exception as e:
+        return JsonResponse({'error': f'An unexpected error occurred: {str(e)}'}, status=500)
+    
+
+                              
+    return JsonResponse(data)
+

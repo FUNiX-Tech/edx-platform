@@ -252,7 +252,9 @@ if settings.FEATURES.get('CERTIFICATES_HTML_VIEW'):
         signatory_detail_handler,
         certificates_detail_handler,
         certificates_list_handler,
-        setting_survey_form
+        setting_survey_form ,
+        about_overview ,
+        remove_teacher
     )
 
     urlpatterns += [
@@ -378,4 +380,16 @@ from django.views.i18n import JavaScriptCatalog
 
 urlpatterns += [
     path('jsi18n/', JavaScriptCatalog.as_view(), name='assignmentxblock-xblock'),
+]
+
+
+
+urlpatterns += [
+    path('about/<str:course_id>' , about_overview , name='course_overview'),
+]
+
+
+
+urlpatterns += [
+    path('api/overview/about/remove_teacher',remove_teacher, name='remove_teacher' )
 ]

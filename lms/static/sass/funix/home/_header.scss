@@ -13,14 +13,13 @@ header.global-header {
     box-shadow: none !important;
     display: flex !important;
     align-items: center;
-
-   
 }
 
 body > div.window-wrap > header {
     div.main-header {
         display: flex;
         align-items: center;
+
         // max-width: 1440px !important;
         width: 100%;
 
@@ -30,6 +29,7 @@ body > div.window-wrap > header {
 
         @media only screen and (max-width: 991px) {
             justify-content: flex-start;
+
         }
 
         h1 {
@@ -78,6 +78,7 @@ body > div.window-wrap > header {
 
         div.hamburger-menu {
             padding: 2px;
+
             @media only screen and (min-width: 992px) {
                 display: none;
             }

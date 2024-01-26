@@ -26,6 +26,7 @@ ABOUT_ATTRIBUTES = [
     'description',
     'short_description',
     'overview',
+    'overview1',
     'effort',
     'entrance_exam_enabled',
     'entrance_exam_id',
@@ -58,6 +59,7 @@ class CourseDetails:
         self.description = ""
         self.short_description = ""
         self.overview = ""  # html to render as the overview
+        self.overview1 = ''
         self.about_sidebar_html = ""
         self.intro_video = None  # a video pointer
         self.effort = None  # hours/week
@@ -169,6 +171,7 @@ class CourseDetails:
         """
         temploc = course.id.make_usage_key('about', about_key)
         store = store or modulestore()
+        # print('========about_key=======', temploc)
         if data is None:
             try:
                 store.delete_item(temploc, user_id)
@@ -196,6 +199,9 @@ class CourseDetails:
         """
         Decode the json into CourseDetails and save any changed attrs to the db
         """
+
+        # print('================', jsondict)
+        
         module_store = modulestore()
         descriptor = module_store.get_course(course_key)
 
@@ -307,7 +313,9 @@ class CourseDetails:
         # against db or could have client send over a list of which
         # fields changed.
         for attribute in ABOUT_ATTRIBUTES:
+            # print('===============', attribute)
             if attribute in jsondict:
+                
                 cls.update_about_item(descriptor, attribute, jsondict[attribute], user.id)
 
         cls.update_about_video(descriptor, jsondict['intro_video'], user.id)
