@@ -12,7 +12,6 @@ def chatbot_query_serializer(query):
         'status': query.status,
         'vote': query.vote,
         'created': query.created,
-        'feedback': query.feedback,
     }
 
 def chatbot_query_list_serializer(query_list):

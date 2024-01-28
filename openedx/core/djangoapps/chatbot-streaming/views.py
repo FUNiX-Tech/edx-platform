@@ -16,11 +16,10 @@ def chatbot_fetch_query_list_view(request, session_id, skip, limit):
     user = request.user
     
     if session_id == '0':
-        last_query = ChatbotQuery.objects.filter(session__student=request.user).last()
+        last_session = ChatbotSession.objects.filter(student=request.user).last()
 
-
-        query_list = [] if last_query is None else last_query.session.chatbot_queries.order_by('-id').all()[skip:skip + limit]
-        total = 0 if last_query is None else last_query.session.chatbot_queries.count()
+        query_list = [] if last_session is None else last_session.chatbot_queries.order_by('-id').all()[skip:skip + limit]
+        total = 0 if last_session is None else last_session.chatbot_queries.count()
         total_page = math.ceil(total/limit)
     else:
         query_list = ChatbotQuery.objects.filter(session__student=user, session__id=session_id).order_by('-id')[skip:skip + limit]
@@ -28,6 +27,7 @@ def chatbot_fetch_query_list_view(request, session_id, skip, limit):
         total_page = math.ceil(total / limit)
 
     remain_page = math.ceil((total - skip - limit)/limit)
+
 
     return JsonResponse(
         {
@@ -63,6 +63,7 @@ def chatbot_fetch_session_list_view(request, skip, limit):
         status=200
     )
 
+
 @require_http_methods('POST')
 @login_required
 def chatbot_query_view(request):
@@ -92,7 +93,6 @@ def chatbot_query_view(request):
         )
 
     response_msg = _chatbot_get_response(query_msg, session.id)
-  
     if response_msg is None: 
         created_query.status = 'failed'
         created_query.save()
@@ -141,7 +141,6 @@ def chatbot_vote_response_view(request):
         )
     if data.get('vote') == 'remove': 
         response.vote = None
-        response.feedback = ''
     else:
         response.vote = data.get('vote')
 
@@ -157,61 +156,6 @@ def chatbot_vote_response_view(request):
         }
     )
     
-@require_http_methods('PUT')
-@login_required
-def chatbot_give_feedback_view(request):
-    data = json.loads(request.body.decode('utf8'))
-
-    feedback = data.get('feedback')
-    query_id = data.get('query_id')
-
-    if not feedback or not query_id:
-        return JsonResponse(
-            {
-                'message': _('Missing query_id or feedback.')
-            },
-            status=400
-        )
-    
-    if len(feedback) > 500:
-        return JsonResponse(
-            {
-                'message': _('Feedback cannot be exceed 500 characters.')
-            },
-            status=400
-        )
-        
-    response = ChatbotQuery.objects.filter(id=query_id).first()
-    if response is None: 
-        return JsonResponse(
-            {
-                'message': _('Not found query response')
-            },
-            status=400
-        )
-    
-    if response.vote != 'down': 
-        return JsonResponse(
-            {
-                'message': _('The vote is not "down" so cannot give feedback.')
-            },
-            status=400
-        )
-
-    response.feedback = feedback 
-    response.save()
-
-    return JsonResponse(
-        {
-            'message': _('success'),  
-            'data': {
-                'feedback': feedback,
-                'id': query_id
-            }
-        }
-    )
-    
-
 @require_http_methods('POST')
 @login_required
 def chatbot_start_new_session_view(request):
@@ -312,6 +256,7 @@ def chatbot_cancel_query_view(request):
         status=200
     )
 
+
 # helper function
 def _chatbot_get_response(query_msg, session_id):
     url = get_chatbot_api_url()
@@ -324,24 +269,16 @@ def _chatbot_get_response(query_msg, session_id):
         'chat_id': session_id
     }
 
-    try:
-        r = requests.post(url, headers=headers, data=json.dumps(data))
-    except Exception as e: 
-        _print_chatbot_error(str(e))
-        return None
+    r = requests.post(url, headers=headers, data=json.dumps(data))
 
     if r.status_code == 200:
         return r.json().get('data').get('response')
 
     else: 
-        _print_chatbot_error(f"Response status code: ", r.status_code)
+        print('chatbot failed: ', r.status_code)
         try:
-            _print_chatbot_error("Response error: ", r.json())
+            print(r.json())
         except Exception as e: 
-            _print_chatbot_error(str(e))
+            print(str(e))
     
     return None
-
-def _print_chatbot_error(msg):
-    error_msg = f"[ CHATBOT_ERROR ]: {msg}"
-    print(error_msg)
