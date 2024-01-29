@@ -11,6 +11,7 @@
 @import "components/xmodule-HtmlBlock";
 @import "components/xmodule-ProblemBlock";
 @import "components/xmodule-VideoBlock";
+@import "components/_xmodule-textBlock.scss/textBlock-videoComponent";
 
 // Remove margin, padding, border of each component
 .course-wrapper .course-content .vert-mod .vert {

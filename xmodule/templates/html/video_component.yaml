@@ -1,0 +1,44 @@
+---
+metadata:
+    display_name: Video Component
+data: |
+    <h3>Thêm Video Component</h3>
+    <p>Để thêm vào Video Component, hãy copy đoạn code HTML phía dưới. Sau đó, tại cửa sổ Editor chỉnh chế độ chỉnh sửa HTML. Sau đó chỉnh sửa các element theo chú thích</p>
+    <ol>
+        <li>textblock__video-wrapper: Link dẫn đến Video</li>
+        <li>textblock__video-thumbnail: Link đến thumbnail</li>
+        <li>textblock__video-title: Tên video</li>
+        <li>textblock__video-source: Nguồn Video</li>
+        <li>textblock__video-caption: Caption video</li>
+    </ol>
+
+
+    <pre>
+    &lt;!-- ===== COPY START ===== --&gt;
+
+        &lt;div class="textblock__video-container"&gt;
+        &lt;!-- Edit Video --&gt;
+            &lt;div class="textblock__video-wrapper" 
+            onclick="window.open('https://youtube.com', '_blank')"&gt;
+            &lt;!-- Edit Thumbnail --&gt;
+                &lt;img class="textblock__video-thumbnail" 
+                src="https://cdn.vectorstock.com/i/preview-1x/65/30/default-image-icon-missing-picture-page-vector-40546530.jpg" alt="Alternative Text"/&gt;
+                &lt;div class="textblock__video-info"&gt;
+                    &lt;h3 class="textblock__video-title"&gt;
+                    &lt;!-- Edit Title --&gt;
+                        Video Title
+                    &lt;/h3&gt;
+                    &lt;span class="textblock__video-source"&gt;
+                        &lt;!-- Edit Source --&gt;
+                            From Youtube
+                    &lt;/span&gt;
+                &lt;/div&gt;
+        &lt;!-- Edit Caption or Remove --&gt;
+            &lt;span class="textblock__video-caption"&gt;Insert Caption here&lt;/span&gt;
+            &lt;/div&gt;
+        &lt;/div&gt;
+
+    &lt;!-- ===== COPY END ===== --&gt;
+
+    </pre>
+
