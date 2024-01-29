@@ -159,3 +159,14 @@
 .mce-content-body table td.cont-justified-center, .mce-content-body table th.cont-justified-center {
     text-align: center;
 }
+
+
+.textblock__video-container {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    // padding: 4px;
+    background-color: #fff;
+    margin-bottom: 46px;
+}
