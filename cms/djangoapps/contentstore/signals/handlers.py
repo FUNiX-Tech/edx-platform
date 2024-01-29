@@ -32,6 +32,7 @@ from openedx.core.lib.gating import api as gating_api
 from xmodule.modulestore import ModuleStoreEnum
 from xmodule.modulestore.django import SignalHandler, modulestore
 from .signals import GRADING_POLICY_CHANGED
+from openedx.features.funix_relative_date.funix_relative_date import FunixRelativeDateLibary
 
 log = logging.getLogger(__name__)
 
@@ -150,6 +151,7 @@ def listen_for_course_publish(sender, course_key, **kwargs):  # pylint: disable=
         countdown=settings.DISCUSSION_SETTINGS['COURSE_PUBLISH_TASK_DELAY'],
     )
 
+    FunixRelativeDateLibary.re_schedule_by_course(course_id=str(course_key))
     # Send to a signal for catalog info changes as well, but only once we know the transaction is committed.
     transaction.on_commit(lambda: emit_catalog_info_changed_signal(course_key))
 

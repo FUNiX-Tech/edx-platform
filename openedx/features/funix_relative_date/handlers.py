@@ -23,7 +23,7 @@ def handle_user_enroll(sender, event=None, user=None, course_id=None,**kwargs): 
 
 @receiver(SignalHandler.course_published)
 def listen_for_course_publish(sender, course_key, **kwargs):
-    print('==========sender===========', sender)
+    print('==========sender===========', SignalHandler.course_published)
     return 
 	# FunixRelativeDateLibary.re_schedule_by_course(course_id=str(course_key))
 # @receiver(grades_signals.PROBLEM_WEIGHTED_SCORE_CHANGED)
