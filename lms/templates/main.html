@@ -295,7 +295,7 @@ function postEventToResizeUnit() {
 
   const msgData = {
     resize: {
-      iframeHeight: $('#main').prop('offsetHeight'),
+      iframeHeight: $('#main').prop('scrollHeight'),
       transition: "0s"
     },
     type: 'unit.resize' 
@@ -308,6 +308,14 @@ window.addEventListener('message', event => {
     postEventToResizeUnit();
   }
 })
+
+window.addEventListener('load', () => {
+  postEventToResizeUnit();
+
+
+});
+
+
   </script>
 </body>
 </html>
