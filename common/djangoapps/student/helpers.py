@@ -797,7 +797,7 @@ def get_resume_urls_for_enrollments(user, enrollments):
 
 # author: uuuuv.
 def get_begin_urls_for_enrollments(enrollments):
-    begin_urls = {}
+    begin_urls = OrderedDict()
     for enrollment in enrollments: 
         course_overview = CourseOverview.get_from_id(enrollment.course_id)
         course = course_overview._original_course
