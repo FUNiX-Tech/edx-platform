@@ -21,6 +21,7 @@ from django.db import IntegrityError, ProgrammingError, transaction
 from django.urls import NoReverseMatch, reverse
 from django.utils.translation import gettext as _
 from pytz import UTC, timezone
+from openedx.core.djangoapps.content.course_overviews.models import CourseOverview
 
 from common.djangoapps import third_party_auth
 from common.djangoapps.course_modes.models import CourseMode
@@ -794,6 +795,34 @@ def get_resume_urls_for_enrollments(user, enrollments):
         resume_course_urls[enrollment.course_id] = url_to_block
     return resume_course_urls
 
+# author: uuuuv.
+def get_begin_urls_for_enrollments(enrollments):
+    begin_urls = {}
+    for enrollment in enrollments: 
+        course_overview = CourseOverview.get_from_id(enrollment.course_id)
+        course = course_overview._original_course
+  
+        first_section = course.get_children()[0] if len(course.get_children()) > 0 else None
+        first_subsection = first_section.get_children()[0] if first_section and len(first_section.get_children()) > 0 else None
+        first_unit = first_subsection.get_children()[0] if first_subsection and len(first_subsection.get_children()) > 0 else None
+
+        if first_unit: 
+            jump_url = reverse(
+                'jump_to',
+                kwargs={'course_id': enrollment.course_id, 'location': first_unit.scope_ids.usage_id}
+            )
+
+            react_path = f"/course/{enrollment.course_id}/{first_subsection.scope_ids.usage_id}/{first_unit.scope_ids.usage_id}"
+        else:
+            jump_url = ""
+            react_path = ""
+
+        begin_urls[enrollment.course_id] = {
+            'jump_url': jump_url,
+            'react_path': react_path
+        }
+
+    return begin_urls
 
 def does_user_profile_exist(user):
     """

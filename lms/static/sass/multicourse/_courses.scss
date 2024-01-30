@@ -228,29 +228,29 @@ $facet-background-color: #007db8;
     @include rtl() { $layout-direction: "RTL"; }
 
     .search-status-label {
-      @extend %t-title3;
+      // @extend %t-title3;
 
-      @include span-columns(9);
+      // @include span-columns(9);
 
-      min-height: $course-search-input-height;
+      // min-height: $course-search-input-height;
 
-      @include media($bp-tiny) {
-        @include fill-parent();
-        @include font-size(20);
-      }
+      // @include media($bp-tiny) {
+      //   @include fill-parent();
+      //   @include font-size(20);
+      // }
 
-      @include media($bp-small) {
-        @include span-columns(4);
-        @include font-size(20);
-      }
+      // @include media($bp-small) {
+      //   @include span-columns(4);
+      //   @include font-size(20);
+      // }
 
-      @include media($bp-medium) {
-        @include span-columns(4);
-      }
+      // @include media($bp-medium) {
+      //   @include span-columns(4);
+      // }
 
-      @include media($bp-large) {
-        @include span-columns(8);
-      }
+      // @include media($bp-large) {
+      //   @include span-columns(8);
+      // }
     }
 
     .wrapper-search-input {
@@ -306,8 +306,8 @@ $facet-background-color: #007db8;
     @extend %t-icon3;
     @extend %t-strong;
 
-    @include margin-left(-2px);
-    @include right(0);
+    @include margin-right(-2px);
+    @include left(0);
 
     position: absolute;
     top: 0;
@@ -330,7 +330,8 @@ $facet-background-color: #007db8;
   .loading-spinner {
     @include transition(all $tmg-f1 ease-out 0s);
 
-    background: $blue;
+    background: #fff;
+    color: #576f8a;
     position: absolute;
     top: ($baseline*0.7); // same as padding rule for .discovery-submit
   }

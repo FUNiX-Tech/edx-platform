@@ -16,6 +16,7 @@ define(['js/views/validation', 'codemirror', 'underscore', 'jquery', 'jquery.ui'
                    'change select': 'updateModel',
                    'click .remove-course-introduction-video': 'removeVideo',
                    'focus #course-overview': 'codeMirrorize',
+                   'focus #course-overview1' : 'codeMirrorize',
                    'focus #course-about-sidebar-html': 'codeMirrorize',
                    'mouseover .timezone': 'updateTime',
         // would love to move to a general superclass, but event hashes don't inherit in backbone :-(
@@ -88,8 +89,10 @@ define(['js/views/validation', 'codemirror', 'underscore', 'jquery', 'jquery.ui'
                    DateUtils.setupDatePicker('upgrade_deadline', this);
 
                    this.$el.find('#' + this.fieldToSelectorMap.overview).val(this.model.get('overview'));
+                   this.$el.find('#' + this.fieldToSelectorMap.overview1).val(this.model.get('overview1'));
                    this.codeMirrorize(null, $('#course-overview')[0]);
-
+                   this.codeMirrorize(null, $('#course-overview1')[0])
+                    
                    if (this.model.get('title') !== '') {
                        this.$el.find('#' + this.fieldToSelectorMap.title).val(this.model.get('title'));
                    } else {
@@ -171,6 +174,7 @@ define(['js/views/validation', 'codemirror', 'underscore', 'jquery', 'jquery.ui'
                    certificate_available_date: 'certificate-available',
                    certificates_display_behavior: 'certificates-display-behavior',
                    overview: 'course-overview',
+                   overview1 : 'course-overview1',
                    title: 'course-title',
                    subtitle: 'course-subtitle',
                    duration: 'course-duration',

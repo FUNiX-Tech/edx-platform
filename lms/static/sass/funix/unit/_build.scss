@@ -1,18 +1,18 @@
-@import '../base/build';
+@import "../base/build";
 
-@import 'mixins/typography';
-@import 'mixins/problem';
-@import 'mixins/table';
-@import 'mixins/details';
-@import 'mixins/image';
-@import 'mixins/buttons';
-@import 'mixins/common';
+@import "mixins/typography";
+@import "mixins/problem";
+@import "mixins/table";
+@import "mixins/details";
+@import "mixins/image";
+@import "mixins/buttons";
+@import "mixins/common";
 
-@import 'components/xmodule-HtmlBlock';
-@import 'components/xmodule-ProblemBlock';
-@import 'components/xmodule-VideoBlock';
+@import "components/xmodule-HtmlBlock";
+@import "components/xmodule-ProblemBlock";
+@import "components/xmodule-VideoBlock";
 
-// Remove margin, padding, border of each component 
+// Remove margin, padding, border of each component
 .course-wrapper .course-content .vert-mod .vert {
     margin: 0;
     padding: 0;
@@ -21,4 +21,8 @@
 
 .content-wrapper {
     margin-top: 0;
+}
+
+#content {
+    margin-top: 0 !important;
 }

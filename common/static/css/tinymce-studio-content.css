@@ -70,6 +70,7 @@
     font-size: 1em;
     line-height: 1.6em !important;
     color: #3c3c3c;
+    text-align: justify;
 }
 
 .mce-content-body em, .mce-content-body i {
@@ -93,6 +94,7 @@
 
 .mce-content-body ol li, .mce-content-body ul li {
     margin-bottom: 0.708em;
+    text-align: justify;
 }
 
 .mce-content-body ol {

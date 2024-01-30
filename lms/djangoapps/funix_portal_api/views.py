@@ -41,6 +41,74 @@ def check_missing_fields(fields, data):
             errors[field] = ["This field is required"]
     return errors
 
+class ResetUserPasswordFromPortalAPIView(APIView):
+    """
+    **Use Case**
+        Update user password
+
+    **Example Request**
+        POST http://localhost:18000/api/v2/funix_portal/user/update_password
+        Content-Type: application/json
+
+        {
+            "email": "example@example.com",
+            "new_password": "new_password"
+        }
+
+    **Example Response**
+
+        {
+            "message": "Updated new password/error message"
+        }
+    """
+
+    authentication_classes = []
+    # permission_classes = (IsStaff,)
+    # throttle_classes = (EnrollmentUserThrottle,)
+    @method_decorator(csrf_exempt)
+    def post(self, request):
+        data = request.data
+        email = data.get("email")
+        new_password = data.get("new_password")
+
+        missing_fields = check_missing_fields(["email", "new_password"], data)
+        if missing_fields:
+            return Response(data={
+                "message": "Missing fields",
+                "errors": missing_fields
+            }, status=status.HTTP_400_BAD_REQUEST)
+
+        password_error = get_password_validation_error(new_password)
+        if password_error:
+            return Response(data={
+                "message": "Invalid new password",
+                "errors": {"new_password": [password_error]}
+            })
+
+        try:
+            user = User.objects.get(email=email)
+            try:
+                user.set_password(new_password)
+                user.save()
+                return Response(data={
+                    "message": "Updated new password"
+                }, status=status.HTTP_200_OK)
+            except Exception as e:
+                logging.error(str(e))
+                return Response(data={
+                    "message": "Internal Server Error",
+                }, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+        except User.DoesNotExist:
+            return Response(data={
+                "message": f"Not found user with email '{email}'",
+                "errors": {"email": [f"Not found user with email '{email}'"]}
+            }, status=status.HTTP_400_BAD_REQUEST)
+        except Exception as e:
+            logging.error(str(e))
+            return Response(data={
+                "message": "Internal Server Error",
+            }, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+
 class UpdateUserPasswordAPIView(APIView): 
     """
     **Use Case**

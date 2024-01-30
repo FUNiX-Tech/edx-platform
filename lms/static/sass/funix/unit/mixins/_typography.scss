@@ -24,6 +24,7 @@
         font-weight: $fw-normal;
         line-height: 1.5;
         margin: 0 0 $spacing-1 0;
+        text-align: justify;
     }
 
     div, section, article, aside {
@@ -113,6 +114,7 @@
     ul,
     ol {
         margin: 0 0 $spacing-1 0;
+        text-align: justify;
     }
 
     ul,
@@ -121,6 +123,7 @@
 
         li {
             margin-bottom: 0.375rem;
+            text-align: justify;
 
             &:last-child {
                 margin-bottom: 0;
