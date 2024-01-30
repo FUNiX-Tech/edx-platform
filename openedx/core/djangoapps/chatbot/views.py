@@ -8,21 +8,10 @@ from django.contrib.auth.decorators import login_required
 from django.views.decorators.http import require_http_methods
 from django.utils.translation import gettext_lazy as _
 import requests
-from .api import get_chatbot_bearer_token, get_chatbot_api_url
 
 @require_http_methods('GET')
 @login_required
 def chatbot_fetch_query_list_view(request, session_id, skip, limit):
-    # all = ChatbotQuery.objects.all()
-    # for q in all:
-    #     if q.status == 'idle' or q.status == 'pending':
-    #         q.status = 'failed'
-    #         q.save()
-
-    #     if not q.query_msg:
-    #         q.delete()
-
-
     user = request.user
     
     if session_id == '0':
@@ -78,7 +67,6 @@ def chatbot_query_view(request):
     Create/update query item
     """
     request_data = json.loads(request.body.decode('utf8'))
-
     query_msg = request_data.get('query_msg')
     session_id = request_data.get('session_id')
     response_msg = request_data.get('response_msg') or ''
@@ -91,8 +79,6 @@ def chatbot_query_view(request):
         _save_error(error)
 
     session = ChatbotSession.objects.filter(id=session_id).last()
-
-
 
     try:
         if request.method == 'POST':
@@ -178,7 +164,6 @@ def chatbot_vote_response_view(request):
 @login_required
 def chatbot_give_feedback_view(request):
     data = json.loads(request.body.decode('utf8'))
-
     feedback = data.get('feedback')
     query_id = data.get('query_id')
 
@@ -253,51 +238,6 @@ def chatbot_start_new_session_view(request):
 
 @require_http_methods('PUT')
 @login_required
-def chatbot_retry_query_view(request):
-    data = json.loads(request.body.decode('utf8'))
-
-    query = ChatbotQuery.objects.filter(id=data.get('query_id')).first()
-
-    if query is None:
-        return JsonResponse(
-            {
-                'message': _('Not found query')
-            },
-            status=400
-        )
-    
-    if query.status != 'failed':
-        return JsonResponse(
-            {
-                'message': _('You can only retry on failed query')
-            },
-            status=400
-        )
-    
-    response_msg = _chatbot_get_response(query.query_msg, query.session.id)
-
-    if response_msg is None: 
-        return JsonResponse(
-            {
-                'message': _('Internal Server Error'),
-                'data': chatbot_query_serializer(query)
-            },
-            status=200
-        )
-
-    query.status = 'succeeded'
-    query.response_msg = response_msg
-    query.save()
-    return JsonResponse(
-        {
-            'message': _('success'),
-            'data': chatbot_query_serializer(query)
-        },
-        status=200
-    )
-
-@require_http_methods('PUT')
-@login_required
 def chatbot_cancel_query_view(request):
     data = json.loads(request.body.decode('utf8'))
 
@@ -356,36 +296,6 @@ def chatbot_save_error_view(request):
             },
             status=500
         )
-
-# helper function
-def _chatbot_get_response(query_msg, session_id):
-    url = get_chatbot_api_url()
-    headers = {
-        'Content-Type': 'application/json', 
-        'Authorization': f'Bearer {get_chatbot_bearer_token()}'
-    }
-    data = {
-        'query': query_msg,
-        'chat_id': session_id
-    }
-
-    try:
-        r = requests.post(url, headers=headers, data=json.dumps(data))
-    except Exception as e: 
-        _print_chatbot_error(str(e))
-        return None
-
-    if r.status_code == 200:
-        return r.json().get('data').get('response')
-
-    else: 
-        _print_chatbot_error(f"Response status code: ", r.status_code)
-        try:
-            _print_chatbot_error("Response error: ", r.json())
-        except Exception as e: 
-            _print_chatbot_error(str(e))
-    
-    return None
 
 def _print_chatbot_error(msg):
     error_msg = f"[ CHATBOT_ERROR ]: {msg}"
