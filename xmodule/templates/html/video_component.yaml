@@ -8,11 +8,11 @@ data: |
         <li>textblock__video-wrapper: Link dẫn đến Video</li>
         <li>textblock__video-thumbnail: Link đến thumbnail</li>
             <ul>
-            <li>Nếu đây là file đã upload của khóa học: /static/<tên-file> </li>
-            <li>Nếu đây là link ngoài khóa học: <link-url> </li>
+            <li>Nếu đây là file đã upload của khóa học: /static/&lt;tên-file&gt; =&lt; Ví dụ: /static/digital-marketing.jpg </li>
+            <li>Nếu đây là link ngoài khóa học: &lt;link-url&gt; =&lt; Ví dụ: https://www.eclosio.ong/wp-content/uploads/2018/08/default.png  </li>
             </ul>
         <li>textblock__video-title: Tên video</li>
-        <li>textblock__video-source-info: Thông tin về Video bao gồm source và thời lượng</li>
+        <li>textblock__video-source-info: Thông tin về Video bao gồm tên trang web (Youtube, Udemy) và thời lượng</li>
         <li>textblock__video-caption: Caption video</li>
     </ol>
     <pre>
@@ -23,7 +23,7 @@ data: |
             onclick="window.open('https://youtube.com', '_blank')"&gt;
             &lt;!-- Edit Thumbnail --&gt;
             &lt;img class="textblock__video-thumbnail" 
-                src="https://cdn.vectorstock.com/i/preview-1x/65/30/default-image-icon-missing-picture-page-vector-40546530.jpg" alt="Alternative Text"/&gt;
+                src="https://www.eclosio.ong/wp-content/uploads/2018/08/default.png" alt="Alternative Text"/&gt;
             &lt;div class="textblock__video-info"&gt;
                 &lt;h3 class="textblock__video-title"&gt;
                 &lt;!-- Edit Title --&gt;
