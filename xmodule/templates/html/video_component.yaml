@@ -16,33 +16,34 @@ data: |
         <li>textblock__video-caption: Caption video</li>
     </ol>
     <pre>
-    &lt;!-- ===== COPY START ===== --&gt;
+        &lt;!-- ===== COPY START ===== --&gt;
         &lt;div class="textblock__video-container"&gt;
         &lt;!-- Edit Video --&gt;
-            &lt;div class="textblock__video-wrapper" 
+        &lt;div class="textblock__video-wrapper" 
             onclick="window.open('https://youtube.com', '_blank')"&gt;
             &lt;!-- Edit Thumbnail --&gt;
-                &lt;img class="textblock__video-thumbnail" 
+            &lt;img class="textblock__video-thumbnail" 
                 src="https://cdn.vectorstock.com/i/preview-1x/65/30/default-image-icon-missing-picture-page-vector-40546530.jpg" alt="Alternative Text"/&gt;
-                &lt;div class="textblock__video-info"&gt;
-                    &lt;h3 class="textblock__video-title"&gt;
-                    &lt;!-- Edit Title --&gt;
-                        Video Title
-                    &lt;/h3&gt;
-                    &lt;div class="textblock__video-info-source"&gt;
+            &lt;div class="textblock__video-info"&gt;
+                &lt;h3 class="textblock__video-title"&gt;
+                &lt;!-- Edit Title --&gt;
+                    Video Title
+                &lt;/h3&gt;
+                &lt;div class="textblock__video-info-source"&gt;
                     &lt;span class="textblock__video-info-item"&gt;
-                        &lt;!-- Edit Source --&gt;
-                            From Youtube
+                    &lt;!-- Edit Source --&gt;
+                        From Youtube
                     &lt;/span&gt;
                     &lt;span class="textblock__video-info-item"&gt;--&lt;/span&gt;
                     &lt;span class="textblock__video-info-item"&gt;
                         10:24:56
                     &lt;/span&gt;
-                    &lt;/div&gt;
                 &lt;/div&gt;
-        &lt;!-- Edit Caption or Remove --&gt;
-            &lt;span class="textblock__video-caption"&gt;Insert Caption here&lt;/span&gt;
             &lt;/div&gt;
+            &lt;!-- Edit Caption or Remove --&gt;
+            &lt;span class="textblock__video-caption"&gt;Insert Caption here&lt;/span&gt;
         &lt;/div&gt;
-    &lt;!-- ===== COPY END ===== --&gt;
+        &lt;/div&gt;
+        &lt;!-- ===== COPY END ===== --&gt;
     </pre>
+
