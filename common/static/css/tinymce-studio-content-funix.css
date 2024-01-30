@@ -48,6 +48,7 @@
     font-weight: 500;
     line-height: 150%;
     margin: 0 !important;
+    height: 48px !important;
 }
 
 .mce-content-body .textblock__video-info-source {
