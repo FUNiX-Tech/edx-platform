@@ -155,7 +155,7 @@
           toolbar: "formatselect bold italic underline table tabledelete | tableprops tablerowprops tablecellprops | tableinsertrowbefore tableinsertrowafter tabledeleterow | tableinsertcolbefore tableinsertcolafter tabledeletecol " +
           "alignleft aligncenter alignright alignjustify " +
           "bullist numlist link unlink " +
-          ((this.new_image_modal ? 'insertImage' : 'image') + " code"),
+          ((this.new_image_modal ? 'insertImage' : 'image') + " helloWorld code"),
           // block_formats: edx.StringUtils.interpolate(
           //   gettext("{paragraph}=p;{preformatted}=pre;{heading3}=h3;{heading4}=h4;{heading5}=h5;{heading6}=h6"),
           //   {
@@ -1260,6 +1260,24 @@
     }
 
     HTMLEditingDescriptor.prototype.setupTinyMCE = function(ed) {
+      ed.ui.registry.addButton("helloWorld", {
+        tooltip: 'Link to video',
+        icon: 'video-link',
+        /**
+        * 1. When click this icon, there will be a modal that has some input fields that user can fill in.
+        * - Video title
+        * - Video url
+        * - Video thumbnail
+        * -- In video thumbnail, we can insert an image url or open the image library
+        * - Video caption
+        * - Video source
+        * - Video duration 
+        */
+        onAction: function() {
+          console.log('hello world')
+        }
+      })
+
       ed.ui.registry.addButton('wrapAsCode', {
 
         /*
@@ -1466,3 +1484,4 @@
   })();
 
 }).call(this);
+
