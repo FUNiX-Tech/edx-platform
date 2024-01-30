@@ -1,0 +1,49 @@
+---
+metadata:
+    display_name: Video Component
+data: |
+    <h3>Thêm Video Component</h3>
+    <p>Để thêm vào Video Component, hãy copy đoạn code HTML phía dưới. Sau đó, tại cửa sổ Editor chỉnh chế độ chỉnh sửa HTML. Sau đó chỉnh sửa các element theo chú thích</p>
+    <ol>
+        <li>textblock__video-wrapper: Link dẫn đến Video</li>
+        <li>textblock__video-thumbnail: Link đến thumbnail</li>
+            <ul>
+            <li>Nếu đây là file đã upload của khóa học: /static/&lt;tên-file&gt; =&lt; Ví dụ: /static/digital-marketing.jpg </li>
+            <li>Nếu đây là link ngoài khóa học: &lt;link-url&gt; =&lt; Ví dụ: https://www.eclosio.ong/wp-content/uploads/2018/08/default.png  </li>
+            </ul>
+        <li>textblock__video-title: Tên video</li>
+        <li>textblock__video-source-info: Thông tin về Video bao gồm tên trang web (Youtube, Udemy) và thời lượng</li>
+        <li>textblock__video-caption: Caption video</li>
+    </ol>
+    <pre>
+        &lt;!-- ===== COPY START ===== --&gt;
+        &lt;div class="textblock__video-container"&gt;
+        &lt;!-- Edit Video --&gt;
+        &lt;div class="textblock__video-wrapper" 
+            onclick="window.open('https://youtube.com', '_blank')"&gt;
+            &lt;!-- Edit Thumbnail --&gt;
+            &lt;img class="textblock__video-thumbnail" 
+                src="https://www.eclosio.ong/wp-content/uploads/2018/08/default.png" alt="Alternative Text"/&gt;
+            &lt;div class="textblock__video-info"&gt;
+                &lt;h3 class="textblock__video-title"&gt;
+                &lt;!-- Edit Title --&gt;
+                    Video Title
+                &lt;/h3&gt;
+                &lt;div class="textblock__video-info-source"&gt;
+                    &lt;span class="textblock__video-info-item"&gt;
+                    &lt;!-- Edit Source --&gt;
+                        From Youtube
+                    &lt;/span&gt;
+                    &lt;span class="textblock__video-info-item"&gt;--&lt;/span&gt;
+                    &lt;span class="textblock__video-info-item"&gt;
+                        10:24:56
+                    &lt;/span&gt;
+                &lt;/div&gt;
+            &lt;/div&gt;
+            &lt;!-- Edit Caption or Remove --&gt;
+            &lt;span class="textblock__video-caption"&gt;Insert Caption here&lt;/span&gt;
+        &lt;/div&gt;
+        &lt;/div&gt;
+        &lt;!-- ===== COPY END ===== --&gt;
+    </pre>
+
