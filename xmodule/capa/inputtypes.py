@@ -232,6 +232,10 @@ class InputTypeBase(object):
 
         self.value = state.get('value', '')
 
+
+        
+
+            
         feedback = state.get('feedback', {})
         self.msg = feedback.get('message', '')
         self.hint = feedback.get('hint', '')
@@ -239,12 +243,13 @@ class InputTypeBase(object):
         self.input_state = state.get('input_state', {})
         self.answervariable = state.get('answervariable', None)
         self.response_data = state.get('response_data')
-
+        # self.response_data['hintExpress'] = 'hint'
+        
         # put hint above msg if it should be displayed
         if self.hintmode == 'always':
             self.msg = HTML('{hint}<br/>{msg}' if self.msg else '{hint}').format(hint=HTML(self.hint),
                                                                                  msg=HTML(self.msg))
-
+        
         self.status = state.get('status', 'unanswered')
 
         try:
@@ -516,6 +521,7 @@ class ChoiceGroup(InputTypeBase):
 
         self.choices = self.extract_choices(self.xml, i18n)
         self._choices_map = dict(self.choices,)
+        # self.hints = self.extract_choices(self.xml, i18n)
 
     @classmethod
     def get_attributes(cls):
@@ -546,16 +552,19 @@ class ChoiceGroup(InputTypeBase):
 
         choices = []
         _ = edx_six.get_gettext(i18n)
-
+        hints = []
         for choice in element:
-            if choice.tag == 'choice':
+            if choice.tag == 'choice' :
                 if not text_only:
                     text = stringify_children(choice)
                 else:
                     text = choice.text
                 choices.append((choice.get("name"), text))
+            elif choice.tag == 'hint':
+                hints.append(choice.text)
             else:
-                if choice.tag != 'compoundhint':
+
+                if choice.tag != 'compoundhint' :
                     msg = Text('[capa.inputtypes.extract_choices] {error_message}').format(
                         error_message=Text(
                             # Translators: '<choice>' and '<compoundhint>' are tag names and should not be translated.
@@ -564,7 +573,8 @@ class ChoiceGroup(InputTypeBase):
                         )
                     )
                     raise Exception(msg)
-        return choices
+
+        return {'choices': choices, 'hints': hints}
 
     def get_user_visible_answer(self, internal_answer):
         if isinstance(internal_answer, six.string_types):

@@ -17,7 +17,7 @@ import six
       % for description_id, description_text in response_data['descriptions'].items():
         <p class="question-description" id="${description_id}">${description_text}</p>
       % endfor
-        % for choice_id, choice_label in choices:
+        % for choice_id, choice_label in choices['choices']:
           <%
             label_class = 'response-label field-label label-inline'
             input_class = 'field-input input-' + input_type
@@ -62,4 +62,10 @@ import six
     % if msg:
     <span class="message" aria-describedby="${id}-legend" tabindex="-1">${HTML(msg)}</span>
     % endif
+
+    <div>
+      %for hint in choices['hints'] :
+        <span>hint</span>
+       %endfor
+    </div>
 </div>
