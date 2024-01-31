@@ -223,13 +223,13 @@
 
   &:active:not(:disabled),
   &:focus:not(:disabled) {
-    $inset-shadow-active: adjust-color($base-color, $red: -111, $green: -116, $blue: -122);
+    // $inset-shadow-active: adjust-color($base-color, $red: -111, $green: -116, $blue: -122);
 
     @if $grayscale == true {
-      $inset-shadow-active: grayscale($inset-shadow-active);
+      // $inset-shadow-active: grayscale($inset-shadow-active);
     }
 
-    box-shadow: inset 0 0 20px 0 $inset-shadow-active;
+    // box-shadow: inset 0 0 20px 0 $inset-shadow-active;
   }
 }
 

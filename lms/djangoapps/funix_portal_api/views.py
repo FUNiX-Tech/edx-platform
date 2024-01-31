@@ -28,6 +28,9 @@ import requests
 from django.contrib.staticfiles import finders
 import mimetypes
 from openedx.core.djangoapps.site_configuration.models import SiteConfiguration
+from openedx.core.djangoapps.site_configuration import helpers as configuration_helpers
+from django.views.decorators.http import require_http_methods
+
 
 
 
@@ -594,7 +597,18 @@ def funix_get_thumb(request):
             return HttpResponse(image_data, content_type=mimetype)
     else:
         return HttpResponseNotFound("Image not found.")
-    
+
+@require_http_methods('GET')
+def get_site_config(request):
+    site_config = configuration_helpers.get_current_site_configuration_values()
+    return JsonResponse(
+        {
+            'message': "success", 
+            'data': site_config
+        },
+        status=200
+    )
+  
 def _get_mime_type(extension):
     mime_type, _ = mimetypes.guess_type(f"dummy.{extension}")
     return mime_type

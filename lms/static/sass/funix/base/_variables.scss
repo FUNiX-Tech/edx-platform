@@ -2,7 +2,7 @@ $color-active: #007ae6;
 $color-active-light: #f2f9ff;
 $color-active-dark: #2c3744;
 $color-hover: #025dae;
-$color-hover-gray: #8097B1;
+$color-hover-gray: #8097b1;
 
 $background-color-hover: #eef7ff;
 $background-content: #fafbfb;
@@ -23,6 +23,9 @@ $color-success-light: #f2ffee;
 
 $color-subdued: #576f8a;
 $color-subdued-light: rgba(87, 111, 138, 0.05);
+$color-subdued-2: #8097B1;
+$color-subdued-3: #59616a;
+$color-subdued-4: #323B46;
 
 $color-critical: #d82c0d;
 $color-critical-light: #fff1f1;
@@ -38,7 +41,7 @@ $border-radius: 6px;
 $fw-medium: 500;
 $fw-normal: 400;
 
-$font-family-default: "Roboto", sans-serif;
+$font-family-default: "Roboto", arial, sans-serif;
 
 $fz-h1: 33px;
 $fz-h2: 27px;
@@ -49,23 +52,21 @@ $fz-h6: 13px;
 $fz-p: 1rem;
 
 // Bootstrap Breakpoints
-
 $breakpoint-mobile-sm: 375px;
 $breakpoint-mobile-lg: 576px;
 $breakpoint-tablet-sm: 768px;
 $breakpoint-tablet-md: 992px;
 $breakpoint-tablet-lg: 1200px;
-$breakpoint-desktop: 1400px;
+$breakpoint-desktop: 1400px; 
 
 $padding-header-footer: 16px;
-
 
 $footer-height: 148px;
 $header-height: 64px;
 
 $four-items-width: 1280px;
 $three-items-width: 954px;
-$two-items-width: 628px;  
+$two-items-width: 628px;
 $one-item-width: 302px;
 
 $img-height: 170px;
