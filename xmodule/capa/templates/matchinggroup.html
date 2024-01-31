@@ -44,18 +44,24 @@ import six
     <div class="matching_result">
         <div class="matching_result_container error_result">
             <div class="matching_result_title">Bạn đã trả lời sai</div>
+
+            % for explain in matching_explains:
             <div class="matching_result_content">
-                Giải thích
+                ${explain}
             </div>
+            % endfor
+
         </div>
     </div>
     % elif matching_result_status == 'correct':
     <div class="matching_result">
         <div class="matching_result_container success_result">
             <div class="matching_result_title">Bạn đã trả lời đúng</div>
+            % for explain in matching_explains:
             <div class="matching_result_content">
-                Giải thích
+                ${explain}
             </div>
+            % endfor
         </div>
     </div>
     % endif

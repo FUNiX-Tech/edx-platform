@@ -1297,7 +1297,8 @@ PIPELINE['STYLESHEETS'] = {
         'source_filenames': [
             'css/tinymce-studio-content-fonts.css',
             'js/vendor/tinymce/js/tinymce/skins/ui/studio-tmce5/content.min.css',
-            'css/tinymce-studio-content.css'
+            'css/tinymce-studio-content.css',
+            'css/tinymce-studio-content-funix.css'
         ],
         'output_filename': 'css/cms-style-vendor-tinymce-content.css',
     },

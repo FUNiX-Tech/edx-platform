@@ -1,12 +1,11 @@
 @mixin unit-details {
-
     // details - summary
     details {
         margin-bottom: 1em;
         padding: 0 1em;
         border-radius: $border-radius;
         overflow: hidden;
-        transition: .2s;
+        transition: 0.2s;
         max-height: none;
 
         * {
@@ -18,20 +17,20 @@
         background: $color-subdued-light;
         border-left: 2px solid $color-subdued;
 
-        >summary {
+        > summary {
             color: $color-subdued;
             text-align: justify;
         }
 
         // ---
 
-        >summary {
+        > summary {
             list-style: none;
             line-height: 1.5;
             font: 500 1em $font-family-default !important;
             margin: 0 -1em !important;
             cursor: pointer;
-            padding: .75em 1em .75em 1em;
+            padding: 0.75em 1em 0.75em 1em;
             position: relative;
 
             &::-webkit-details-marker {
@@ -41,33 +40,31 @@
             &::after {
                 position: absolute;
                 display: block;
-                content: '';
-                width: .5em;
-                height: .5em;
+                content: "";
+                width: 0.5em;
+                height: 0.5em;
                 border-right: 2px solid $color-text-default;
                 border-bottom: 2px solid $color-text-default;
                 right: 1em;
                 top: 50%;
                 transform: translateY(-50%) rotate(-45deg);
-                transition: .2s;
+                transition: 0.2s;
             }
         }
 
         &[open] {
-            >summary {
-
+            > summary {
                 &::after {
                     transform: translateY(-50%) rotate(45deg);
                 }
             }
         }
 
-
         &.details-primary {
             background: $color-active-light;
             border-left: 2px solid $color-active;
 
-            >summary {
+            > summary {
                 color: $color-active;
             }
         }
@@ -76,7 +73,7 @@
             background: $color-subdued-light;
             border-left: 2px solid $color-subdued;
 
-            >summary {
+            > summary {
                 color: $color-subdued;
             }
         }
@@ -85,7 +82,7 @@
             background: $color-success-light;
             border-left: 2px solid $color-success;
 
-            >summary {
+            > summary {
                 color: $color-success;
             }
         }
@@ -94,7 +91,7 @@
             background: $color-warning-light;
             border-left: 2px solid $color-warning;
 
-            >summary {
+            > summary {
                 color: $color-warning;
             }
         }
@@ -103,7 +100,7 @@
             background: $color-critical-light;
             border-left: 2px solid $color-critical;
 
-            >summary {
+            > summary {
                 color: $color-critical;
             }
         }
@@ -112,26 +109,26 @@
             background: $color-leaf-light;
             border-left: 2px solid $color-leaf;
 
-            >summary {
+            > summary {
                 color: $color-leaf;
             }
         }
     }
 
-    // =================== components ========================== 
-    // =================== info box ========================== 
+    // =================== components ==========================
+    // =================== info box ==========================
     .informa {
         border-radius: $border-radius;
         overflow: hidden;
-        padding: .75em 1em;
+        padding: 0.75em 1em;
         margin-bottom: 1em;
 
-        >p {
+        > p {
             font: 500 1em $font-family-default !important;
             margin-bottom: 0 !important;
         }
 
-        >div {
+        > div {
             margin: 0;
             padding: 0;
 
@@ -169,7 +166,7 @@
         }
 
         // -- auto subdued --
-        >p {
+        > p {
             color: $color-subdued;
         }
 
@@ -179,7 +176,7 @@
         // ----
 
         &.informa-primary {
-            >p {
+            > p {
                 color: $color-active;
             }
 
@@ -188,7 +185,7 @@
         }
 
         &.informa-warning {
-            >p {
+            > p {
                 color: $color-warning;
             }
 
@@ -197,7 +194,7 @@
         }
 
         &.informa-success {
-            >p {
+            > p {
                 color: $color-success;
             }
 
@@ -206,7 +203,7 @@
         }
 
         &.informa-critical {
-            >p {
+            > p {
                 color: $color-critical;
             }
 
@@ -215,7 +212,7 @@
         }
 
         &.informa-subdued {
-            >p {
+            > p {
                 color: $color-subdued;
             }
 
@@ -224,7 +221,7 @@
         }
 
         &.informa-leaf {
-            >p {
+            > p {
                 color: $color-leaf;
             }
 
