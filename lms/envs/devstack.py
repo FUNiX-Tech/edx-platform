@@ -169,8 +169,8 @@ SEARCH_ENGINE = 'search.elastic.ElasticSearchEngine'
 ELASTIC_SEARCH_CONFIG = [
     {
         'use_ssl': False,
-        'host': '13.214.22.79',
-        'port': 9201
+        'host': 'edx.devstack.elasticsearch710',
+        'port': 9200
     }
 ]
 

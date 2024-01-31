@@ -1065,7 +1065,9 @@ urlpatterns += [
    
 ]
 
+
 from lms.djangoapps.funix_portal_api.views import (
+    ResetUserPasswordFromPortalAPIView,
     UpdateUserPasswordAPIView, 
     CreateUserAPIView, 
     GradeLearningProjectXblockAPIView,
@@ -1076,7 +1078,8 @@ from lms.djangoapps.funix_portal_api.views import (
 
 # funix portal api
 urlpatterns +=[
-    path ('api/funix_portal/user/update_password', UpdateUserPasswordAPIView.as_view() , name='funix_portal_update_password'),
+    path ('api/funix_portal/user/update_password', UpdateUserPasswordAPIView.as_view(), name='funix_portal_update_password'),
+    path('api/v2/funix_portal/user/update_password',ResetUserPasswordFromPortalAPIView.as_view() , name='funix_portal_update_password_v2'),
     path ('api/funix_portal/user/create_user', CreateUserAPIView.as_view() , name='funix_portal_create_user'),
     path ('api/funix_portal/project/grade_project', GradeLearningProjectXblockAPIView.as_view() , name='funix_portal_grade_learning_project'),
     path ('api/funix_portal/portal_host',get_portal_host , name='funix_portal_host'),
@@ -1101,3 +1104,11 @@ urlpatterns += [
     path('api/chatbot/', include('openedx.core.djangoapps.chatbot.urls')),
 ]
 
+
+# about course overview 
+from lms.djangoapps.courseware.views.views import get_about_course 
+
+urlpatterns += [
+    path('api/overview/about/<str:course_id>' , get_about_course , name='about_course' ) ,
+
+]

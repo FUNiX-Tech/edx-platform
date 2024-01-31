@@ -84,6 +84,9 @@ class CourseRunSerializer(serializers.Serializer):
     upgradeUrl = serializers.SerializerMethodField()
     resumeUrl = serializers.SerializerMethodField()
 
+    # uuuuv funix
+    beginUrl = serializers.SerializerMethodField()
+
     def get_isStarted(self, instance):
         return instance.course_overview.has_started()
 
@@ -116,6 +119,13 @@ class CourseRunSerializer(serializers.Serializer):
 
         # Return None if missing or empty string
         return resumeUrl if bool(resumeUrl) else None
+    
+    # uuuuv funix
+    def get_beginUrl(self, instance):
+        beginUrl = self.context.get("begin_course_urls", {}).get(instance.course_id)
+
+        # Return None if missing or empty string
+        return beginUrl if bool(beginUrl) else None
 
 
 class CoursewareAccessSerializer(serializers.Serializer):

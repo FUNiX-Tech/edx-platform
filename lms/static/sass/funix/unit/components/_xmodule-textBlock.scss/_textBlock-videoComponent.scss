@@ -1,0 +1,102 @@
+.textblock__video-container {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 4px;
+    background-color: $color-white;
+
+    .textblock__video-wrapper {
+        width: 458px;
+        height: 114px;
+        display: flex;
+        margin: 0;
+        gap: 12px;
+        cursor: pointer;
+        padding: 12px;
+        border-radius: 4px;
+        position: relative;
+        border-radius: 12px;
+        border: 1px solid #d7d7d7;
+
+        @media only screen and (max-width: 492px) {
+            width: 356px !important;
+            height: 92px !important;
+        }
+
+        .textblock__video-thumbnail {
+            width: 161px !important;
+            height: 90px !important;
+            margin: 0 !important;
+            border-radius: 4px !important; 
+            @media only screen and (max-width: 492px) {
+                width: 122px !important;
+                height: 68px !important;
+            }
+        }
+
+        .textblock__video-info {
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+            justify-content: center;
+            align-items: flex-start;
+            gap: 8px;
+            flex: 1;
+            margin: 0 !important;
+            height: 90px !important;
+            @media only screen and (max-width: 492px) {
+                height: 68px !important;
+            }
+            // width: 348px !important;
+
+            .textblock__video-title {
+                color: $color-subdued-4;
+                font-feature-settings: "clig" off, "liga" off;
+                font-family: "Roboto", sans-serif;
+                font-size: 16px !important;
+                font-style: normal;
+                font-weight: 500;
+                line-height: 150%;
+                margin: 0 !important;
+                height: 48px !important;
+
+                @media only screen and (max-width: 492px) {
+                    height: 42px !important;
+                    front-size: 14px !important;
+                }
+            }
+
+            .textblock__video-info-source {
+                display: flex;
+                align-items: center;
+                justify-content: flex-start;
+                gap: 4px;
+                margin: 0 !important;
+
+                .textblock__video-info-item {
+                    color: $color-subdued-3 !important;
+                    font-feature-settings: "clig" off, "liga" off;
+                    font-family: "Roboto", sans-serif;
+                    font-size: 12px !important;
+                    font-style: normal !important;
+                    font-weight: 400;
+                    line-height: 150%;
+                }
+            }
+        }
+
+        .textblock__video-caption {
+            text-align: center;
+            position: absolute;
+            width: 200px;
+            left: calc(50% - 100px);
+            bottom: -32px;
+            font-size: 12px !important;
+            font-style: normal;
+            line-height: 150%;
+            font-weight: 400;
+            color: $color-subdued-3 !important;
+        }
+    }
+}

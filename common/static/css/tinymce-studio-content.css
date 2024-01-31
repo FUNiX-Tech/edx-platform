@@ -6,9 +6,9 @@
      * (edx-platform/xmodule/js/src/html/edit.js)
      * and with acceptance tests in cms/djangoapps/contentstore/features/html-editor.feature
      */
-    font-family: 'Open Sans', Verdana, Arial, Helvetica, sans-serif;
+    font-family: 'Roboto', sans-serif;
     font-size: 16px;
-    line-height: 1.6;
+    line-height: 1.5;
     color: #3c3c3c;
     scrollbar-3dlight-color: #F0F0EE;
     scrollbar-arrow-color: #676662;
@@ -70,6 +70,7 @@
     font-size: 1em;
     line-height: 1.6em !important;
     color: #3c3c3c;
+    text-align: justify;
 }
 
 .mce-content-body em, .mce-content-body i {
@@ -158,3 +159,14 @@
 .mce-content-body table td.cont-justified-center, .mce-content-body table th.cont-justified-center {
     text-align: center;
 }
+
+
+// .textblock__video-container {
+//     width: 100%;
+//     display: flex;
+//     justify-content: center;
+//     align-items: center;
+//     // padding: 4px;
+//     background-color: #fff;
+//     margin-bottom: 46px;
+// }

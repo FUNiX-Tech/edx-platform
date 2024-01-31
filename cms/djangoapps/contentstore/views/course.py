@@ -1231,7 +1231,7 @@ def settings_handler(request, course_key_string):  # lint-amnesty, pylint: disab
                             'show_min_grade_warning': show_min_grade_warning,
                         }
                     )
-
+            
             return render_to_response('settings.html', settings_context)
         elif 'application/json' in request.META.get('HTTP_ACCEPT', ''):
             if request.method == 'GET':
@@ -1243,6 +1243,7 @@ def settings_handler(request, course_key_string):  # lint-amnesty, pylint: disab
                 )
             # For every other possible method type submitted by the caller...
             else:
+                
                 # if pre-requisite course feature is enabled set pre-requisite course
                 if is_prerequisite_courses_enabled():
                     prerequisite_course_keys = request.json.get('pre_requisite_courses', [])
@@ -1907,3 +1908,6 @@ def _get_course_creator_status(user):
         course_creator_status = 'granted'
 
     return course_creator_status
+
+
+
