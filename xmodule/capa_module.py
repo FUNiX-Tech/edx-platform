@@ -1257,20 +1257,23 @@ class ProblemBlock(
         answer_notification_type, answer_notification_message = self._get_answer_notification(
             render_notifications=submit_notification)
 
-        if answer_notification_type == 'correct':
-            print("answer_notification_type: ", answer_notification_type)
-            self.problem_html_result_test = 'correct'
-            pass
-        else:
-            print("answer_notification_type: ", answer_notification_type)
-            self.problem_html_result_test = 'no value'
-            pass
-
         save_message = None
         if self.has_saved_answers:
             save_message = _(
                 "Your answers were previously saved. Click '{button_name}' to grade them."
             ).format(button_name=self.submit_button_name())
+
+        # UFC - kiểm tra có phải là matching quiz hay không, sau đó thêm biến là bài matching quiz có đúng hay ko
+        problem_html_result_matching_quiz = 'no value'
+        if content['name'] == 'Matching Problem':
+            if 'success_result' in content['html']:
+                problem_html_result_matching_quiz = 'correct'
+            elif 'error_result' in content['html']:
+                problem_html_result_matching_quiz = 'incorrect'
+            elif 'unsubmitted' in content['html']:
+                problem_html_result_matching_quiz = 'Unsubmitted'
+            pass
+
 
         context = {
             'problem': content,
@@ -1291,12 +1294,11 @@ class ProblemBlock(
             'has_saved_answers': self.has_saved_answers,
             'save_message': save_message,
             'submit_disabled_cta': submit_disabled_ctas[0] if submit_disabled_ctas else None,
-            'problem_html_result_test' : self.problem_html_result_test,
-            # 'problem_html_result_test': 'problem_html_result_test content'
+            'problem_html_result_matching_quiz' : problem_html_result_matching_quiz,
         }
 
         # UFC - các biến đc truyền vào problem.html
-        print("context_problem.html: ", self)
+        # print("context_problem.html ", self)
         html = self.runtime.service(self, 'mako').render_template('problem.html', context)
 
         if encapsulate:
