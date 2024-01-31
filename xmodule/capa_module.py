@@ -1257,6 +1257,15 @@ class ProblemBlock(
         answer_notification_type, answer_notification_message = self._get_answer_notification(
             render_notifications=submit_notification)
 
+        if answer_notification_type == 'correct':
+            print("answer_notification_type: ", answer_notification_type)
+            self.problem_html_result_test = 'correct'
+            pass
+        else:
+            print("answer_notification_type: ", answer_notification_type)
+            self.problem_html_result_test = 'no value'
+            pass
+
         save_message = None
         if self.has_saved_answers:
             save_message = _(
@@ -1282,9 +1291,12 @@ class ProblemBlock(
             'has_saved_answers': self.has_saved_answers,
             'save_message': save_message,
             'submit_disabled_cta': submit_disabled_ctas[0] if submit_disabled_ctas else None,
+            'problem_html_result_test' : self.problem_html_result_test,
+            # 'problem_html_result_test': 'problem_html_result_test content'
         }
 
-
+        # UFC - các biến đc truyền vào problem.html
+        print("context_problem.html: ", self)
         html = self.runtime.service(self, 'mako').render_template('problem.html', context)
 
         if encapsulate:
