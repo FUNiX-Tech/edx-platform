@@ -1,5 +1,3 @@
-
-
 #discovery-form {
     display: flex;
     justify-content: center;
@@ -22,49 +20,47 @@
         @media only screen and (min-width: $breakpoint-desktop) {
             width: 620px !important;
         }
-    
+
         @media only screen and (min-width: $breakpoint-tablet-lg) and (max-width: $breakpoint-desktop) {
             width: 620px !important;
         }
-    
+
         @media only screen and (min-width: $breakpoint-tablet-md) and (max-width: $breakpoint-tablet-lg) {
             width: $three-items-width !important;
-        } 
-    
+        }
+
         @media only screen and (min-width: $breakpoint-tablet-sm) and (max-width: $breakpoint-tablet-md) {
             margin-left: 16px !important;
-            margin-right: 16px !important
+            margin-right: 16px !important;
         }
-    
+
         @media only screen and (min-width: $breakpoint-mobile-lg) and (max-width: $breakpoint-tablet-sm) {
             margin-left: 16px !important;
-            margin-right: 16px !important
+            margin-right: 16px !important;
         }
         @media only screen and (min-width: $breakpoint-mobile-sm) and (max-width: $breakpoint-mobile-lg) {
             margin-left: 16px !important;
-            margin-right: 16px !important
+            margin-right: 16px !important;
         }
         @media only screen and (max-width: $breakpoint-mobile-sm) {
             margin-left: 16px !important;
-            margin-right: 16px !important
+            margin-right: 16px !important;
         }
 
         #discovery-message {
-            color: var(--Text-Default, #2C3744);
-font-feature-settings: 'clig' off, 'liga' off;
-/* Unit text/Paragraph 1 Medium */
-font-family: Roboto;
-font-size: 16px;
-font-style: normal;
-font-weight: 500;
-line-height: 150%; /* 24px */   
+            color: var(--Text-Default, #2c3744);
+            font-feature-settings: "clig" off, "liga" off;
+            /* Unit text/Paragraph 1 Medium */
+            font-family: Roboto;
+            font-size: 16px;
+            font-style: normal;
+            font-weight: 500;
+            line-height: 150%; /* 24px */
         }
-
     }
 }
 
 form.wrapper-search-input {
-
     width: 100% !important;
     height: 56px !important;
 
@@ -76,7 +72,7 @@ form.wrapper-search-input {
 
         button.discovery-submit {
             border: 1px solid $color-hover-gray !important;
-            border-right: 0 !important
+            border-right: 0 !important;
         }
     }
 
@@ -88,7 +84,7 @@ form.wrapper-search-input {
 
         button.discovery-submit {
             border: 1px solid $color-active-dark !important;
-            border-right: 0 !important
+            border-right: 0 !important;
         }
     }
     &:focus {
@@ -96,12 +92,10 @@ form.wrapper-search-input {
             border: 1px solid $color-active-dark !important;
             border-left: 0 !important;
         }
-    
+
         button.discovery-submit {
             border: 1px solid $color-active-dark !important;
-            border-right: 0 !important
-
-            
+            border-right: 0 !important;
         }
     }
     // @media only screen and (min-width: $breakpoint-desktop) {
@@ -114,7 +108,7 @@ form.wrapper-search-input {
 
     // @media only screen and (min-width: $breakpoint-tablet-md) and (max-width: $breakpoint-tablet-lg) {
     //     width: $three-items-width !important;
-    // } 
+    // }
 
     // @media only screen and (min-width: $breakpoint-tablet-sm) and (max-width: $breakpoint-tablet-md) {
     //     margin-left: 16px !important;
@@ -158,9 +152,16 @@ form.wrapper-search-input {
         border-top-right-radius: 0px;
         border-bottom-right-radius: 0xp;
         color: $color-subdued;
+        background-image: none !important;
 
         &:hover {
             background-color: #fff !important;
+            background-image: none !important;
+        }
+
+        &:active {
+            background-color: #fff !important;
+            background-image: none !important;
         }
 
         .search-icon {
@@ -172,7 +173,6 @@ form.wrapper-search-input {
 
         div > div#loading-indicator > span.fa.fa-spinner {
             font-size: 2rem !important;
-            
         }
     }
 }

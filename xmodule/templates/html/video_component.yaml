@@ -1,0 +1,55 @@
+---
+metadata:
+    display_name: Video Component
+data: |
+    <h3>Thêm Video Component</h3>
+    <p>Để thêm vào Video Component, hãy copy đoạn code HTML phía dưới. Sau đó, tại cửa sổ Editor chỉnh chế độ chỉnh sửa HTML. Sau đó chỉnh sửa các element theo chú thích</p>
+    <ol>
+        <li>textblock__video-wrapper: Link dẫn đến Video</li>
+        <li>textblock__video-thumbnail: Link đến thumbnail</li>
+            <ul>
+            <li>Nếu đây là file đã upload của khóa học: /static/&lt;tên-file&gt; =&lt; Ví dụ: /static/digital-marketing.jpg </li>
+            <li>Nếu đây là link ngoài khóa học: &lt;link-url&gt; =&lt; Ví dụ: https://www.eclosio.ong/wp-content/uploads/2018/08/default.png  </li>
+            </ul>
+        <li>textblock__video-title: Tên video</li>
+        <li>textblock__video-source-info: Thông tin về Video bao gồm tên trang web (Youtube, Udemy) và thời lượng</li>
+        <li>textblock__video-caption: Caption video</li>
+    </ol>
+    <pre>
+        &lt;!-- ===== COPY START ===== --&gt;
+        &lt;div class="textblock__video-container"&gt;
+        &lt;!-- Edit Video --&gt;
+        &lt;div class="textblock__video-wrapper" 
+            onclick="window.open('https://youtube.com', '_blank')"&gt;
+            &lt;!-- Edit Thumbnail --&gt;
+            &lt;div class="textblock__video-thumbnail-container" &gt;
+            &lt;img class="textblock__video-thumbnail" 
+                src="https://www.eclosio.ong/wp-content/uploads/2018/08/default.png" alt="Alternative Text"/&gt;
+            &lt;svg xmlns="http://www.w3.org/2000/svg" width="31" height="30" viewBox="0 0 31 30" fill="none"&gt;
+            &lt;ellipse cx="15.4997" cy="14.9996" rx="12.197" ry="12.1622" fill="white"/&gt;
+            &lt;path d="M13.1449 20.217L20.3993 15.8692C20.7465 15.6605 20.9201 15.3707 20.9201 14.9996C20.9201 14.6286 20.7465 14.3388 20.3993 14.1301L13.1449 9.78225C12.7729 9.55037 12.3946 9.53298 12.0102 9.73008C11.6258 9.92718 11.4336 10.2344 11.4336 10.6518V19.3475C11.4336 19.7649 11.6258 20.0721 12.0102 20.2692C12.3946 20.4663 12.7729 20.4489 13.1449 20.217Z" fill="#323B46"/&gt;
+            &lt;/svg&gt;
+            &lt;/div&gt;
+            &lt;div class="textblock__video-info"&gt;
+                &lt;h3 class="textblock__video-title"&gt;
+                &lt;!-- Edit Title --&gt;
+                    Video Title
+                &lt;/h3&gt;
+                &lt;div class="textblock__video-info-source"&gt;
+                    &lt;span class="textblock__video-info-item"&gt;
+                    &lt;!-- Edit Source --&gt;
+                        From Youtube
+                    &lt;/span&gt;
+                    &lt;span class="textblock__video-info-item textblock__video-info-separator"&gt;&bull;&lt;/span&gt;
+                    &lt;span class="textblock__video-info-item"&gt;
+                        10:24:56
+                    &lt;/span&gt;
+                &lt;/div&gt;
+            &lt;/div&gt;
+            &lt;!-- Edit Caption or Remove --&gt;
+            &lt;span class="textblock__video-caption"&gt;Insert Caption here&lt;/span&gt;
+        &lt;/div&gt;
+        &lt;/div&gt;
+        &lt;!-- ===== COPY END ===== --&gt;
+    </pre>
+
