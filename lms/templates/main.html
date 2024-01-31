@@ -308,6 +308,11 @@ window.addEventListener('message', event => {
     postEventToResizeUnit();
   }
 })
+
+
+window.addEventListener('load', () => {
+  postEventToResizeUnit();
+});
   </script>
 </body>
 </html>
