@@ -321,10 +321,10 @@ $facet-background-color: #007db8;
     text-shadow: none;
 
     //STATE: hover, focus
-    &:hover,
-    &:focus {
-      background: $m-blue-d5;
-    }
+    // &:hover,
+    // &:focus {
+    //   background: $m-blue-d5;
+    // }
   }
 
   .loading-spinner {

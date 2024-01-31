@@ -160,9 +160,17 @@ form.wrapper-search-input {
         border-top-right-radius: 0px;
         border-bottom-right-radius: 0xp;
         color: $color-subdued;
+        background-image: none !important;
+
 
         &:hover {
             background-color: #fff !important;
+            background-image: none !important;
+        }
+
+        &:active {
+            background-color: #fff !important;
+            background-image: none !important;
         }
 
 
