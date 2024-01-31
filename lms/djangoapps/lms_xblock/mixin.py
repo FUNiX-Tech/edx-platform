@@ -258,5 +258,10 @@ class LmsBlockMixin(XBlockMixin):
             raise JsonHandlerError(404, "Completion tracking is not enabled and API calls are unexpected")
         if not completion_service.can_mark_block_complete_on_view(self):
             raise JsonHandlerError(400, "Block not configured for completion on view.")
+
+        # UFC - cach lam
+        # if completion_service.isText():
+        #     self.runtime.publish(self, "completion", data)
+
         self.runtime.publish(self, "completion", data)
         return {'result': 'ok'}

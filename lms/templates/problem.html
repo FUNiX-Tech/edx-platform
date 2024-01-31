@@ -156,6 +156,15 @@ from openedx.core.djangolib.markup import HTML
         box-sizing: border-box;
     }
 
+    .problem-matching-header {
+        margin-top: 2rem !important;
+        margin-bottom: 1.5rem !important;
+        font-size: 1.5rem !important;
+        font-weight: 500;
+        line-height: 1.5;
+        color: #2c3744;
+    }
+
     .question_matching_content {
         margin-top: 1.5rem !important;
         padding: 0 2rem !important;
@@ -307,6 +316,15 @@ from openedx.core.djangolib.markup import HTML
         background-color: #f6f6f7;
     }
 
+    .drag_item_border {
+        border: 2px solid #025DAE;
+        padding: 1px;
+        border-radius: 0.5rem;
+    }
+
+    .drag_item_background {
+        background-color: #2C3744 !important;
+    }
 
     /* phần result */
     .matching_action {
@@ -375,7 +393,6 @@ from openedx.core.djangolib.markup import HTML
         background-color: #5aa447 !important;
     }
 
-
     .error_result {
         background-color: #FFF1F1;
         border-left: 2px solid #D82C0D;
@@ -398,7 +415,7 @@ from openedx.core.djangolib.markup import HTML
 %endif
 
 <%namespace name='static' file='static_content.html'/>
-<h3 class="hd hd-3 problem-header" id="${ short_id }-problem-title" aria-describedby="${ id }-problem-progress" tabindex="-1">
+<h3 class="hd hd-3 problem-header ${'problem-matching-header' if problem['name'] == 'Matching Problem' else '' }" id="${ short_id }-problem-title" aria-describedby="${ id }-problem-progress" tabindex="-1">
 
   % if problem['name'] == 'Quiz Problem Custom' or problem['name'] == 'Matching Problem':
     Quiz
@@ -453,7 +470,7 @@ from openedx.core.djangolib.markup import HTML
           </button>
 
 
-          <button class=' btn-custom' id='btn-next-lesson'  style='display:none'> Hoàn thành   </button>
+          <button class=' btn-custom' id='btn-next-lesson'  style='display:none'> Hoàn thành </button>
 
         </span>
 
@@ -461,7 +478,7 @@ from openedx.core.djangolib.markup import HTML
 
       % elif problem['name'] == 'Matching Problem':
       <button type="button" class="submit btn-brand submit_matching_btn" data-submitting="${ submit_button_submitting }" data-value="${ submit_button }" data-should-enable-submit-button="${ should_enable_submit_button }" aria-describedby="submission_feedback_${short_id}" ${'' if should_enable_submit_button else 'disabled'}>
-        Trả lời ${'Hoàn Thành' if answer_notification_type == 'correct' else 'Trả lời'}
+        Trả lời
       </button>
       %endif
 
@@ -1012,7 +1029,7 @@ from openedx.core.djangolib.markup import HTML
             imgEle.forEach(function(img) {
 
                 if (img.nodeName === 'IMG' && img.name === inputName) {
-                    console.log("img", img);
+                    // console.log("img", img);
                     imgValue.push(img.getAttribute('data-right-result'));
                 }
 
@@ -1030,12 +1047,12 @@ from openedx.core.djangolib.markup import HTML
                     let currentValue = input.value;
                     if (currentValue.length > 0) {
                         const lastPartInput = currentValue.substring(currentValue.lastIndexOf("_") + 1);
-                        console.log("lastPartInput", lastPartInput);
+                        // console.log("lastPartInput", lastPartInput);
                         const lastPartImg = imgValue[i].substring(imgValue[i].lastIndexOf("_") + 1);
-                        console.log("lastPartImg", lastPartImg);
+                        // console.log("lastPartImg", lastPartImg);
 
                         const test_new_string = currentValue.replace(lastPartInput, lastPartImg);
-                        console.log("test_new_string", test_new_string);
+                        // console.log("test_new_string", test_new_string);
 
                         input.value = test_new_string;
                     }
@@ -1044,10 +1061,7 @@ from openedx.core.djangolib.markup import HTML
                 }
 
             });
-            console.log("inputValue", inputValue);
-
-
-
+            // console.log("inputValue", inputValue);
         });
     });
 
@@ -1063,8 +1077,6 @@ from openedx.core.djangolib.markup import HTML
             item.querySelector(".right_content_item_drap_drop").innerHTML = draggedItem;
 
             draggedItem = cloneItem;
-
-
         });
     });
 
