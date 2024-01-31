@@ -94,6 +94,7 @@
 
 .mce-content-body ol li, .mce-content-body ul li {
     margin-bottom: 0.708em;
+    text-align: justify;
 }
 
 .mce-content-body ol {

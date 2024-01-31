@@ -13,8 +13,6 @@ header.global-header {
     box-shadow: none !important;
     display: flex !important;
     align-items: center;
-
-   
 }
 
 body > div.window-wrap > header {
@@ -93,7 +91,7 @@ body > div.window-wrap > header {
     left: 0;
     right: 0;
     background-color: #fff;
-    z-index: 999;   
+    z-index: 999;
     border: 0;
     padding: 16px;
     display: flex;
@@ -136,5 +134,5 @@ body > div.window-wrap > header {
                 }
             }
         }
-    } 
+    }
 }

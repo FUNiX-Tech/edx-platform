@@ -290,26 +290,29 @@ $(function() {
   })
 })
 
-    function postEventToResizeUnit() {
-      console.log('offsetHeight',  $('#main').prop('offsetHeight'), $('body').prop('offsetHeight'))
+function postEventToResizeUnit() {
+  console.log('offsetHeight',  $('#main').prop('offsetHeight'), $('body').prop('offsetHeight'))
 
-      const msgData = {
-        resize: {
-          iframeHeight: $('#main').prop('offsetHeight'),
-          transition: "0s"
-        },
-        type: 'unit.resize' 
-      }
-      window.parent.postMessage(msgData, "*");
-    }
+  const msgData = {
+    resize: {
+      iframeHeight: $('#main').prop('offsetHeight'),
+      transition: "0s"
+    },
+    type: 'unit.resize' 
+  }
+  window.parent.postMessage(msgData, "*");
+}
 
-    window.addEventListener('message', event => {
-      if (event.data.type === 'unit.resize') {
-        postEventToResizeUnit();
-      }
-    })
+window.addEventListener('message', event => {
+  if (event.data.type === 'unit.resize') {
+    postEventToResizeUnit();
+  }
+})
 
 
+window.addEventListener('load', () => {
+  postEventToResizeUnit();
+});
   </script>
 </body>
 </html>
