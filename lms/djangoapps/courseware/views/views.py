@@ -792,14 +792,15 @@ class EnrollStaffView(View):
 @ensure_valid_course_key
 @cache_if_anonymous()
 def course_about(request, course_id):  # pylint: disable=too-many-statements
-    
+
     """
     Display the course's about page.
     """
     course_key = CourseKey.from_string(course_id)
+    
     url_mfe =configuration_helpers.get_value('LEARNING_MICROFRONTEND_URL',settings.LEARNING_MICROFRONTEND_URL)
     return redirect(f'{url_mfe}/{course_id}/about')
-    
+
     # If a user is not able to enroll in a course then redirect
     # them away from the about page to the dashboard.
     if not can_self_enroll_in_course(course_key):
@@ -811,7 +812,6 @@ def course_about(request, course_id):  # pylint: disable=too-many-statements
 
     with modulestore().bulk_operations(course_key):
         permission = get_permission_for_course_about()
-        
         course = get_course_with_access(request.user, permission, course_key)
         course_details = CourseDetails.populate(course)
         modes = CourseMode.modes_for_course_dict(course_key)

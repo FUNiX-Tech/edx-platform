@@ -13,14 +13,18 @@ metadata:
               </div>
 
               <matchinggroup>
+
                 <matchingitem matchingvalue='1' pos="left">Mục tiêu Marketing của bạn:</matchingitem>
                 <matchingitem matchingvalue='1' pos="right">Why 1</matchingitem>
+                <matchingexplain> explain for matching quiz 1 </matchingexplain>
 
                 <matchingitem matchingvalue='2' pos="left">Các kênh mà khách hàng của bạn sử dụng:</matchingitem>
                 <matchingitem matchingvalue='2' pos="right">Where 2</matchingitem>
+                <matchingexplain> explain for matching quiz 2 </matchingexplain>
 
                 <matchingitem pos="left">Left: will be hide, no matchingvalue</matchingitem>
                 <matchingitem pos="right">Yes/No</matchingitem>
+                <matchingexplain> explain for matching quiz 3 </matchingexplain>
 
               </matchinggroup>
 
@@ -32,21 +36,21 @@ metadata:
         [ ] an incorrect answer {{ selected: incorrect answer. }}
         [ ] an incorrect answer {{ selected: incorrect answer. }}
         [x] a correct answer {{ selected:  giai thich  2  }}
-  
-  
-  
-  
+
+
+
+
         >> Question 3 <<
-  
+
         (x) Yes {{ giai thich  }}
         ( ) No {{ incorrect answer }}
         ( ) No {{  incorrect answer }}
         ( ) No {{  incorrect answer }}
-  
-  
-  
+
+
+
         >> Question 4 <<
-  
+
         (x) Yes  {{ giai thich   }}
         ( ) No {{  incorrect answer }}
         ( ) No {{  incorrect answer }}
@@ -67,14 +71,19 @@ data: |
         </div>
 
         <matchinggroup>
+
           <matchingitem matchingvalue='1' pos="left">Mục tiêu Marketing của bạn:</matchingitem>
           <matchingitem matchingvalue='1' pos="right">Why 1</matchingitem>
+          <matchingexplain> explain for matching quiz 1 </matchingexplain>
 
           <matchingitem matchingvalue='2' pos="left">Các kênh mà khách hàng của bạn sử dụng:</matchingitem>
           <matchingitem matchingvalue='2' pos="right">Where 2</matchingitem>
+          <matchingexplain> explain for matching quiz 2 </matchingexplain>
 
           <matchingitem pos="left">Left: will be hide, no matchingvalue</matchingitem>
           <matchingitem pos="right">Yes/No</matchingitem>
+          <matchingexplain> explain for matching quiz 3 </matchingexplain>
+
         </matchinggroup>
   </matchingresponse>
 

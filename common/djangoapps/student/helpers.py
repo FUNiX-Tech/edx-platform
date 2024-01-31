@@ -792,6 +792,7 @@ def get_resume_urls_for_enrollments(user, enrollments):
                     url_to_block = ''
         except UnavailableCompletionData:
             url_to_block = ''
+
         resume_course_urls[enrollment.course_id] = url_to_block
     return resume_course_urls
 

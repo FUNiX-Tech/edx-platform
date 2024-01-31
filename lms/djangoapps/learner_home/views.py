@@ -322,6 +322,7 @@ def get_complate_course(response_data_course, request):
 
 
 
+
 class InitializeView(RetrieveAPIView):  # pylint: disable=unused-argument
     """List of courses a user is enrolled in or entitled to"""
 
@@ -442,10 +443,9 @@ class InitializeView(RetrieveAPIView):  # pylint: disable=unused-argument
             learner_dash_data, context=context
         ).data
         
-    # add complate block
+        # add complate block
         get_complate_course(response_data_course=response_data['courses'],request=request)
         
-            
         return Response(response_data)
 
 
