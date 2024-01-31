@@ -1,16 +1,14 @@
 body {
     min-height: 100vh;
-
     div.window-wrap {
         position: relative;
     }
-
 }
 
 #content {
-    min-height: calc(100vh - #{$footer-height} - #{$header-height});
+    min-height: calc(100vh - #{$footer-height} - #{$header-height} + 48px);
     margin-top: $header-height;
-    padding-bottom: 48px !important;
+    // padding-bottom: 48px !important;
     padding-left: 0 !important;
     padding-right: 0 !important;
 
@@ -18,3 +16,4 @@ body {
     // padding-left: $padding-body-desktop !important;
     // padding-right: $padding-body-desktop !important;
 }
+
