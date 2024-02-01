@@ -199,7 +199,58 @@ ${HTML(fragment.foot_html())}
       window.addEventListener('resize', dispatchResizeMessage);
     }
   }());
+
+  
 </script>
+<script type="text/javascript">
+  function limitWord(str, num) {
+    const words = str.split(' ');
+    return words.slice(0, num+1).join(' ') + '...';
+  }
+  
+  function truncateTitles() {
+    const videoTitleElements = document.querySelectorAll('.textblock__video-title');
+    const videoContainerElements = document.querySelectorAll('.textblock__video-container');
+    const currentWidth = window.innerWidth;
+  
+    videoTitleElements.forEach((videoTitleElement, index) => {
+      const videoTitleString = videoTitleElement.getAttribute('data-original-title');
+      const videoContainer = videoContainerElements[index];
+  
+      if (videoTitleString && videoContainer && currentWidth !== 0) {
+        let wordLimit;
+  
+        if (currentWidth <= 395) {
+          wordLimit = 3;
+        } else if (currentWidth <= 492) {
+          wordLimit = 6;
+        } else {
+          wordLimit = 8;
+        }  
+        if (videoTitleString.split(' ').length > wordLimit) {
+          const truncatedTitle = limitWord(videoTitleString, wordLimit);
+          videoTitleElement.textContent = truncatedTitle;
+        } else {
+          // If the title is not truncated, set the full title
+          videoTitleElement.textContent = videoTitleString;
+        }
+      }
+    });
+  }
+  
+  // Set the initial data-original-title attribute with the full title for each video title
+  window.addEventListener('load', function() {
+    const videoTitleElements = document.querySelectorAll('.textblock__video-title');
+    videoTitleElements.forEach((videoTitleElement) => {
+      videoTitleElement.setAttribute('data-original-title', videoTitleElement.textContent);
+    });
+    truncateTitles();
+  });
+  
+  // Call the function on window resize
+  window.addEventListener('resize', truncateTitles);
+  </script>
+  
 % endif
 
 <style>
