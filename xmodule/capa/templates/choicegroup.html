@@ -62,10 +62,12 @@ import six
     % if msg:
     <span class="message" aria-describedby="${id}-legend" tabindex="-1">${HTML(msg)}</span>
     % endif
-
-    <div>
-      %for hint in choices['hints'] :
-        <span>${hint}</span>
-       %endfor
-    </div>
+    %if len(choices['hints']) > 0 :
+      <div id='hints' style='display:none'>
+        %for hint in choices['hints'] :
+          <span>${hint}</span>
+        %endfor
+      </div>
+    %endif
+    
 </div>

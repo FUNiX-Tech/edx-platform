@@ -983,6 +983,15 @@
               that.$('#btn-next').css('display', 'none');
               that.$('#btn-next-lesson').css('display', 'block');
             }
+
+            var hintElembet = listQz[currentIndex].querySelector('#hints')
+            if (hintElembet){
+              that.$('#btn-hint-custom').css('display', 'block');
+            }else {
+              that.$('#btn-hint-custom').css('display', 'none');
+    
+            }
+    
           };
           
 

@@ -66,10 +66,14 @@ import six
     </div>
     % endif
 
-
-    %for hint in hints:
-        <span>${hint}</span>
-    %endfor
+    %if len(hints) > 0 :
+        <div id='hints' style='display:none'>
+                %for hint in hints:
+                <span>${hint}</span>
+            %endfor
+        </div>
+    %endif
+   
 
 </div>
 

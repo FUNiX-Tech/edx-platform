@@ -440,7 +440,8 @@ from openedx.core.djangolib.markup import HTML
 
 
           <button class=' btn-custom' id='btn-next-lesson'  style='display:none'> Hoàn thành   </button>
-
+          
+          <span id='btn-hint-custom' style='display:none'> Show Hint </span>
         </span>
 
       </div>
@@ -627,6 +628,7 @@ from openedx.core.djangolib.markup import HTML
     const btnNext = document.querySelector('#btn-next')
     const problemBtn = document.querySelector('#problem-buttom')
     const matchingBtn = document.querySelector('.matching_quiz_custom')
+    const btnHin =  document.querySelector('#btn-hint-custom')
 
     // console.log("matchingBtn", matchingBtn)
     var currentIndex = 0;
@@ -698,6 +700,11 @@ from openedx.core.djangolib.markup import HTML
                 matchingBtn.style.display = 'none'
             }
 
+            const hintElembet = problemList[i].querySelector('#hints')
+            if (hintElembet){
+              btnHin.style.display = 'block'    
+            }
+
           spanElement.classList.add('active-number')
 
           if (submittedInput && incorrectLabel) {
@@ -760,8 +767,16 @@ from openedx.core.djangolib.markup import HTML
 
         }
 
+        
+        
 
       }
+
+      btnHin.addEventListener('click',()=>{
+
+        const hintElembet = problemList[currentIndex].querySelector('#hints')
+        hintElembet.style.display = 'block'
+      })
 
       problemElement.insertBefore(divContainer, problemElement.firstChild);
       if ( problemList.length == 1){
@@ -815,7 +830,6 @@ from openedx.core.djangolib.markup import HTML
         return
       }
       if (problemElement) {
-        console.log('============', problemElement)
         const titleElement = problemElement.querySelector('.explanation-title');
         if (titleElement) {
           titleElement.textContent = 'Bạn đã trả lời đúng';
@@ -959,6 +973,14 @@ from openedx.core.djangolib.markup import HTML
             btnNextLesson.style.display = 'none'
           }
 
+
+          const hintElembet = problemList[currentIndex].querySelector('#hints')
+
+          if (hintElembet){
+            btnHin.style.display = 'block'    
+          }else {
+            btnHin.style.display = 'none'    
+          }
         });
 
       });
