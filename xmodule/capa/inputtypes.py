@@ -1880,7 +1880,7 @@ class MatchingGroup(InputTypeBase):
         try:
             # print("self MatchingGroup new", vars(self))
             # print("self MatchingGroup new", self.status)
-            print("setup_func_new", self.xml)
+            # print("setup_func_new", self.xml)
             # xml_str = ET.tostring(self.xml, encoding='utf8').decode('utf8')
             # print("rootXML_new setup_func", xml_str)
 
@@ -1890,9 +1890,12 @@ class MatchingGroup(InputTypeBase):
             # print("rootXML_new setup_func", root)
             for matchingexplain in self.xml.findall('.//matchingexplain'):
                 matching_explains.append(matchingexplain.text.strip())
-
-            print("matching_explains_new", matching_explains)
-
+            
+            hints = []
+            
+            for hint in self.xml.findall('.//hint'):
+                hints.append(hint.text.strip())
+            
             matching_items, left_items, right_items, matchingitems = self.extract_matching_items(self.xml, i18n, False, self.value)
             self.matching_items = matching_items
             self.left_items = left_items
@@ -1901,7 +1904,7 @@ class MatchingGroup(InputTypeBase):
             self.matching_result_status = self.status
             self._matching_items_map = dict(self.matching_items,)
             self.matching_explains = matching_explains
-
+            self.hints = hints
         except Exception as e:
             raise Exception(str(e))
 
@@ -1929,6 +1932,7 @@ class MatchingGroup(InputTypeBase):
             'test_name_context': 'test_name_context',
             'matching_result_status': self.matching_result_status,
             'matching_explains': self.matching_explains,
+            "hints" : self.hints
         }
 
     @staticmethod

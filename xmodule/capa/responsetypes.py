@@ -186,6 +186,7 @@ class LoncapaResponse(six.with_metaclass(abc.ABCMeta, object)):
         # The LoncapaProblemError messages here do not need to be translated as they are
         # only displayed to the user when settings.DEBUG is True
         for abox in inputfields:
+
             if abox.tag not in self.allowed_inputfields:
                 msg = "%s: cannot have input field %s" % (
                     six.text_type(self), abox.tag)
