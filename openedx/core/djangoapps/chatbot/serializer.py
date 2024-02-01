@@ -1,14 +1,10 @@
-import markdown 
-
 def chatbot_query_serializer(query):
-    response_msg = markdown.markdown(query.response_msg) if query.response_msg else None
-
     return {
         'id': query.id,
         'session_id': query.session.id,
         'student_id': query.session.student.id,
         'query_msg': query.query_msg,
-        'response_msg': response_msg,
+        'response_msg': query.response_msg,
         'status': query.status,
         'vote': query.vote,
         'created': query.created,
