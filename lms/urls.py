@@ -1062,7 +1062,6 @@ urlpatterns += [
 # course sub-text api
 urlpatterns += [
     path('api/sub_text/<str:sequence_id>', get_course_subtext , name='sub_text'),
-
 ]
 
 
