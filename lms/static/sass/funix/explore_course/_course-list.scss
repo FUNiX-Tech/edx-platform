@@ -124,17 +124,17 @@
 @media only screen and (min-width: 1201px) and (max-width: 1399px) {
     ul.courses-list {
         width: $breakpoint-tablet-lg !important;
-        padding-left: calc((#{$breakpoint-tablet-lg} - #{$four-items-width}) / 2) !important;
-        padding-right: calc((#{$breakpoint-tablet-lg} - #{$four-items-width}) / 2) !important;
+        padding-left: calc((#{$breakpoint-tablet-lg} - #{$three-items-width}) / 2) !important;
+        padding-right: calc((#{$breakpoint-tablet-lg} - #{$three-items-width}) / 2) !important;
     }
 
     .courses-listing {
-        grid-template-columns: repeat(4, 1fr) !important;
+        grid-template-columns: repeat(3, 1fr) !important;
     }
 }
 
 // 992px - 1200px
-@media only screen and (min-width: $breakpoint-tablet-md) and (max-width: $breakpoint-tablet-lg) {
+@media only screen and (min-width: $breakpoint-tablet-md) and (max-width: $breakpoint-tablet-lg) { 
     ul.courses-list {
         width: $breakpoint-tablet-md !important;
         padding-left: calc((#{$breakpoint-tablet-md} - #{$three-items-width}) / 2) !important;
