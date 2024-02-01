@@ -6,6 +6,7 @@
       el: "#discovery-form",
       events: {
         "submit form": "submitForm",
+        "click .clear-search": "clearSearch",
       },
 
       initialize: function () {
@@ -15,8 +16,8 @@
         this.$loadingIndicator = this.$el.find("#loading-indicator");
         this.$searchContainer = this.$el.find(".search-container");
         this.$searchTerm = '';
-
-
+        this.$clearSearch = this.$el.find('.clear-search')
+        this.$discoveryForm = this.$el.find('.wrapper-search-context');
       },
 
       submitForm: function (event) {
@@ -27,27 +28,29 @@
       doSearch: function (term) {
         if (term !== undefined) {
           this.$searchField.val(term);
-          this.$searchContainer.css("height", "56px");
         } else {
           term = this.$searchField.val();
           if (_.isEmpty(term) || term.trim() === "") {
             this.$message.addClass("hidden");
-            this.$searchContainer.css("height", "56px");
-            this.$searchContainer.css("margin-top","24px")
+            this.$clearSearch.addClass("hidden");
             this.$searchContainer.css("margin-bottom","24px")
           } else {
             this.$searchTerm = term
             this.$message.removeClass("hidden");
             this.$searchContainer.css("height", "auto");
             this.$searchContainer.css("margin-bottom","0px")
-            this.$searchContainer.css("margin-top","36px")
+            
           }
         }
         this.trigger("search", $.trim(term));
       },
 
       clearSearch: function () {
+        this.$clearSearch.addClass("hidden");
         this.$searchField.val("");
+        this.$searchTerm = '';
+        this.trigger("search", $.trim(this.$searchTerm));
+        this.$message.addClass("hidden");
       },
 
       showLoadingIndicator: function () {
@@ -60,7 +63,12 @@
 
       showFoundMessage: function (count,term) {
         // var msg = gettext("Viewing %s course", "Viewing %s courses", count);
-
+        if (term) {
+          this.$clearSearch.removeClass("hidden");
+          this.$clearSearch.css('margin-top', '24px');
+        } else {
+          // this.$message.addClass("hidden");
+        }
         // !FIXME: use po file to translate to Vietnamese instead of hardcoded
         // var msg = interpolate(gettext("%s results for %s", "%s results for %s", count), [count, _.escape(term)]);
         var msg = interpolate(gettext('%s Kết quả tìm kiếm cho Từ khóa "%s"', '%s Kết quả tìm kiếm cho Từ khóa "%s"', count), [count, _.escape(term)]);
@@ -70,10 +78,12 @@
       showNotFoundMessage: function (term) {
         // !FIXME: use po file to translate to Vietnamese instead of hardcoded
         // var msg = interpolate(gettext('We couldn\'t find any results for "%s".'), [_.escape(term)]);
-
+        // this.$clearSearch.removeClass("hidden");
+        // this.$clearSearch.css('margin-top', '24px');
+        this.$clearSearch.addClass("hidden");
         var msg = interpolate(gettext('0 Kết quả tìm kiếm cho Từ khóa "%s"', '0 Kết quả tìm kiếm cho Từ khóa "%s"', 0), [_.escape(term)]);
         this.$message.html(msg);
-        this.clearSearch();
+        // this.clearSearch();
       },
 
       showErrorMessage: function (error) {
