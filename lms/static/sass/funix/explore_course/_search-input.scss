@@ -2,10 +2,73 @@
     display: flex;
     justify-content: center;
     align-items: center;
+    flex-direction: column;
     // height: 104px !important;
     width: 100% !important;
+
     // margin-top: 24px;
     // margin-bottom: 24px !important;
+
+    @media only screen and (min-width: $breakpoint-desktop) {
+        width: $four-items-width !important;
+
+        div.search-container {
+            width: 620px !important;
+        }
+    }
+
+    @media only screen and (min-width: $breakpoint-tablet-lg) and (max-width: $breakpoint-desktop) {
+        width: $three-items-width !important;
+    }
+
+    @media only screen and (min-width: $breakpoint-tablet-md) and (max-width: $breakpoint-tablet-lg) {
+        width: $three-items-width !important;
+    }
+
+    @media only screen and (min-width: $breakpoint-tablet-sm) and (max-width: 991px) {
+        width: $two-items-width !important;
+    }
+
+    @media only screen and (min-width: $breakpoint-mobile-lg) and (max-width: 767px) {
+        width: $one-item-width !important;
+    }
+    @media only screen and (min-width: $breakpoint-mobile-sm) and (max-width: $breakpoint-mobile-lg) {
+        // margin-left: 16px !important;
+        // margin-right: 16px !important;
+        width: $one-item-width !important;
+    }
+    @media only screen and (max-width: $breakpoint-mobile-sm) {
+        // margin-left: 16px !important;
+        // margin-right: 16px !important;
+        width: $one-item-width !important;
+    }
+
+    .clear-search {
+        align-self: flex-start;
+        display: flex;
+        justify-content: flex-start;
+        align-items: center;
+        gap: 8px;
+        order: 1;
+        cursor: pointer;
+
+        span {
+            color: $color-active;
+        }
+
+        &:hover {
+            svg {
+                path {
+                    fill: $color-hover !important;
+                }
+            }
+
+            span {
+                color: $color-hover !important;
+            }
+        }
+
+    }
 
     div.search-container {
         display: flex;
@@ -16,39 +79,12 @@
         align-items: flex-start;
         width: 100%;
         gap: 24px;
+        order: 3;
 
-        @media only screen and (min-width: $breakpoint-desktop) {
-            width: 620px !important;
-        }
 
-        @media only screen and (min-width: $breakpoint-tablet-lg) and (max-width: $breakpoint-desktop) {
-            width: 620px !important;
-        }
-
-        @media only screen and (min-width: $breakpoint-tablet-md) and (max-width: $breakpoint-tablet-lg) {
-            width: $three-items-width !important;
-        }
-
-        @media only screen and (min-width: $breakpoint-tablet-sm) and (max-width: $breakpoint-tablet-md) {
-            margin-left: 16px !important;
-            margin-right: 16px !important;
-        }
-
-        @media only screen and (min-width: $breakpoint-mobile-lg) and (max-width: $breakpoint-tablet-sm) {
-            margin-left: 16px !important;
-            margin-right: 16px !important;
-        }
-        @media only screen and (min-width: $breakpoint-mobile-sm) and (max-width: $breakpoint-mobile-lg) {
-            margin-left: 16px !important;
-            margin-right: 16px !important;
-        }
-        @media only screen and (max-width: $breakpoint-mobile-sm) {
-            margin-left: 16px !important;
-            margin-right: 16px !important;
-        }
 
         #discovery-message {
-            color: var(--Text-Default, #2c3744);
+            color: $color-text-default;
             font-feature-settings: "clig" off, "liga" off;
             /* Unit text/Paragraph 1 Medium */
             font-family: Roboto;
@@ -63,77 +99,34 @@
 form.wrapper-search-input {
     width: 100% !important;
     height: 56px !important;
+    order: 2;
 
     &:hover {
         input {
-            border: 1px solid $color-hover-gray !important;
-            border-left: 0px !important;
+            border: 1px solid $color-active !important;
+            // border-left: 0px !important;
         }
 
-        button.discovery-submit {
-            border: 1px solid $color-hover-gray !important;
-            border-right: 0 !important;
-        }
     }
 
     &:active {
         input {
-            border: 1px solid $color-active-dark !important;
-            border-left: 0px !important;
+            border: 2px solid $color-active !important;
+            // border-left: 0px !important;
         }
 
-        button.discovery-submit {
-            border: 1px solid $color-active-dark !important;
-            border-right: 0 !important;
-        }
     }
     &:focus {
         input {
-            border: 1px solid $color-active-dark !important;
-            border-left: 0 !important;
+            border: 2px solid $color-active !important;
         }
 
-        button.discovery-submit {
-            border: 1px solid $color-active-dark !important;
-            border-right: 0 !important;
-        }
     }
-    // @media only screen and (min-width: $breakpoint-desktop) {
-    //     width: 620px !important;
-    // }
-
-    // @media only screen and (min-width: $breakpoint-tablet-lg) and (max-width: $breakpoint-desktop) {
-    //     width: 620px !important;
-    // }
-
-    // @media only screen and (min-width: $breakpoint-tablet-md) and (max-width: $breakpoint-tablet-lg) {
-    //     width: $three-items-width !important;
-    // }
-
-    // @media only screen and (min-width: $breakpoint-tablet-sm) and (max-width: $breakpoint-tablet-md) {
-    //     margin-left: 16px !important;
-    //     margin-right: 16px !important
-    // }
-
-    // @media only screen and (min-width: $breakpoint-mobile-lg) and (max-width: $breakpoint-tablet-sm) {
-    //     margin-left: 16px !important;
-    //     margin-right: 16px !important
-    // }
-    // @media only screen and (min-width: $breakpoint-mobile-sm) and (max-width: $breakpoint-mobile-lg) {
-    //     margin-left: 16px !important;
-    //     margin-right: 16px !important
-    // }
-    // @media only screen and (max-width: $breakpoint-mobile-sm) {
-    //     margin-left: 16px !important;
-    //     margin-right: 16px !important
-    // }
 
     input {
         padding: 12px !important;
+        border-radius: 4px !important;
         border: 1px solid $color-subdued !important;
-        border-left: 0px !important;
-        border-top-right-radius: 4px;
-        border-bottom-right-radius: 4px;
         padding-left: 61px !important;
         font-family: Roboto !important;
         font-size: 16px !important;
@@ -141,26 +134,27 @@ form.wrapper-search-input {
         font-style: normal !important;
         line-height: 150% !important;
         color: $color-text-inactive !important;
+
+        &:focus {
+            border: 2px solid $color-active !important;
+            // border-left: 0 !important;
+        }
     }
 
     button.discovery-submit {
         background-color: #fff;
-        border: 1px solid $color-subdued !important;
+        border: 0px !important;
         border-right: 0px !important;
-        border-top-left-radius: 4px;
-        border-bottom-left-radius: 4px;
-        border-top-right-radius: 0px;
-        border-bottom-right-radius: 0xp;
         color: $color-subdued;
         background-image: none !important;
+        background: transparent !important;
+
 
         &:hover {
-            background-color: #fff !important;
             background-image: none !important;
         }
 
         &:active {
-            background-color: #fff !important;
             background-image: none !important;
         }
 

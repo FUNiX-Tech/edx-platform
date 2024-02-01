@@ -4058,6 +4058,8 @@ class MatchingResponse(LoncapaResponse):
         # UFC - hàm trả về điểm cho các problem đúng 1 điểm, sai 0 điểm
         npoints = 1 if correctness == 'correct' else 0
 
+        self.result_correctness_new = correctness
+
         return CorrectMap(self.answer_id, correctness=correctness, npoints=npoints)
 
     def get_answers(self):
