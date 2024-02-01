@@ -53,7 +53,7 @@ from openedx.core.djangoapps.user_authn.views.login import redirect_to_lms_login
 from openedx.features.enterprise_support.api import enterprise_enabled
 from lms.djangoapps.instructor_tools import views as instructor_tools_views
 from lms.djangoapps.instructor_tools import urls as instructor_tools_urls
-from lms.djangoapps.feedback import views as feedback_views 
+from lms.djangoapps.feedback import views as feedback_views
 from openedx.core.djangoapps.content.course_overviews.api import get_course_subtext, set_course_subtext
 
 RESET_COURSE_DEADLINES_NAME = 'reset_course_deadlines'
@@ -103,7 +103,7 @@ urlpatterns = [
     path('', include('common.djangoapps.student.urls')),
     # TODO: Move lms specific student views out of common code
     re_path(r'^dashboard/?$', student_views.student_dashboard, name='dashboard'),
-    
+
     path('instructor_tools', instructor_tools_views.instructor_tools_dashboard, name='instructor_tools_dashboard'),
     path('change_enrollment', student_views.change_enrollment, name='change_enrollment'),
 
@@ -1059,40 +1059,43 @@ urlpatterns += [
     path('api/feedback/create' , feedback_views.create_feedback , name='feedback_create')
 ]
 
-# course sub-text api 
+# course sub-text api
 urlpatterns += [
     path('api/sub_text/<str:sequence_id>', get_course_subtext , name='sub_text'),
-   
+
 ]
 
 
 from lms.djangoapps.funix_portal_api.views import (
     ResetUserPasswordFromPortalAPIView,
-    UpdateUserPasswordAPIView, 
-    CreateUserAPIView, 
+    UpdateUserPasswordAPIView,
+    CreateUserAPIView,
     GradeLearningProjectXblockAPIView,
-    get_portal_host, 
+    get_portal_host,
     get_resume_path,
-    funix_get_thumb, 
-    get_site_config
+    funix_get_thumb,
+    get_site_config,
+    complete_text_unit
 )
 
 # funix portal api
+# UFC - nơi viết url endpoint cho các api của funix portal
 urlpatterns +=[
     path ('api/funix_portal/user/update_password', UpdateUserPasswordAPIView.as_view(), name='funix_portal_update_password'),
     path('api/v2/funix_portal/user/update_password',ResetUserPasswordFromPortalAPIView.as_view() , name='funix_portal_update_password_v2'),
     path ('api/funix_portal/user/create_user', CreateUserAPIView.as_view() , name='funix_portal_create_user'),
     path ('api/funix_portal/project/grade_project', GradeLearningProjectXblockAPIView.as_view() , name='funix_portal_grade_learning_project'),
     path ('api/funix_portal/portal_host',get_portal_host , name='funix_portal_host'),
+    path ('api/funix_mfe/complete_text_unit', complete_text_unit, name='funix_complete_text_unit'),
     re_path(r'api/course_resume_path/{}/(?P<location>.*)$'.format(settings.COURSE_ID_PATTERN),get_resume_path , name='get_resume_path_for_mfe'),
 ]
 
-# image 
+# image
 urlpatterns += [
     path('thumb/', funix_get_thumb, name='funix_get_thumb'),
 ]
 
-# image 
+# image
 urlpatterns += [
     path('api/site_config/', get_site_config, name='get_site_config'),
 ]
@@ -1112,8 +1115,8 @@ urlpatterns += [
 ]
 
 
-# about course overview 
-from lms.djangoapps.courseware.views.views import get_about_course 
+# about course overview
+from lms.djangoapps.courseware.views.views import get_about_course
 
 urlpatterns += [
     path('api/overview/about/<str:course_id>' , get_about_course , name='about_course' ) ,

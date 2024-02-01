@@ -64,7 +64,7 @@ class BlockCompletionTransformer(BlockStructureTransformer):
 
         if len(arr) == 0:
             return None
-        
+
         filtered_arr = [el for el in arr if el is not None]
 
         if len(filtered_arr) == 0:
@@ -81,6 +81,7 @@ class BlockCompletionTransformer(BlockStructureTransformer):
         return complete_block.modified
 
 
+    # UFC - có thể hàm này đánh dấu block là complete
     def mark_complete(self, complete_course_blocks, latest_complete_block_key, block_key, block_structure, usage_info):
         """
         Helper function to mark a block as 'complete' as dictated by
@@ -92,6 +93,8 @@ class BlockCompletionTransformer(BlockStructureTransformer):
         :param block_key: A opaque_keys.edx.locator.BlockUsageLocator object
         :param block_structure: A BlockStructureBlockData object
         """
+
+
         if block_key in complete_course_blocks:
             block_structure.override_xblock_field(block_key, self.COMPLETE, True)
 

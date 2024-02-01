@@ -36,8 +36,8 @@ from django.views.decorators.http import require_http_methods
 
 def check_missing_fields(fields, data):
     errors = {}
-    for field in fields: 
-        if data.get(field) is None: 
+    for field in fields:
+        if data.get(field) is None:
             errors[field] = ["This field is required"]
     return errors
 
@@ -109,7 +109,7 @@ class ResetUserPasswordFromPortalAPIView(APIView):
                 "message": "Internal Server Error",
             }, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
-class UpdateUserPasswordAPIView(APIView): 
+class UpdateUserPasswordAPIView(APIView):
     """
     **Use Case**
         Update user password
@@ -125,7 +125,7 @@ class UpdateUserPasswordAPIView(APIView):
         }
 
     **Example Response**
-    
+
         {
             "message": "Updated new password/error message"
         }
@@ -158,7 +158,7 @@ class UpdateUserPasswordAPIView(APIView):
         try:
             user = User.objects.get(email=email)
             password_matches = user.check_password(password)
-            if password_matches: 
+            if password_matches:
                 try:
                     user.set_password(new_password)
                     user.save()
@@ -168,7 +168,7 @@ class UpdateUserPasswordAPIView(APIView):
                 except Exception as e:
                     logging.error(str(e))
                     return Response(data={
-                        "message": "Internal Server Error", 
+                        "message": "Internal Server Error",
                     }, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
             else:
                 return Response(data={
@@ -181,10 +181,10 @@ class UpdateUserPasswordAPIView(APIView):
                  "errors": {"email": [f"Not found user with email '{email}'"]}
             }, status=status.HTTP_400_BAD_REQUEST)
 
-        except Exception as e: 
+        except Exception as e:
             logging.error(str(e))
             return Response(data={
-                "message": "Internal Server Error", 
+                "message": "Internal Server Error",
             }, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
 
@@ -248,7 +248,7 @@ class CreateUserAPIView(APIView):
     def post(self, request):  # lint-amnesty, pylint: disable=missing-function-docstring
         users = request.data
 
-        if type(users) != list: 
+        if type(users) != list:
             return Response(data={
                 "message": "users payload must be an array.",
             }, status=status.HTTP_400_BAD_REQUEST)
@@ -256,26 +256,26 @@ class CreateUserAPIView(APIView):
         results = []
         users_created = 0
 
-        def _append_results(status, user, errors = {}): 
+        def _append_results(status, user, errors = {}):
             results.append({
-                "ok": status, 
-                "user": user, 
+                "ok": status,
+                "user": user,
                 "errors": errors
             })
 
-        for user in users: 
+        for user in users:
             if type(user) != dict:
                 return Response(data={
                     "message": "Invalid data: user must be a dict.",
                 }, status=status.HTTP_400_BAD_REQUEST)
             validation_errors = funix_user_validator.validate(user)
-            if validation_errors: 
+            if validation_errors:
                 return Response(data={
                     "message": "Invalid fields",
                     "errors": validation_errors,
                 }, status=status.HTTP_400_BAD_REQUEST)
-            
-        for user in users: 
+
+        for user in users:
             username = user.get('username')
             email = user.get('email')
             password = user.get('password')
@@ -302,7 +302,7 @@ class CreateUserAPIView(APIView):
                     profile.student_code = student_code
                     profile.save()
 
-                _append_results(True, 
+                _append_results(True,
                     {
                         "username": username,
                         "email": email,
@@ -323,7 +323,7 @@ class CreateUserAPIView(APIView):
                 _append_results(False, user, {"message": str(e)})
 
         response_message = ""
-        if users_created > 0: 
+        if users_created > 0:
             response_message += f"Created successfully {users_created} users. "
         if len(results) > users_created:
             response_message += f"Failed to create {len(results) - users_created} users."
@@ -335,7 +335,7 @@ class CreateUserAPIView(APIView):
 
 
 
-class GradeLearningProjectXblockAPIView(APIView): 
+class GradeLearningProjectXblockAPIView(APIView):
     """
     **Use Case**
         Grade a student's learning project. Just grade if 'result' is 'passed' or 'did_not_pass'.
@@ -352,12 +352,12 @@ class GradeLearningProjectXblockAPIView(APIView):
         }
 
     **Example Response**
-        - 200: 
+        - 200:
         {
             "message": "Graded"
         }
 
-        - 400, 500: 
+        - 400, 500:
         {
             "message": "error message"
         }
@@ -379,22 +379,22 @@ class GradeLearningProjectXblockAPIView(APIView):
             return Response(data={
                  "message": "Missing course_code",
             }, status=status.HTTP_400_BAD_REQUEST)
-        
+
         if not email:
             return Response(data={
                  "message": "Missing email",
             }, status=status.HTTP_400_BAD_REQUEST)
-        
+
         if not project_name:
             return Response(data={
                  "message": "Missing project_name",
             }, status=status.HTTP_400_BAD_REQUEST)
-        
+
         if not result:
             return Response(data={
                  "message": "Missing result",
             }, status=status.HTTP_400_BAD_REQUEST)
-        
+
         if result not in ['passed', 'did_not_pass']:
             return Response(data={
                  "message": "This result will not be took into account. The result value must be 'passed' or 'did_not_pass'",
@@ -418,7 +418,7 @@ class GradeLearningProjectXblockAPIView(APIView):
                 return Response(data={
                     "message": f"Not found course with course_code '{course_code}'",
                 }, status=status.HTTP_400_BAD_REQUEST)
-        
+
             course = course_overview._original_course
             sections = course.get_children()
 
@@ -458,7 +458,7 @@ class GradeLearningProjectXblockAPIView(APIView):
                  "message": "Not found usage_id",
             }, status=status.HTTP_400_BAD_REQUEST)
 
-        
+
         req = request
         req.user = student
 
@@ -487,14 +487,15 @@ class GradeLearningProjectXblockAPIView(APIView):
         return Response(data={
             "message": "Graded",
         }, status=status.HTTP_200_OK)
-    
+
+# UFC - hàm API Hoàng viết
 def get_portal_host(request):
     from django.contrib.sites.models import Site
 
     def get_site_config(domain, setting_name, default_value=None):
         try:
             site = Site.objects.filter(domain=domain).first()
-            if site is None: 
+            if site is None:
                 print('NOT FOUND SITE')
                 return default_value
             site_config = SiteConfiguration.objects.filter(site=site).first()
@@ -508,12 +509,14 @@ def get_portal_host(request):
             return None
 
     LMS_BASE = settings.LMS_BASE
-    PORTAL_HOST = get_site_config(LMS_BASE, 'PORTAL_HOST') 
+    PORTAL_HOST = get_site_config(LMS_BASE, 'PORTAL_HOST')
     return  JsonResponse( {
             'HOST':PORTAL_HOST
             }
         ,
         status=200)
+
+
 
 def get_resume_path(request, course_id, location):
 
@@ -559,13 +562,13 @@ def funix_get_thumb(request):
 
     if request.method != 'GET':
         return HttpResponseNotAllowed('Not allowed method.')
-    
+
     img_path = request.GET['path']
 
-    if not img_path: 
+    if not img_path:
         logging.error('From funix_get_thumb: Missing img_path.')
         return HttpResponseBadRequest('Missing img_path')
-    
+
     try:
         ext = img_path.split('.')[-1]
     except:
@@ -580,14 +583,14 @@ def funix_get_thumb(request):
     if response.status_code == 200:
         mimetype = _get_mime_type(ext)
         return HttpResponse(response.content, content_type=mimetype)
-    else: 
+    else:
         logging.error(f'From funix_get_thumb: image_path: {img_path}. img_url: {img_url}. status code: {response.status_code}')
 
     fallback_path = FALLBACK_DEFAULT_PATH
 
     if request.GET.get('type') == 'course_thumb':
         fallback_path = FALLBACK_COURSE_IMAGE_PATH
-    
+
     fallback_img_path = finders.find(fallback_path)
 
     if fallback_img_path:
@@ -603,13 +606,72 @@ def get_site_config(request):
     site_config = configuration_helpers.get_current_site_configuration_values()
     return JsonResponse(
         {
-            'message': "success", 
+            'message': "success",
             'data': site_config
         },
         status=200
     )
-  
+
 def _get_mime_type(extension):
     mime_type, _ = mimetypes.guess_type(f"dummy.{extension}")
     return mime_type
-    
+
+from completion.models import BlockCompletion
+@require_http_methods('POST')
+def complete_text_unit(request):
+    print("complete_text_unit_test_API", request.user)
+    data = json.loads(request.body.decode('utf-8'))
+    print("complete_text_unit_test_data", data)
+    print("complete_text_unit_test_data_location", data['location'])
+
+    # xài hàm này để lấy ra những unit chỉ có text ko có video + quiz
+    # course_overview = CourseOverview.get_from_id(course_code)
+
+    try:
+        course_key = CourseKey.from_string(data['courseId'])
+        usage_key = UsageKey.from_string(data['location']).replace(course_key=course_key)
+
+        print("usage_key_complete", usage_key)
+
+        # Hàm này chạy để ghi completion vào database
+        BlockCompletion.objects.submit_completion(
+            user=request.user,
+            block_key=usage_key,
+            completion=1,
+        )
+
+        return  JsonResponse(
+            {
+                'completion':"completion unit success",
+            },
+            status=200
+        )
+    except InvalidKeyError as exc:
+        return  JsonResponse({
+                'message': 'Invalid usage key or course key.'
+            }
+            ,
+            status=400
+        )
+# http://localhost:2000/course/course-v1:Funix+FU01+sdfsdfsdf/block-v1:Funix+FU01+sdfsdfsdf+type@sequential+block@e63765b1bb874546a2cf37f1e2fef10a/block-v1:Funix+FU01+sdfsdfsdf+type@vertical+block@79a155e4951742b680fca481f276c9a5
+
+
+
+
+
+def tesst_api(request):
+    # data = json.loads(request.body.decode('utf-8'))
+    # location = "abc"
+    # BlockCompletion.objects.submit_completion(
+    #     user=request.user,
+    #     block_key=location,
+    #     completion=1,
+    # )
+    # return JsonResponse(
+    #     {
+    #         'message': "success",
+    #     },
+    #     status=200
+    # )
+
+    pass
