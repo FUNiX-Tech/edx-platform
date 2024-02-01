@@ -331,15 +331,18 @@ class SequenceBlock(
     # there are still incomplete but access-locked blocks left.
     get_completion.will_recheck_access = True
 
+    # UFC - hàm completion unit hoặc sequence
     def _get_completion(self, data):
         """Returns whether the provided vertical is complete based off the 'usage_key' value in the incoming dict"""
         complete = False
+        # complete = True
         usage_key = data.get('usage_key', None)
         if usage_key:
             item = self.get_child(UsageKey.from_string(usage_key))
             if item:
                 completion_service = self.runtime.service(self, 'completion')
                 complete = completion_service.vertical_is_complete(item)
+                # complete = True
         return {'complete': complete}
 
     @XBlock.json_handler
